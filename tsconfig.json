@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "dist/compiled",
+    "target": "ES2022",
+    "module": "ES2022",
+    "removeComments": false,
+    "skipLibCheck": true,
+    "lib": ["ES2022"],
+    "paths": {
+      "resource:///org/gnome/shell/*": ["./node_modules/@girs/gnome-shell/dist/*"],
+      "resource:///org/gnome/Shell/Extensions/js/*": ["./node_modules/@girs/gnome-shell/dist/*"]
+    }
+  },
+  "include": ["./src/**/*.ts"]
+}

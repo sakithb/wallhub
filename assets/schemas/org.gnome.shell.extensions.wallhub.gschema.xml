@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.wallhub"
+    path="/org/gnome/shell/extensions/wallhub/">
+  </schema>
+</schemalist>

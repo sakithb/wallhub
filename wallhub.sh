@@ -9,7 +9,7 @@ build() {
 
   echo "Packing..."
 
-  EXCLUDE=("metadata.json" "extension.js" "stylesheet.css")
+  EXCLUDE=("metadata.json" "extension.js" "stylesheet.css" "prefs.ts")
   TSSRCDIR="$PWD/src"
   JSSRCDIR="$PWD/dist/compiled"
   BUILDDIR="$PWD/dist/builds"

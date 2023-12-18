@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
+    "moduleResolution": "Bundler",
     "outDir": "dist/compiled",
-    "target": "ES2022",
-    "module": "ES2022",
+    "target": "ESNext",
+    "module": "ESNext",
     "removeComments": false,
     "skipLibCheck": true,
-    "lib": ["ES2022"],
-    "paths": {
-      "resource:///org/gnome/shell/*": ["./node_modules/@girs/gnome-shell/dist/*"],
-      "resource:///org/gnome/Shell/Extensions/js/*": ["./node_modules/@girs/gnome-shell/dist/*"]
-    }
+    "lib": ["ESNext"],
   },
   "include": ["./src/**/*.ts"]
 }

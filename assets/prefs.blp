@@ -1,358 +1,327 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.PreferencesWindow win-prefs {
-  title: "Wallhub Preferences";
-  default-width: 800;
-  default-height: 600;
 
-  Adw.PreferencesPage {
-    icon-name: 'settings-symbolic';
-    name: 'wallhub-general';
-    title: 'General';
+Adw.PreferencesPage page-general {
+  icon-name: 'settings-symbolic';
+  name: 'wallhub-general';
+  title: 'General';
 
-    Adw.PreferencesGroup {
-      title: "Common";
-      description: "You can choose set one or more wallpapers. Image files and dynamic wallpapers(xml) are supported.";
+  Adw.PreferencesGroup {
+    title: "Common";
+    description: "You can choose set one or more wallpapers. Image files and dynamic wallpapers(xml) are supported.";
 
-      Adw.ActionRow {
-        title: 'Wallpaper type';
+    Adw.ActionRow {
+      title: 'Wallpaper type';
 
-        Box {
-          orientation: horizontal;
-          margin-top: 10;
-          margin-bottom: 10;
+      Box {
+        orientation: horizontal;
+        margin-top: 10;
+        margin-bottom: 10;
 
-          styles [
-            "linked"
-          ]
+        styles [
+          "linked"
+        ]
 
-          ToggleButton btn-wp-type-single {
-            active: true;
-            label: 'Single';
-          }
-
-          ToggleButton btn-wp-type-slideshow {
-            active: false;
-            label: 'Slideshow';
-            group: btn-wp-type-single;
-          }
+        ToggleButton btn-wp-type-single {
+          active: true;
+          label: 'Single';
         }
-      }
 
-      Adw.ActionRow {
-        title: 'Choose wallpaper(s)';
-        subtitle: 'No wallpapers selected';
-
-        Button btn-wp-choose {
-          halign: center;
-          margin-top: 10;
-          margin-bottom: 10;
-
-          styles [
-            "suggested-action"
-          ]
-
-          Adw.ButtonContent {
-            label: "Choose";
-            icon-name: "document-open-symbolic";
-          }
+        ToggleButton btn-wp-type-slideshow {
+          active: false;
+          label: 'Slideshow';
+          group: btn-wp-type-single;
         }
       }
     }
 
-    Adw.PreferencesGroup {
-      title: "Slideshow";
+    Adw.ActionRow row-wp-choose {
+      title: 'Choose wallpaper(s)';
+      subtitle-lines: 1;
 
-      Adw.ActionRow {
-        title: 'Slideshow interval';
+      Button btn-wp-choose {
+        halign: center;
+        margin-top: 10;
+        margin-bottom: 10;
 
-        DropDown sb-slideshow-interval-unit {
-          margin-top: 10;
-          margin-bottom: 10;
-          selected: 2;
+        styles [
+          "suggested-action"
+        ]
 
-          model: StringList {
-            strings [
-              "Hours",
-              "Minutes",
-              "Seconds",
-            ]
-          };
-        }
-
-        SpinButton sb-slideshow-interval {
-          margin-top: 10;
-          margin-bottom: 10;
-
-          adjustment: Adjustment {
-            lower: 0;
-            upper: 60;
-            step-increment: 1;
-            value: 1;
-          };
+        Adw.ButtonContent {
+          label: "Choose";
+          icon-name: "document-open-symbolic";
         }
       }
     }
+  }
 
-    Adw.PreferencesGroup {
-      title: "Login screen";
+  Adw.PreferencesGroup {
+    title: "Slideshow";
 
-      Adw.SwitchRow sw-set-login-bg {
-        title: 'Set as login screen background';
-        subtitle: 'Automatically set your wallpaper as GDM background';
+    Adw.ActionRow {
+      title: 'Slideshow interval';
+
+      DropDown dd-slideshow-interval-unit {
+        margin-top: 10;
+        margin-bottom: 10;
+
+        model: StringList {
+          strings [
+            "Hours",
+            "Minutes",
+            "Seconds",
+          ]
+        };
       }
 
-      Adw.SpinRow sb-blur-radius {
-        title: 'Blur radius (px)';
-        subtitle: 'Blur wallpaper before setting as GDM background';
+      SpinButton sb-slideshow-interval {
+        margin-top: 10;
+        margin-bottom: 10;
 
         adjustment: Adjustment {
           lower: 0;
-          upper: 100;
+          upper: 60;
           step-increment: 1;
-          value: 20;
         };
       }
     }
   }
 
-  Adw.PreferencesPage {
-    icon-name: "search-symbolic";
-    name: "wallhub-browse";
-    title: "Browse";
+  Adw.PreferencesGroup {
+    title: "Login screen";
 
-    ProgressBar pb-loading {
+    Adw.SwitchRow sw-login-bg-enabled {
+      title: 'Set as login screen background';
+      subtitle: 'Automatically set your wallpaper as GDM background';
+    }
+
+    Adw.SpinRow sb-login-bg-blur {
+      title: 'Blur radius (px)';
+      subtitle: 'Blur wallpaper before setting as GDM background';
+
+      adjustment: Adjustment {
+        lower: 0;
+        upper: 100;
+        step-increment: 1;
+      };
+    }
+  }
+}
+
+Adw.PreferencesPage page-browse {
+  icon-name: "search-symbolic";
+  name: "wallhub-browse";
+  title: "Browse";
+
+  ProgressBar pb-loading {
+    visible: false;
+    pulse-step: 0.25;
+
+    styles [
+      "osd"
+    ]
+  }
+
+  Box {
+    orientation: vertical;
+    margin-top: 20;
+    margin-bottom: 20;
+    margin-start: 20;
+    margin-end: 20;
+
+    Box {
       styles [
-        "osd"
+        "linked"
       ]
+
+      SearchEntry se-search {
+        hexpand: true;
+        placeholder-text: "Search wallpapers on wallhaven.cc";
+      }
+
+      Button btn-search {
+        label: "Search";
+
+        styles [
+          "suggested-action"
+        ]
+
+      }
     }
 
     Box {
-      orientation: vertical;
-      margin-top: 20;
-      margin-bottom: 20;
-      margin-start: 20;
-      margin-end: 20;
+      margin-top: 10;
 
       Box {
         styles [
           "linked"
         ]
 
-        SearchEntry {
-          hexpand: true;
-          placeholder-text: "Search wallpapers on wallhaven.cc";
+        ToggleButton btn-ctg-general {
+          label: 'General';
+          active: true;
         }
 
-        Button btn-search {
-          label: "Search";
+        ToggleButton btn-ctg-anime {
+          label: 'Anime';
+          active: true;
+        }
 
-          styles [
-            "suggested-action"
-          ]
-
+        ToggleButton btn-ctg-people {
+          label: 'People';
+          active: true;
         }
       }
 
       Box {
-        margin-top: 10;
+        hexpand: true;
+        halign: end;
 
-        Box {
-          styles [
-            "linked"
-          ]
+        styles [
+          "linked"
+        ]
 
-          ToggleButton btn-ctg-general {
-            label: 'General';
-          }
+        DropDown dd-sort {
+          selected: 0;
 
-          ToggleButton btn-ctg-anime {
-            label: 'Anime';
-          }
-
-          ToggleButton btn-ctg-people {
-            label: 'People';
-          }
-        }
-
-        Box {
-          hexpand: true;
-          halign: end;
-
-          styles [
-            "linked"
-          ]
-
-          DropDown dd-sort {
-            selected: 2;
-
-            model: StringList {
-              strings [
-                "Date added",
-                "Relevance",
-                "Random",
-                "Views",
-                "Favorites",
-                "Toplist"
-              ]
-            };
-          }
-
-          ToggleButton btn-sort-asc {
-            icon-name: "arrow2-up-symbolic";
-          }
-          
-          ToggleButton btn-sort-desc {
-            icon-name: "arrow2-down-symbolic";
-            group: btn-sort-asc;
-          }
-        }
-      }
-
-      ScrolledWindow {
-        margin-top: 10;
-        hscrollbar-policy: never;
-        vscrollbar-policy: automatic;
-        vexpand: true;
-
-        child: Viewport {
-          vscroll-policy: natural;
-
-          child: Grid grid-results {
-            halign: fill;
-            valign: fill;
-            hexpand: true;
-            vexpand: true;
-            column-spacing: 5;
-            row-spacing: 5;
-            column-homogeneous: true;
-
-            styles [
-              "frame"
+          model: StringList {
+            strings [
+              "Date added",
+              "Relevance",
+              "Random",
+              "Views",
+              "Favorites",
+              "Toplist"
             ]
-
-            Label {
-              label: "";
-              hexpand: true;
-
-              layout {
-                column: 1;
-                row: 1;
-              }
-            }
-
-            Label {
-              label: "";
-              hexpand: true;
-
-              layout {
-                column: 2;
-                row: 1;
-              }
-            }
-
-            Label {
-              label: "";
-              hexpand: true;
-
-              layout {
-                column: 3;
-                row: 1;
-              }
-            }
           };
+        }
+
+        ToggleButton btn-sort-asc {
+          icon-name: "go-up-symbolic";
+          active: true;
+        }
+
+        ToggleButton {
+          icon-name: "go-down-symbolic";
+          group: btn-sort-asc;
+        }
+      }
+    }
+
+    ScrolledWindow {
+      margin-top: 10;
+      hscrollbar-policy: never;
+      vscrollbar-policy: automatic;
+      vexpand: true;
+
+      child: Viewport {
+        vscroll-policy: natural;
+
+        child: Grid grid-results {
+          halign: fill;
+          valign: fill;
+          hexpand: true;
+          vexpand: true;
+          column-spacing: 5;
+          row-spacing: 5;
+          column-homogeneous: true;
+
+          styles [
+            "frame"
+          ]
         };
+      };
+    }
+
+    CenterBox {
+      margin-top: 10;
+
+      [start]
+      Button btn-prev-page {
+        Adw.ButtonContent {
+          icon-name: "go-previous-symbolic";
+        }
       }
 
-      CenterBox {
+      [center]
+      Label lb-page {
+        label: "Page 1 of 4";
+      }
+
+      [end]
+      Button btn-next-page {
+        Adw.ButtonContent {
+          icon-name: "go-next-symbolic";
+        }
+      }
+    }
+  }
+}
+
+Adw.PreferencesPage page-dwp {
+  icon-name: "edit-symbolic";
+  name: "wallhub-dynamic";
+  title: "Dynamic Wallpapers";
+
+  Adw.PreferencesGroup {
+    Adw.ActionRow {
+      title: 'Edit dynamic wallpaper';
+
+      Button btn-dwp-choose {
+        halign: center;
         margin-top: 10;
+        margin-bottom: 10;
 
-        [start]
-        Button btn-previous-page {
-          Adw.ButtonContent {
-            icon-name: "go-previous-symbolic";
-          }
-        }
-
-        [center]
-        Label lb-page {
-          label: "Page 1 of 4";
-        }
-        
-        [end]
-        Button btn-next-page {
-          Adw.ButtonContent {
-            icon-name: "go-next-symbolic";
-          }
+        Adw.ButtonContent {
+          label: "Select";
+          icon-name: "document-open-symbolic";
         }
       }
     }
   }
 
-  Adw.PreferencesPage {
-    icon-name: "edit-symbolic";
-    name: "wallhub-dynamic";
-    title: "Dynamic Wallpapers";
+  Adw.PreferencesGroup {
+    Adw.ActionRow {
+      title: 'Daytime wallpaper';
 
-    Adw.PreferencesGroup {
-      Adw.ActionRow {
-        title: 'Edit dynamic wallpaper';
+      Button btn-dwp-light-choose {
+        halign: center;
+        margin-top: 10;
+        margin-bottom: 10;
 
-        Button btn-dw-choose {
-          halign: center;
-          margin-top: 10;
-          margin-bottom: 10;
-          
-          Adw.ButtonContent {
-            label: "Select";
-            icon-name: "document-open-symbolic";
-          }
+        Adw.ButtonContent {
+          label: "Select";
+          icon-name: "document-open-symbolic";
         }
       }
     }
 
-    Adw.PreferencesGroup {
-      Adw.ActionRow {
-        title: 'Daytime wallpaper';
+    Adw.ActionRow {
+      title: 'Nighttime wallpaper';
 
-        Button btn-dw-light-choose {
-          halign: center;
-          margin-top: 10;
-          margin-bottom: 10;
+      Button btn-dwp-dark-choose {
+        halign: center;
+        margin-top: 10;
+        margin-bottom: 10;
 
-          Adw.ButtonContent {
-            label: "Select";
-            icon-name: "document-open-symbolic";
-          }
-        }
-      }
-
-      Adw.ActionRow {
-        title: 'Nighttime wallpaper';
-
-        Button btn-dw-dark-choose {
-          halign: center;
-          margin-top: 10;
-          margin-bottom: 10;
-          
-          Adw.ButtonContent {
-            label: "Select";
-            icon-name: "document-open-symbolic";
-          }
+        Adw.ButtonContent {
+          label: "Select";
+          icon-name: "document-open-symbolic";
         }
       }
     }
+  }
 
-    Adw.PreferencesGroup {
-      Adw.PreferencesRow {
-        Button {
-          label: "Save";
+  Adw.PreferencesGroup {
+    Adw.PreferencesRow {
+      Button {
+        label: "Save";
 
-          styles [
-            "suggested-action"
-          ]
-        }
+        styles [
+          "suggested-action"
+        ]
       }
     }
   }
@@ -361,6 +330,7 @@ Adw.PreferencesWindow win-prefs {
 Adw.Window win-wp-viewer {
   modal: true;
   hide-on-close: true;
+  resizable: false;
 
   content: Adw.ToolbarView {
     content: Box {
@@ -374,7 +344,7 @@ Adw.Window win-wp-viewer {
     };
 
     [top]
-    Adw.HeaderBar hb-wp-viewer {
+    Adw.HeaderBar{
       show-title: false;
       decoration-layout: "";
 

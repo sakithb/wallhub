@@ -11,4 +11,3 @@ indent_size = 2
 
 [*.{js,ts,css}]
 indent_size = 4
-

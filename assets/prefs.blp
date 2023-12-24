@@ -89,25 +89,6 @@ Adw.PreferencesPage page-general {
     }
   }
 
-  Adw.PreferencesGroup {
-    title: "Login screen";
-
-    Adw.SwitchRow sw-login-bg-enabled {
-      title: 'Set as login screen background';
-      subtitle: 'Automatically set your wallpaper as GDM background';
-    }
-
-    Adw.SpinRow sb-login-bg-blur {
-      title: 'Blur radius (px)';
-      subtitle: 'Blur wallpaper before setting as GDM background';
-
-      adjustment: Adjustment {
-        lower: 0;
-        upper: 100;
-        step-increment: 1;
-      };
-    }
-  }
 }
 
 Adw.PreferencesPage page-browse {
@@ -263,7 +244,30 @@ Adw.PreferencesPage page-browse {
 Adw.PreferencesPage page-dwp {
   icon-name: "edit-symbolic";
   name: "wallhub-dynamic";
-  title: "Dynamic Wallpapers";
+  title: "Dynamic wallpapers";
+
+  Adw.PreferencesGroup grp-dwp-preview {
+    hexpand: true;
+    vexpand: true;
+
+    Label lbl-dwp-preview {
+      label: "<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Preview</span>";
+      halign: center;
+      valign: center;
+      hexpand: true;
+      vexpand: true;
+      selectable: false;
+      use-markup: true;
+    }
+
+    Picture pic-dwp-preview {
+      visible: false;
+
+      styles [
+        "card"
+      ]
+    }
+  }
 
   Adw.PreferencesGroup {
     Adw.ActionRow {
@@ -283,28 +287,99 @@ Adw.PreferencesPage page-dwp {
   }
 
   Adw.PreferencesGroup {
-    Adw.ActionRow {
+    Adw.EntryRow er-dwp-name {
+      title: 'Wallpaper name';
+    }
+
+    Adw.ActionRow row-dwp-light-choose {
       title: 'Daytime wallpaper';
+      subtitle-lines: 1;
 
       Button btn-dwp-light-choose {
         halign: center;
         margin-top: 10;
         margin-bottom: 10;
-
-        Adw.ButtonContent {
-          label: "Select";
-          icon-name: "document-open-symbolic";
-        }
+        label: "Select";
       }
     }
 
-    Adw.ActionRow {
+    Adw.ActionRow row-dwp-dark-choose {
       title: 'Nighttime wallpaper';
+      subtitle-lines: 1;
 
       Button btn-dwp-dark-choose {
         halign: center;
         margin-top: 10;
         margin-bottom: 10;
+        label: "Select";
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    Adw.ActionRow {
+      title: 'Save changes';
+      subtitle: 'Create or save changes to a dynamic wallpaper';
+
+      Button btn-dwp-save {
+        margin-top: 10;
+        margin-bottom: 10;
+        sensitive: false;
+
+        styles [
+          "suggested-action"
+        ]
+
+        Adw.ButtonContent {
+          label: "Save";
+          icon-name: "document-save-symbolic";
+        }
+      }
+    }
+  }
+}
+
+Adw.PreferencesPage page-login {
+  icon-name: "system-users-symbolic";
+  name: "wallhub-login";
+  title: "Login";
+
+  Adw.PreferencesGroup grp-login-preview {
+    hexpand: true;
+    vexpand: true;
+
+    Label lbl-login-preview {
+      label: "<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Preview</span>";
+      halign: center;
+      valign: center;
+      hexpand: true;
+      vexpand: true;
+      selectable: false;
+      use-markup: true;
+    }
+
+    Picture pic-login-preview {
+      visible: false;
+
+      styles [
+        "card"
+      ]
+    }
+  }
+
+  Adw.PreferencesGroup {
+    Adw.ActionRow row-login-choose {
+      title: 'Choose wallpaper';
+      subtitle-lines: 1;
+
+      Button btn-login-choose {
+        halign: center;
+        margin-top: 10;
+        margin-bottom: 10;
+
+        styles [
+          "suggested-action"
+        ]
 
         Adw.ButtonContent {
           label: "Select";
@@ -315,13 +390,73 @@ Adw.PreferencesPage page-dwp {
   }
 
   Adw.PreferencesGroup {
-    Adw.PreferencesRow {
-      Button {
-        label: "Save";
+    Adw.SpinRow sr-login-blur {
+      title: "Blur radius";
+      subtitle: "Blur radius of the wallpaper";
+      sensitive: false;
+
+      adjustment: Adjustment {
+        lower: 0;
+        upper: 100;
+        step-increment: 1;
+        value: 60;
+      };
+    }
+
+    Adw.SpinRow sr-login-brightness {
+      title: "Brightness";
+      subtitle: "Brightness of the wallpaper";
+      sensitive: false;
+
+      adjustment: Adjustment {
+        lower: 0;
+        upper: 100;
+        step-increment: 1;
+        value: 80;
+      };
+    }
+  }
+
+  Adw.PreferencesGroup {
+    Adw.ActionRow {
+      title: 'Apply wallpaper';
+      subtitle: 'Apply wallpaper to the login screen';
+
+      Button btn-login-apply {
+        halign: center;
+        margin-top: 10;
+        margin-bottom: 10;
+        sensitive: false;
 
         styles [
           "suggested-action"
         ]
+
+        Adw.ButtonContent {
+          label: "Apply";
+          icon-name: "document-save-symbolic";
+        }
+      }
+    }
+
+    Adw.ActionRow {
+      title: 'Reset wallpaper';
+      subtitle: 'Revert back to default theme';
+
+      Button btn-login-reset {
+        halign: center;
+        margin-top: 10;
+        margin-bottom: 10;
+        sensitive: false;
+
+        styles [
+          "destructive-action"
+        ]
+
+        Adw.ButtonContent {
+          label: "Reset";
+          icon-name: "user-trash-symbolic";
+        }
       }
     }
   }
@@ -364,4 +499,3 @@ Adw.Window win-wp-viewer {
     }
   };
 }
-

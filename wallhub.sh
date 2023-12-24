@@ -8,8 +8,13 @@ nested() {
 
 build() {
   echo "Compiling..."
+  npm run compile
 
-  npm run compile 1>/dev/null
+  if [ "$1" = "release" ]; then
+    echo "Stripping debug values..."
+    sed -i '1s/.*/const DEBUG = false;/' ./dist/compiled/utils/common.js
+  fi
+
   cp src/metadata.json dist/compiled/metadata.json
   cp src/stylesheet.css dist/compiled/stylesheet.css 2>/dev/null || :
 
@@ -90,6 +95,9 @@ watch() {
 }
 
 case "$1" in
+release)
+  build "release"
+  ;;
 build)
   build
   ;;
@@ -115,7 +123,7 @@ watch)
   watch
   ;;
 *)
-  echo "Usage: $0 {build|debug|install|uninstall|enable|disable|prefs|watch}"
+  echo "Usage: $0 {prod|build|debug|install|uninstall|enable|disable|prefs|watch}"
   exit 1
   ;;
 esac

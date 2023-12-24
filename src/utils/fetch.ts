@@ -28,7 +28,7 @@ const buildUrlQuery = (params: { [k: string]: string }) => {
 };
 
 export const fetchSearchResults = async (searchOptions: IWallhavenSearchOptions, cancellable: Gio.Cancellable) => {
-    const { q, categories, order, page, sorting } = searchOptions;
+    const { q, categories, order, page, sorting, atleast } = searchOptions;
 
     const scheme = "https";
     const host = "wallhaven.cc";
@@ -39,6 +39,7 @@ export const fetchSearchResults = async (searchOptions: IWallhavenSearchOptions,
         categories,
         sorting,
         order,
+        atleast,
         page,
     });
 
@@ -61,10 +62,4 @@ export const fetchImage = async (url: string, cancellable: Gio.Cancellable) => {
 
     const bytes = await session.send_and_read_async(message, null, cancellable);
     return bytes;
-};
-
-export const handleCatch = (error: unknown): null => {
-    console.warn("[Wallhub] Error caught!");
-    console.error(error);
-    return null;
 };

@@ -1,4 +1,3 @@
-
 export interface IWallhavenWallpaper {
     id: string;
     url: string;
@@ -41,5 +40,7 @@ export interface IWallhavenSearchOptions {
     categories: string;
     sorting: string;
     order: string;
+    atleast: string;
+    ratios: string;
     page: string;
 }

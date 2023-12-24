@@ -1,6 +1,11 @@
 {
   "root": true,
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:import/recommended", "plugin:import/typescript"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+  ],
   "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "env": {

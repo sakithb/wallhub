@@ -22,8 +22,6 @@ Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 Gio._promisify(Gtk.FileDialog.prototype, "save", "save_finish");
 Gio._promisify(Gtk.FileDialog.prototype, "select_folder", "select_folder_finish");
 
-// TODO: Set print width to 120 and refactor
-
 const GRESOURCE_PATH = "/usr/share/gnome-shell/gnome-shell-theme.gresource";
 const CSS = `
     .results-grid-image {
@@ -664,6 +662,7 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private async downloadWallpaper(imgBytes: GLib.Bytes, path: string) {
+        // TODO: show a loading animation
         // TODO: set initial name to path
         const chooserOptions: IFileChooserOptions = {
             title: "Save wallpaper",
@@ -685,6 +684,7 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private async setGDMBackground() {
+        // TODO: properly remove tmp dir
         const brightness = this.loginBrightnessIpt.value;
         const sigma = this.loginBlurIpt.value;
         const blurredPath = this.getBlurredWallpaper(this.loginPath, brightness, sigma);

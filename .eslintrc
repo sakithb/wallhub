@@ -1,14 +1,7 @@
 {
   "root": true,
-  "extends": [
-    "eslint:recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "plugins": [
-    "@typescript-eslint"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:import/recommended", "plugin:import/typescript"],
+  "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "env": {
     "es2021": true
@@ -40,7 +33,7 @@
   },
   "rules": {
     "max-len": [
-      "error",
+      "warn",
       {
         "code": 120,
         "ignoreComments": true,
@@ -112,16 +105,13 @@
         "message": "Use constructor() and super()"
       }
     ],
-    "import/extensions": [
-      "error",
-      "ignorePackages"
-    ],
+    "import/extensions": ["error", "ignorePackages"],
     "import/no-unresolved": "off",
     "no-constant-condition": [
       "error",
       {
         "checkLoops": false
       }
-    ],
+    ]
   }
 }

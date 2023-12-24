@@ -1,7 +1,7 @@
 import GLib from "gi://GLib?version=2.0";
 import Gio from "gi://Gio?version=2.0";
 import Soup from "gi://Soup?version=3.0";
-import { IWallhavenResponse, IWallhavenSearchOptions } from "../types/fetch";
+import { IWallhavenResponse, IWallhavenSearchOptions } from "../types/fetch.js";
 
 const buildUrlQuery = (params: { [k: string]: string }) => {
     const query = new GLib.String("");

@@ -9,6 +9,7 @@ import { readFile } from "./utils/io.js";
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.FileEnumerator.prototype, "next_files_async", "next_files_finish");
 
+// TODO: Randomize wallpaper queue
 export default class Wallhub extends Extension {
     private settings: Gio.Settings;
     private backgroundSettings: Gio.Settings;
@@ -180,15 +181,14 @@ export default class Wallhub extends Extension {
             }
         }
 
-        debugLog(`Slideshow queue: ${this.slideshowQueue}`);
-
         this.createSlideshowMonitor();
         this.createSlideshowInterval();
     }
 
     private async setWallpaper(path: string) {
+        // TODO: check if file exists
         const extension = path.split(".").pop().toLowerCase();
-        console.log(extension);
+
         if (extension === "xml") {
             const xmlBytes = await readFile(path, null);
             if (xmlBytes == null) return;

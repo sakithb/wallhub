@@ -68,8 +68,10 @@ class WallhubPreferences extends ExtensionPreferences {
 
     private wpViewerWin: Adw.Window;
     private wpViewerPic: Gtk.Picture;
+    private wpViewerSpinner: Gtk.Spinner;
     private wpViewerCancelBtn: Gtk.Button;
     private wpViewerDownloadBtn: Gtk.Button;
+    private wpViewerCancellable: Gio.Cancellable;
 
     private dwpChooseBtn: Gtk.Button;
     private dwpNameIpt: Adw.EntryRow;
@@ -185,6 +187,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
         this.wpViewerWin = this.builder.get_object("win-wp-viewer") as Adw.Window;
         this.wpViewerPic = this.builder.get_object("pic-wp-viewer") as Gtk.Picture;
+        this.wpViewerSpinner = this.builder.get_object("spn-wp-viewer") as Gtk.Spinner;
         this.wpViewerCancelBtn = this.builder.get_object("btn-wp-viewer-cancel") as Gtk.Button;
         this.wpViewerDownloadBtn = this.builder.get_object("btn-wp-viewer-download") as Gtk.Button;
 
@@ -521,7 +524,7 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private async searchAndShowWallpapers() {
-        if (this.searchCancellable) this.searchCancellable.cancel();
+        this.searchCancellable?.cancel();
         this.searchCancellable = new Gio.Cancellable();
 
         this.loadingBar.visible = true;
@@ -638,27 +641,44 @@ class WallhubPreferences extends ExtensionPreferences {
         this.searchCancellable = null;
     }
 
-    private async showWallpaperPreview(wallpaper: IWallhavenWallpaper, gesture: Gtk.GestureClick) {
-        gesture.widget.cursor = this.cursorBusy;
+    private async showWallpaperPreview(wallpaper: IWallhavenWallpaper) {
         this.window.cursor = this.cursorBusy;
 
-        const imgBytes = await fetchImage(wallpaper.path, null).catch(handleCatch);
+        this.wpViewerDownloadBtn.sensitive = false;
+        this.wpViewerSpinner.visible = true;
+        this.wpViewerPic.visible = false;
 
-        if (imgBytes != null) {
+        this.wpViewerWin.defaultWidth = 200;
+        this.wpViewerWin.defaultHeight = 200;
+
+        this.wpViewerWin.present();
+        
+        this.wpViewerCancellable?.cancel()
+        this.wpViewerCancellable = new Gio.Cancellable();
+
+        const imgBytes = await fetchImage(wallpaper.path, this.wpViewerCancellable).catch(handleCatch);
+
+        if (imgBytes == null) {
+            this.wpViewerWin.close();
+            this.sendToast("Failed to preview wallpaper");
+        } else {
             const texture = Gdk.Texture.new_from_bytes(imgBytes);
-            this.wpViewerPic.paintable = texture;
-
-            this.wpViewerCancelBtn.connect("clicked", this.wpViewerWin.close.bind(this.wpViewerWin));
-            this.wpViewerDownloadBtn.connect("clicked", this.downloadWallpaper.bind(this, imgBytes, wallpaper.path));
-
             const aspectRatio = texture.width / texture.height;
             const width = Math.min(Math.min(texture.width, 800), Math.min(texture.height, 800) * aspectRatio);
-            this.wpViewerWin.defaultWidth = width;
 
-            this.wpViewerWin.present();
+            this.wpViewerWin.defaultWidth = width;
+            this.wpViewerWin.defaultHeight = null;
+
+            this.wpViewerPic.paintable = texture;
+
+            this.wpViewerDownloadBtn.sensitive = true;
+            this.wpViewerSpinner.visible = false;
+            this.wpViewerPic.visible = true;
+
+            this.wpViewerCancelBtn.connect("clicked", this.closeWallpaperPreview.bind(this));
+            this.wpViewerDownloadBtn.connect("clicked", this.downloadWallpaper.bind(this, imgBytes, wallpaper.path));
         }
 
-        gesture.widget.cursor = this.cursorPointer;
         this.window.cursor = this.cursorDefault;
     }
 
@@ -803,6 +823,12 @@ class WallhubPreferences extends ExtensionPreferences {
         }
 
         this.sendToast("Login background was successfully applied!");
+    }
+
+    private closeWallpaperPreview() {
+        this.wpViewerCancellable?.cancel();
+        this.wpViewerCancellable = null;
+        this.wpViewerWin.close();
     }
 
     private sendToast(title: string, timeout = 2) {

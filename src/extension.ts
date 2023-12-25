@@ -2,7 +2,7 @@ import GLib from "gi://GLib?version=2.0";
 import Gio from "gi://Gio?version=2.0";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 import { WallpaperTypes } from "./types/enums.js";
-import { debugLog } from "./utils/common.js";
+import { debugLog, errorLog } from "./utils/common.js";
 import { parseDynamicWallpaper } from "./utils/dwp.js";
 import { readFile } from "./utils/io.js";
 
@@ -190,12 +190,21 @@ export default class Wallhub extends Extension {
 
         if (extension === "xml") {
             const xmlBytes = await readFile(path, null);
-            if (xmlBytes == null) return;
+
+            if (xmlBytes == null) {
+                errorLog("Failed to read dynamic wallpaper");
+                return;
+            }
 
             const decoder = new TextDecoder();
             const xml = decoder.decode(xmlBytes);
 
             const dwpConfig = parseDynamicWallpaper(xml);
+
+            if (dwpConfig == null) {
+                errorLog("Failed to parse dynamic wallpaper");
+                return;
+            }
 
             this.backgroundSettings.set_string("picture-uri", `file:///${dwpConfig.lightBg}`);
             this.backgroundSettings.set_string("picture-uri-dark", `file:///${dwpConfig.darkBg}`);

@@ -11,9 +11,11 @@ Wallhub is a gnome extension that allows you to set wallpapers with ease. Here i
 ## Installation
 
 ### From extensions.gnome.org (Recommended)
+
 [<img src="assets/images/ego.png" height="75">]()
 
 ### Manual installation
+
 1. Download the latest release from [here](https://github.com/sakithb/wallhub/releases)
 2. Extract the downloaded file
 3. Move the folder into `~/.local/share/gnome-shell/extensions/`
@@ -25,9 +27,9 @@ You can report issues in [here](https://github.com/sakithb/wallhub/issues). Befo
 
 1. Make sure there are no open issues regarding the same problem.
 2. After making sure your issue is original, submit an issue with the following information.
-    - Distribution name and version
-    - Gnome version
-    - Extension version
+   - Distribution name and version
+   - Gnome version
+   - Extension version
 
 ## Contributing
 

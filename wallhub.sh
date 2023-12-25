@@ -64,6 +64,16 @@ debug() {
   nested
 }
 
+lint() {
+  echo "Linting..."
+  npm run lint
+}
+
+format() {
+  echo "Formatting..."
+  npm run format
+}
+
 install() {
   echo "Installing..."
   gnome-extensions install --force ./dist/builds/wallhub@sakithb.github.io.shell-extension.zip
@@ -104,6 +114,12 @@ build)
 debug)
   debug
   ;;
+lint)
+  lint
+  ;;
+format)
+  format
+  ;;
 install)
   install
   ;;
@@ -123,7 +139,7 @@ watch)
   watch
   ;;
 *)
-  echo "Usage: $0 {prod|build|debug|install|uninstall|enable|disable|prefs|watch}"
+  echo "Usage: $0 {prod|build|debug|lint|format|install|uninstall|enable|disable|prefs|watch}"
   exit 1
   ;;
 esac

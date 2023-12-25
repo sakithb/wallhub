@@ -75,7 +75,9 @@ export const copyFile = async (src: string, dest: string, cancellable: Gio.Cance
     const srcFile = Gio.File.new_for_path(src);
     const destFile = Gio.File.new_for_path(dest);
 
-    const result = await srcFile.copy_async(destFile, Gio.FileCopyFlags.OVERWRITE, null, cancellable, null).catch(handleCatch);
+    const result = await srcFile
+        .copy_async(destFile, Gio.FileCopyFlags.OVERWRITE, null, cancellable, null)
+        .catch(handleCatch);
 
     if (result == null || result === false) {
         errorLog(`Failed to copy file: ${src} to ${dest}`);
@@ -86,7 +88,13 @@ export const copyFile = async (src: string, dest: string, cancellable: Gio.Cance
 };
 
 export const spawnChild = async (argv: string[]) => {
-    const [success, pid] = GLib.spawn_async(null, argv, null, GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD, null);
+    const [success, pid] = GLib.spawn_async(
+        null,
+        argv,
+        null,
+        GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+        null,
+    );
 
     if (success === false) {
         errorLog(`Failed to spawn command line: ${argv.join(" ")}`);

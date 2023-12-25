@@ -6,7 +6,7 @@
     "module": "ESNext",
     "removeComments": false,
     "skipLibCheck": true,
-    "lib": ["ESNext"],
+    "lib": ["ESNext"]
   },
   "include": ["./src/**/*.ts"],
   "exclude": ["./src/types/dev.ts"]

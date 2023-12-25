@@ -156,7 +156,12 @@ export default class Wallhub extends Extension {
         this.slideshowQueue = [];
         this.slideshowFolder = Gio.File.new_for_path(this.wallpaperPathSlideshow);
 
-        const enumerator = await this.slideshowFolder.enumerate_children_async("standard::*", Gio.FileQueryInfoFlags.NONE, GLib.PRIORITY_DEFAULT, null);
+        const enumerator = await this.slideshowFolder.enumerate_children_async(
+            "standard::*",
+            Gio.FileQueryInfoFlags.NONE,
+            GLib.PRIORITY_DEFAULT,
+            null,
+        );
 
         while (true) {
             const fileInfos = await enumerator.next_files_async(10, GLib.PRIORITY_DEFAULT, null);

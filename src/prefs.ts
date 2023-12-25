@@ -9,8 +9,10 @@ import Soup from "gi://Soup?version=3.0";
 import { ExtensionPreferences } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 import { IFileChooserOptions } from "./types/common.js";
 import { DynamicWallpaper } from "./types/dwp.js";
+// prettier-ignore
 import { BrowseCategories, FileChooserActions, MimeTypes, SlideshowIntervalUnits, SortOrders, SortTypes, WallpaperTypes } from "./types/enums.js";
 import { IWallhavenSearchOptions, IWallhavenWallpaper } from "./types/fetch.js";
+// prettier-ignore
 import { debugLog, errorLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/common.js";
 import { generateDynamicWallpaper, parseDynamicWallpaper } from "./utils/dwp.js";
 import { fetchImage, fetchSearchResults } from "./utils/fetch.js";
@@ -160,9 +162,23 @@ class WallhubPreferences extends ExtensionPreferences {
 
         this.settings.bind("slideshow-interval", this.slideshowIntervalIpt, "value", Gio.SettingsBindFlags.DEFAULT);
 
-        const singleHandler = this.bindWallpaperType.bind(this, "wallpaper-type", this.wpTypeSingleIpt, WallpaperTypes.SINGLE);
-        const slideshowHandler = this.bindWallpaperType.bind(this, "wallpaper-type", this.wpTypeSlideshowIpt, WallpaperTypes.SLIDESHOW);
-        const intervalUnitHandler = this.bindSlideshowIntervalUnit.bind(this, "slideshow-interval-unit", this.slideshowIntervalUnitIpt);
+        const singleHandler = this.bindWallpaperType.bind(
+            this,
+            "wallpaper-type",
+            this.wpTypeSingleIpt,
+            WallpaperTypes.SINGLE,
+        );
+        const slideshowHandler = this.bindWallpaperType.bind(
+            this,
+            "wallpaper-type",
+            this.wpTypeSlideshowIpt,
+            WallpaperTypes.SLIDESHOW,
+        );
+        const intervalUnitHandler = this.bindSlideshowIntervalUnit.bind(
+            this,
+            "slideshow-interval-unit",
+            this.slideshowIntervalUnitIpt,
+        );
 
         this.wpTypeSingleIpt.connect("clicked", singleHandler);
         this.wpTypeSlideshowIpt.connect("clicked", slideshowHandler);
@@ -291,7 +307,10 @@ class WallhubPreferences extends ExtensionPreferences {
         });
 
         this.dwpLightChooseBtn.connect("clicked", async () => {
-            const fileOptions: IFileChooserOptions = { title: "Choose a light background", filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }] };
+            const fileOptions: IFileChooserOptions = {
+                title: "Choose a light background",
+                filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
+            };
             const file = await this.openFileChooser(fileOptions, FileChooserActions.FILE);
             if (file == null) return;
 
@@ -307,7 +326,10 @@ class WallhubPreferences extends ExtensionPreferences {
         });
 
         this.dwpDarkChooseBtn.connect("clicked", async () => {
-            const fileOptions: IFileChooserOptions = { title: "Choose a dark background", filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }] };
+            const fileOptions: IFileChooserOptions = {
+                title: "Choose a dark background",
+                filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
+            };
             const file = await this.openFileChooser(fileOptions, FileChooserActions.FILE);
             if (file == null) return;
 
@@ -364,7 +386,11 @@ class WallhubPreferences extends ExtensionPreferences {
         this.loginPreviewGrp = this.builder.get_object("grp-login-preview") as Adw.PreferencesGroup;
         this.loginPreviewLbl = this.builder.get_object("lbl-login-preview") as Gtk.Label;
 
-        this.ogResourcePath = GLib.build_filenamev([GLib.get_user_config_dir(), "wallhub", GLib.basename(GRESOURCE_PATH)]);
+        this.ogResourcePath = GLib.build_filenamev([
+            GLib.get_user_config_dir(),
+            "wallhub",
+            GLib.basename(GRESOURCE_PATH),
+        ]);
 
         if (GLib.file_test(this.ogResourcePath, GLib.FileTest.EXISTS)) {
             this.loginResetBtn.sensitive = true;
@@ -400,7 +426,10 @@ class WallhubPreferences extends ExtensionPreferences {
         };
 
         this.loginChooseBtn.connect("clicked", async () => {
-            const fileOptions: IFileChooserOptions = { title: "Choose a login background", filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }] };
+            const fileOptions: IFileChooserOptions = {
+                title: "Choose a login background",
+                filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
+            };
             const file = await this.openFileChooser(fileOptions, FileChooserActions.FILE);
             const path = file.get_path();
 
@@ -652,8 +681,8 @@ class WallhubPreferences extends ExtensionPreferences {
         this.wpViewerWin.defaultHeight = 200;
 
         this.wpViewerWin.present();
-        
-        this.wpViewerCancellable?.cancel()
+
+        this.wpViewerCancellable?.cancel();
         this.wpViewerCancellable = new Gio.Cancellable();
 
         const imgBytes = await fetchImage(wallpaper.path, this.wpViewerCancellable).catch(handleCatch);

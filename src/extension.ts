@@ -9,6 +9,7 @@ import { readFile } from "./utils/io.js";
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.FileEnumerator.prototype, "next_files_async", "next_files_finish");
 
+// TODO: option in the context menu to change the wallpaper
 export default class Wallhub extends Extension {
     private settings: Gio.Settings;
     private backgroundSettings: Gio.Settings;
@@ -23,9 +24,6 @@ export default class Wallhub extends Extension {
     private slideshowFolder: Gio.File;
     private slideshowMonitor: Gio.FileMonitor;
     private slideshowSourceId: number;
-
-    private slideshowIntervalUnitSourceId: number;
-    private slideshowIntervalSourceId: number;
 
     private extensionStarted = false;
 
@@ -80,23 +78,11 @@ export default class Wallhub extends Extension {
         });
 
         this.settings.connect("changed::slideshow-interval-unit", () => {
-            if (this.slideshowIntervalUnitSourceId) GLib.source_remove(this.slideshowIntervalUnitSourceId);
-            this.slideshowIntervalUnitSourceId = GLib.timeout_add(GLib.PRIORITY_LOW, 500, () => {
-                this.slideshowIntervalUnit = this.settings.get_enum("slideshow-interval-unit");
-                this.handleWallpaperType();
-
-                return GLib.SOURCE_REMOVE;
-            });
+            this.slideshowIntervalUnit = this.settings.get_enum("slideshow-interval-unit");
         });
 
         this.settings.connect("changed::slideshow-interval", () => {
-            if (this.slideshowIntervalSourceId) GLib.source_remove(this.slideshowIntervalSourceId);
-            this.slideshowIntervalSourceId = GLib.timeout_add(GLib.PRIORITY_LOW, 500, () => {
-                this.slideshowInterval = this.settings.get_uint("slideshow-interval");
-                this.handleWallpaperType();
-
-                return GLib.SOURCE_REMOVE;
-            });
+            this.slideshowInterval = this.settings.get_uint("slideshow-interval");
         });
     }
 

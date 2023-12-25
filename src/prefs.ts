@@ -484,10 +484,11 @@ class WallhubPreferences extends ExtensionPreferences {
 
     private async openWallpaperChooser() {
         const wallpaperType = this.settings.get_enum("wallpaper-type");
-        // const initialFolder = Gio.File.new_for_path(GLib.get_home_dir());
+        const initialFolder = Gio.File.new_for_path(GLib.get_home_dir());
 
-        // TODO: set initial folder to home directory
-        const chooserOptions: IFileChooserOptions = {};
+        const chooserOptions: IFileChooserOptions = {
+            initialFolder,
+        };
 
         if (wallpaperType === WallpaperTypes.SINGLE) {
             chooserOptions.filters = [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }];
@@ -662,11 +663,9 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private async downloadWallpaper(imgBytes: GLib.Bytes, path: string) {
-        // TODO: show a loading animation
-        // TODO: set initial name to path
         const chooserOptions: IFileChooserOptions = {
             title: "Save wallpaper",
-            // initialName: GLib.basename(path),
+            initialName: GLib.basename(path),
         };
 
         const file = await this.openFileChooser(chooserOptions, FileChooserActions.SAVE);
@@ -684,7 +683,6 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private async setGDMBackground() {
-        // TODO: properly remove tmp dir
         const brightness = this.loginBrightnessIpt.value;
         const sigma = this.loginBlurIpt.value;
         const blurredPath = this.getBlurredWallpaper(this.loginPath, brightness, sigma);
@@ -746,9 +744,9 @@ class WallhubPreferences extends ExtensionPreferences {
         const encoder = new TextEncoder();
         const xmlBytes = encoder.encode(xmlStr);
 
-        const result = await writeFile(xmlPath, xmlBytes, null);
+        const xmlResult = await writeFile(xmlPath, xmlBytes, null);
 
-        if (result == null) {
+        if (xmlResult == null) {
             console.error("[Wallhub] Failed to write XML file");
             this.sendToast("Failed to apply login background");
             return;
@@ -798,7 +796,12 @@ class WallhubPreferences extends ExtensionPreferences {
             return;
         }
 
-        GLib.rmdir(tmpDir);
+        const rmResult = GLib.rmdir(tmpDir);
+
+        if (rmResult === -1) {
+            console.error("[Wallhub] Failed to remove tmp dir");
+        }
+
         this.sendToast("Login background was successfully applied!");
     }
 

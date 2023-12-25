@@ -11,7 +11,7 @@ import { IFileChooserOptions } from "./types/common.js";
 import { DynamicWallpaper } from "./types/dwp.js";
 import { BrowseCategories, FileChooserActions, MimeTypes, SlideshowIntervalUnits, SortOrders, SortTypes, WallpaperTypes } from "./types/enums.js";
 import { IWallhavenSearchOptions, IWallhavenWallpaper } from "./types/fetch.js";
-import { debugLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/common.js";
+import { debugLog, errorLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/common.js";
 import { generateDynamicWallpaper, parseDynamicWallpaper } from "./utils/dwp.js";
 import { fetchImage, fetchSearchResults } from "./utils/fetch.js";
 import { appendFile, copyFile, readFile, spawnChild, writeFile } from "./utils/io.js";
@@ -343,7 +343,7 @@ class WallhubPreferences extends ExtensionPreferences {
             const result = await writeFile(this.dwpPath, xmlBytes, null);
 
             if (result == null) {
-                console.error("[Wallhub] Failed to save dynamic wallpaper");
+                errorLog("[Wallhub] Failed to save dynamic wallpaper");
             } else {
                 this.sendToast("Dynamic wallpaper was successfully saved!");
             }
@@ -429,7 +429,7 @@ class WallhubPreferences extends ExtensionPreferences {
             const installResult = await spawnChild(installArgs);
 
             if (installResult === false) {
-                console.error("[Wallhub] Failed to reset GResource");
+                errorLog("[Wallhub] Failed to reset GResource");
                 this.sendToast("Failed to reset login background");
                 return;
             }
@@ -693,7 +693,7 @@ class WallhubPreferences extends ExtensionPreferences {
             const backupResult = await copyFile(GRESOURCE_PATH, this.ogResourcePath, null);
 
             if (backupResult == false) {
-                console.error("[Wallhub] Failed to backup GResource");
+                errorLog("[Wallhub] Failed to backup GResource");
                 this.sendToast("Failed to apply login background");
                 return;
             }
@@ -719,7 +719,7 @@ class WallhubPreferences extends ExtensionPreferences {
             const result = await writeFile(path, data.toArray(), null);
 
             if (result == null) {
-                console.error("[Wallhub] Failed to copy resource");
+                errorLog("[Wallhub] Failed to copy resource");
                 this.sendToast("Failed to apply login background");
                 return;
             } else {
@@ -747,7 +747,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const xmlResult = await writeFile(xmlPath, xmlBytes, null);
 
         if (xmlResult == null) {
-            console.error("[Wallhub] Failed to write XML file");
+            errorLog("[Wallhub] Failed to write XML file");
             this.sendToast("Failed to apply login background");
             return;
         }
@@ -771,7 +771,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const resultDark = await appendFile(cssDarkPath, cssBytes, null);
 
         if (resultLight == null || resultDark == null) {
-            console.error("[Wallhub] Failed to write CSS file");
+            errorLog("[Wallhub] Failed to write CSS file");
             this.sendToast("Failed to apply login background");
             return;
         }
@@ -782,7 +782,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const compileResult = await spawnChild(compileArgs);
 
         if (compileResult === false) {
-            console.error("[Wallhub] Failed to compile GResource");
+            errorLog("[Wallhub] Failed to compile GResource");
             this.sendToast("Failed to apply login background");
             return;
         }
@@ -791,7 +791,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const installResult = await spawnChild(installArgs);
 
         if (installResult === false) {
-            console.error("[Wallhub] Failed to install GResource");
+            errorLog("[Wallhub] Failed to install GResource");
             this.sendToast("Failed to apply login background");
             return;
         }
@@ -799,7 +799,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const rmResult = GLib.rmdir(tmpDir);
 
         if (rmResult === -1) {
-            console.error("[Wallhub] Failed to remove tmp dir");
+            errorLog("[Wallhub] Failed to remove tmp dir");
         }
 
         this.sendToast("Login background was successfully applied!");

@@ -68,11 +68,11 @@
       },
       {
         "name": "log",
-        "message": "Use console.log()"
+        "message": "Use debugLog()"
       },
       {
         "name": "logError",
-        "message": "Use console.warn() or console.error()"
+        "message": "Use errorLog()"
       }
     ],
     "no-restricted-properties": [

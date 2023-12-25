@@ -9,7 +9,6 @@ import { readFile } from "./utils/io.js";
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.FileEnumerator.prototype, "next_files_async", "next_files_finish");
 
-// TODO: Randomize wallpaper queue
 export default class Wallhub extends Extension {
     private settings: Gio.Settings;
     private backgroundSettings: Gio.Settings;
@@ -125,7 +124,8 @@ export default class Wallhub extends Extension {
 
     private slideshowSourceFunc() {
         if (this.slideshowQueue.length > 0) {
-            const filename = this.slideshowQueue.shift();
+            const randomIndex = Math.round(Math.random() * (this.slideshowQueue.length - 1));
+            const filename = this.slideshowQueue.splice(randomIndex, 1)[0];
             const path = GLib.build_filenamev([this.wallpaperPathSlideshow, filename]);
 
             this.setWallpaper(path);
@@ -186,7 +186,6 @@ export default class Wallhub extends Extension {
     }
 
     private async setWallpaper(path: string) {
-        // TODO: check if file exists
         const extension = path.split(".").pop().toLowerCase();
 
         if (extension === "xml") {

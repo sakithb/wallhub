@@ -467,8 +467,8 @@ Adw.Window win-wp-viewer {
   hide-on-close: true;
   resizable: false;
 
-  content: Adw.ToolbarView {
-    content: Box {
+  Adw.ToolbarView {
+    Box {
       vexpand: true;
       hexpand: true;
 
@@ -484,7 +484,7 @@ Adw.Window win-wp-viewer {
         hexpand: true;
         vexpand: true;
       }
-    };
+    }
 
     [top]
     Adw.HeaderBar{
@@ -505,5 +505,5 @@ Adw.Window win-wp-viewer {
         ]
       }
     }
-  };
+  }
 }

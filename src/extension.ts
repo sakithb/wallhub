@@ -40,8 +40,6 @@ export default class Wallhub extends Extension {
         this.bindSettings();
         this.handleWallpaperType();
 
-        this.extensionStarted = true;
-
         debugLog("Enabled");
     }
 
@@ -100,15 +98,23 @@ export default class Wallhub extends Extension {
             GLib.source_remove(this.slideshowSourceId);
         }
 
-        const interval = this.slideshowInterval * this.slideshowIntervalUnit;
-        this.slideshowSourceId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, interval, this.slideshowSourceFunc);
-
         if (this.extensionStarted) {
             this.slideshowSourceFunc();
+        } else {
+            this.extensionStarted = true;
         }
+
+        const interval = this.slideshowInterval * this.slideshowIntervalUnit;
+
+        this.slideshowSourceId = GLib.timeout_add_seconds(
+            GLib.PRIORITY_DEFAULT,
+            interval,
+            this.slideshowSourceFunc.bind(this),
+        );
     }
 
     private slideshowSourceFunc() {
+        debugLog("Slideshow source function called", this.extensionStarted);
         if (this.slideshowQueue.length > 0) {
             const randomIndex = Math.round(Math.random() * (this.slideshowQueue.length - 1));
             const filename = this.slideshowQueue.splice(randomIndex, 1)[0];

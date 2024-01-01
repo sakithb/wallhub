@@ -2,9 +2,9 @@ import GLib from "gi://GLib?version=2.0";
 import Gio from "gi://Gio?version=2.0";
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 import { WallpaperTypes } from "./types/enums.js";
-import { debugLog, errorLog } from "./utils/common.js";
 import { parseDynamicWallpaper } from "./utils/dwp.js";
 import { readFile } from "./utils/io.js";
+import { debugLog, errorLog } from "./utils/misc.js";
 
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.FileEnumerator.prototype, "next_files_async", "next_files_finish");

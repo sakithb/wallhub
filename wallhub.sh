@@ -11,8 +11,12 @@ build() {
   npm run compile
 
   if [ "$1" = "release" ]; then
+    echo "Prettifying..."
+    npm run compile:padding 1>/dev/null
+
     echo "Stripping debug values..."
-    sed -i '1s/.*/const DEBUG = false;/' ./dist/compiled/utils/common.js
+    sed 's/const DEBUG = true;/const DEBUG = false;/g' ./dist/compiled/utils/misc.js >./dist/compiled/utils/misc.js.tmp
+    mv ./dist/compiled/utils/misc.js.tmp ./dist/compiled/utils/misc.js
   fi
 
   cp src/metadata.json dist/compiled/metadata.json
@@ -53,7 +57,6 @@ build() {
   PODIR="$PWD/assets/locale"
 
   mkdir -p "$BUILDDIR"
-
   gnome-extensions pack -f -o "$BUILDDIR" --schema="$SCHEMA" --podir="$PODIR" "${ESFLAGS[@]}" "$JSSRCDIR"
 }
 
@@ -62,6 +65,18 @@ debug() {
   build
   install
   nested
+}
+
+reload() {
+  echo "Reloading..."
+  build
+  install
+
+  if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+    pkill -HUP gnome-shell
+  else
+    echo "Reloading Wayland session is not supported yet."
+  fi
 }
 
 lint() {
@@ -113,6 +128,9 @@ build)
   ;;
 debug)
   debug
+  ;;
+reload)
+  reload
   ;;
 lint)
   lint

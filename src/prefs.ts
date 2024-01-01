@@ -12,11 +12,11 @@ import { DynamicWallpaper } from "./types/dwp.js";
 // prettier-ignore
 import { BrowseCategories, FileChooserActions, MimeTypes, SlideshowIntervalUnits, SortOrders, SortTypes, WallpaperTypes } from "./types/enums.js";
 import { IWallhavenSearchOptions, IWallhavenWallpaper } from "./types/fetch.js";
-// prettier-ignore
-import { debugLog, errorLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/common.js";
 import { generateDynamicWallpaper, parseDynamicWallpaper } from "./utils/dwp.js";
 import { fetchImage, fetchSearchResults } from "./utils/fetch.js";
 import { appendFile, copyFile, readFile, spawnChild, writeFile } from "./utils/io.js";
+// prettier-ignore
+import { debugLog, errorLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/misc.js";
 
 Gio._promisify(Soup.Session.prototype, "send_and_read_async", "send_and_read_finish");
 Gio._promisify(Soup.Session.prototype, "send_async", "send_finish");

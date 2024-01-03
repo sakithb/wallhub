@@ -2,8 +2,5 @@
   "printWidth": 120,
   "bracketSameLine": true,
   "quoteProps": "consistent",
-  "singleQuote": false,
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^[./]"],
-  "importOrderParserPlugins": ["typescript"],
-  "plugins": ["@trivago/prettier-plugin-sort-imports"]
+  "singleQuote": false
 }

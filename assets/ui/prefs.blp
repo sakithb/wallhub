@@ -1,61 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-
 Adw.PreferencesPage page-general {
   icon-name: 'settings-symbolic';
   name: 'wallhub-general';
   title: 'General';
 
-  Adw.PreferencesGroup {
-    title: "Common";
-    description: "You can choose set one or more wallpapers. Image files and dynamic wallpapers(xml) are supported.";
-
-    Adw.ActionRow {
-      title: 'Wallpaper type';
-
-      Box {
-        orientation: horizontal;
-        margin-top: 10;
-        margin-bottom: 10;
-
-        styles [
-          "linked"
-        ]
-
-        ToggleButton btn-wp-type-single {
-          active: true;
-          label: 'Single';
-        }
-
-        ToggleButton btn-wp-type-slideshow {
-          active: false;
-          label: 'Slideshow';
-          group: btn-wp-type-single;
-        }
-      }
-    }
-
-    Adw.ActionRow row-wp-choose {
-      title: 'Choose wallpaper(s)';
-      subtitle-lines: 1;
-
-      Button btn-wp-choose {
-        halign: center;
-        margin-top: 10;
-        margin-bottom: 10;
-
-        styles [
-          "suggested-action"
-        ]
-
-        Adw.ButtonContent {
-          label: "Choose";
-          icon-name: "document-open-symbolic";
-        }
-      }
-    }
-  }
+  $WallpaperGrid grp-wp-paths {}
 
   Adw.PreferencesGroup {
     title: "Slideshow";
@@ -246,28 +197,7 @@ Adw.PreferencesPage page-dwp {
   name: "wallhub-dynamic";
   title: "Dynamic wallpapers";
 
-  Adw.PreferencesGroup grp-dwp-preview {
-    hexpand: true;
-    vexpand: true;
-
-    Label lbl-dwp-preview {
-      label: "<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Preview</span>";
-      halign: center;
-      valign: center;
-      hexpand: true;
-      vexpand: true;
-      selectable: false;
-      use-markup: true;
-    }
-
-    Picture pic-dwp-preview {
-      visible: false;
-
-      styles [
-        "card"
-      ]
-    }
-  }
+  $TexturePreview grp-dwp-preview {}
 
   Adw.PreferencesGroup {
     Adw.ActionRow {
@@ -344,28 +274,7 @@ Adw.PreferencesPage page-login {
   name: "wallhub-login";
   title: "Login";
 
-  Adw.PreferencesGroup grp-login-preview {
-    hexpand: true;
-    vexpand: true;
-
-    Label lbl-login-preview {
-      label: "<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Preview</span>";
-      halign: center;
-      valign: center;
-      hexpand: true;
-      vexpand: true;
-      selectable: false;
-      use-markup: true;
-    }
-
-    Picture pic-login-preview {
-      visible: false;
-
-      styles [
-        "card"
-      ]
-    }
-  }
+  $TexturePreview grp-login-preview {}
 
   Adw.PreferencesGroup {
     Adw.ActionRow row-login-choose {

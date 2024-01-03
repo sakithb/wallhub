@@ -1,39 +1,45 @@
-import Adw from "gi://Adw?version=1";
-import GLib from "gi://GLib?version=2.0";
-import Gdk from "gi://Gdk?version=4.0";
 import Gio from "gi://Gio?version=2.0";
+import GLib from "gi://GLib?version=2.0";
+import Adw from "gi://Adw?version=1";
+import Gdk from "gi://Gdk?version=4.0";
 import Graphene from "gi://Graphene?version=1.0";
 import Gsk from "gi://Gsk?version=4.0";
 import Gtk from "gi://Gtk?version=4.0";
 import Soup from "gi://Soup?version=3.0";
+import GObject from "gi://GObject?version=2.0";
 import { ExtensionPreferences } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
+
+import "./utils/initResource.js";
+import WallpaperGrid from "./helpers/WallpaperGrid.js";
+import TexturePreview from "./helpers/TexturePreview.js";
+import { IWallhavenSearchOptions, IWallhavenWallpaper } from "./types/api.js";
 import { IFileChooserOptions } from "./types/common.js";
 import { DynamicWallpaper } from "./types/dwp.js";
-// prettier-ignore
-import { BrowseCategories, FileChooserActions, MimeTypes, SlideshowIntervalUnits, SortOrders, SortTypes, WallpaperTypes } from "./types/enums.js";
-import { IWallhavenSearchOptions, IWallhavenWallpaper } from "./types/fetch.js";
 import { generateDynamicWallpaper, parseDynamicWallpaper } from "./utils/dwp.js";
+import { getDwpTexture, openFileChooser } from "./utils/ui.js";
 import { fetchImage, fetchSearchResults } from "./utils/fetch.js";
 import { appendFile, copyFile, readFile, spawnChild, writeFile } from "./utils/io.js";
-// prettier-ignore
-import { debugLog, errorLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/misc.js";
+import { errorLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/misc.js";
+import {
+    BrowseCategories,
+    FileChooserActions,
+    MimeTypes,
+    SlideshowIntervalUnits,
+    SortOrders,
+    SortTypes,
+} from "./types/enums.js";
+
+GObject.type_ensure(WallpaperGrid.$gtype);
+GObject.type_ensure(TexturePreview.$gtype);
 
 Gio._promisify(Soup.Session.prototype, "send_and_read_async", "send_and_read_finish");
 Gio._promisify(Soup.Session.prototype, "send_async", "send_finish");
 Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 Gio._promisify(Gtk.FileDialog.prototype, "save", "save_finish");
+Gio._promisify(Gtk.FileDialog.prototype, "open_multiple", "open_multiple_finish");
 Gio._promisify(Gtk.FileDialog.prototype, "select_folder", "select_folder_finish");
 
-const GRESOURCE_PATH = "/usr/share/gnome-shell/gnome-shell-theme.gresource";
-const CSS = `
-    .results-grid-image {
-        transition: 0.1s ease-in-out;
-    }
-    
-    .results-grid-image:hover {
-        opacity: 0.25;
-    }`;
-
+const SHELL_RESOURCE_PATH = "/usr/share/gnome-shell/gnome-shell-theme.gresource";
 class WallhubPreferences extends ExtensionPreferences {
     private window: Adw.PreferencesWindow;
     private settings: Gio.Settings;
@@ -48,10 +54,7 @@ class WallhubPreferences extends ExtensionPreferences {
     private dwpPage: Adw.PreferencesPage;
     private loginPage: Adw.PreferencesPage;
 
-    private wpTypeSingleIpt: Gtk.ToggleButton;
-    private wpTypeSlideshowIpt: Gtk.ToggleButton;
-    private wpChooseRow: Adw.ActionRow;
-    private wpChooseBtn: Gtk.Button;
+    private wpGrpPaths: InstanceType<typeof WallpaperGrid>;
     private slideshowIntervalUnitIpt: Gtk.DropDown;
     private slideshowIntervalIpt: Gtk.SpinButton;
 
@@ -82,9 +85,7 @@ class WallhubPreferences extends ExtensionPreferences {
     private dwpDarkRow: Adw.ActionRow;
     private dwpDarkChooseBtn: Gtk.Button;
     private dwpSaveBtn: Gtk.Button;
-    private dwpPreviewPic: Gtk.Picture;
-    private dwpPreviewGrp: Adw.PreferencesGroup;
-    private dwpPreviewLbl: Gtk.Label;
+    private dwpPreview: InstanceType<typeof TexturePreview>;
 
     private loginChooseRow: Adw.ActionRow;
     private loginChooseBtn: Gtk.Button;
@@ -92,9 +93,7 @@ class WallhubPreferences extends ExtensionPreferences {
     private loginBrightnessIpt: Adw.SpinRow;
     private loginApplyBtn: Gtk.Button;
     private loginResetBtn: Gtk.Button;
-    private loginPreviewPic: Gtk.Picture;
-    private loginPreviewGrp: Adw.PreferencesGroup;
-    private loginPreviewLbl: Gtk.Label;
+    private loginPreview: InstanceType<typeof TexturePreview>;
 
     private searchCancellable: Gio.Cancellable;
     private currentPage = 1;
@@ -110,7 +109,8 @@ class WallhubPreferences extends ExtensionPreferences {
     public fillPreferencesWindow(window: Adw.PreferencesWindow) {
         this.window = window;
         this.settings = this.getSettings();
-        this.builder = Gtk.Builder.new_from_file(`${this.path}/prefs.ui`);
+
+        this.builder = Gtk.Builder.new_from_resource("/org/gnome/shell/extensions/wallhub/ui/prefs.ui");
 
         this.generalPage = this.builder.get_object("page-general") as Adw.PreferencesPage;
         this.browsePage = this.builder.get_object("page-browse") as Adw.PreferencesPage;
@@ -122,8 +122,7 @@ class WallhubPreferences extends ExtensionPreferences {
         this.cursorDefault = Gdk.Cursor.new_from_name("default", null);
 
         const cssProvider = new Gtk.CssProvider();
-        cssProvider.load_from_data(CSS, CSS.length);
-
+        cssProvider.load_from_resource("/org/gnome/shell/extensions/wallhub/prefs.css");
         Gtk.StyleContext.add_provider_for_display(window.display, cssProvider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         this.window.add(this.generalPage);
@@ -138,53 +137,35 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private initPageGeneral() {
-        this.wpTypeSingleIpt = this.builder.get_object("btn-wp-type-single") as Gtk.ToggleButton;
-        this.wpTypeSlideshowIpt = this.builder.get_object("btn-wp-type-slideshow") as Gtk.ToggleButton;
-        this.wpChooseRow = this.builder.get_object("row-wp-choose") as Adw.ActionRow;
-        this.wpChooseBtn = this.builder.get_object("btn-wp-choose") as Gtk.Button;
+        this.wpGrpPaths = this.builder.get_object("grp-wp-paths") as InstanceType<typeof WallpaperGrid>;
         this.slideshowIntervalUnitIpt = this.builder.get_object("dd-slideshow-interval-unit") as Gtk.DropDown;
         this.slideshowIntervalIpt = this.builder.get_object("sb-slideshow-interval") as Gtk.SpinButton;
 
-        const wallpaperType = this.settings.get_enum("wallpaper-type");
-        const wallpaperPathSingle = this.settings.get_string("wallpaper-path-single");
-        const wallpaperPathSlideshow = this.settings.get_string("wallpaper-path-slideshow");
+        const wallpapers = this.settings.get_strv("wallpaper-paths");
+        const selectedWallpapers = this.settings.get_int("wallpaper-paths-selected");
+
+        this.wpGrpPaths.setSelected(selectedWallpapers);
+        this.wpGrpPaths.setWallpapers(wallpapers);
+
+        this.wpGrpPaths.connect("notify::selected", () => {
+            this.settings.set_int("wallpaper-paths-selected", this.wpGrpPaths.selected);
+        });
+
+        this.wpGrpPaths.connect("notify::wallpapers", () => {
+            this.settings.set_strv("wallpaper-paths", this.wpGrpPaths.wallpapers);
+        });
+
         const slideshowIntervalUnit = this.settings.get_enum("slideshow-interval-unit");
-
-        const wallpaperPath = wallpaperType === WallpaperTypes.SINGLE ? wallpaperPathSingle : wallpaperPathSlideshow;
-        const wallpaperPathText = wallpaperPath || "No wallpaper(s) selected";
-        const intervalUnitIndex = getEnumIndexFromValue(SlideshowIntervalUnits, slideshowIntervalUnit.toString());
-
-        this.wpChooseRow.subtitle = wallpaperPathText;
-        this.wpChooseRow.tooltipText = wallpaperPathText;
-        this.wpTypeSingleIpt.active = wallpaperType === WallpaperTypes.SINGLE;
-        this.wpTypeSlideshowIpt.active = wallpaperType === WallpaperTypes.SLIDESHOW;
-        this.slideshowIntervalUnitIpt.selected = intervalUnitIndex;
+        this.slideshowIntervalUnitIpt.selected = getEnumIndexFromValue(
+            SlideshowIntervalUnits,
+            slideshowIntervalUnit.toString(),
+        );
 
         this.settings.bind("slideshow-interval", this.slideshowIntervalIpt, "value", Gio.SettingsBindFlags.DEFAULT);
-
-        const singleHandler = this.bindWallpaperType.bind(
-            this,
-            "wallpaper-type",
-            this.wpTypeSingleIpt,
-            WallpaperTypes.SINGLE,
+        this.slideshowIntervalUnitIpt.connect(
+            "notify::selected",
+            this.bindSlideshowIntervalUnit.bind(this, "slideshow-interval-unit", this.slideshowIntervalUnitIpt),
         );
-        const slideshowHandler = this.bindWallpaperType.bind(
-            this,
-            "wallpaper-type",
-            this.wpTypeSlideshowIpt,
-            WallpaperTypes.SLIDESHOW,
-        );
-        const intervalUnitHandler = this.bindSlideshowIntervalUnit.bind(
-            this,
-            "slideshow-interval-unit",
-            this.slideshowIntervalUnitIpt,
-        );
-
-        this.wpTypeSingleIpt.connect("clicked", singleHandler);
-        this.wpTypeSlideshowIpt.connect("clicked", slideshowHandler);
-        this.slideshowIntervalUnitIpt.connect("notify::selected", intervalUnitHandler);
-
-        this.wpChooseBtn.connect("clicked", this.openWallpaperChooser.bind(this));
     }
 
     private initPageBrowse() {
@@ -233,9 +214,7 @@ class WallhubPreferences extends ExtensionPreferences {
         this.dwpDarkRow = this.builder.get_object("row-dwp-dark-choose") as Adw.ActionRow;
         this.dwpDarkChooseBtn = this.builder.get_object("btn-dwp-dark-choose") as Gtk.Button;
         this.dwpSaveBtn = this.builder.get_object("btn-dwp-save") as Gtk.Button;
-        this.dwpPreviewPic = this.builder.get_object("pic-dwp-preview") as Gtk.Picture;
-        this.dwpPreviewGrp = this.builder.get_object("grp-dwp-preview") as Adw.PreferencesGroup;
-        this.dwpPreviewLbl = this.builder.get_object("lbl-dwp-preview") as Gtk.Label;
+        this.dwpPreview = this.builder.get_object("grp-dwp-preview") as InstanceType<typeof TexturePreview>;
 
         const updateSaveSensitive = () => {
             const name = Boolean(this.dwpNameIpt.text);
@@ -246,22 +225,8 @@ class WallhubPreferences extends ExtensionPreferences {
         };
 
         const updatePreview = () => {
-            if (this.dwpConfig.lightBg == "" || this.dwpConfig.darkBg == "") {
-                this.dwpPreviewLbl.visible = true;
-                this.dwpPreviewPic.visible = false;
-                return;
-            }
-
-            this.dwpPreviewLbl.visible = false;
-            this.dwpPreviewPic.visible = true;
-
-            const dwpTexture = this.getDwpTexture(this.dwpConfig.lightBg, this.dwpConfig.darkBg);
-
-            const width = this.dwpPreviewGrp.get_allocated_width();
-            const height = (width * dwpTexture.height) / dwpTexture.width;
-
-            this.dwpPreviewPic.paintable = dwpTexture;
-            this.dwpPreviewPic.heightRequest = height;
+            const dwpTexture = getDwpTexture(this.dwpConfig.lightBg, this.dwpConfig.darkBg, this.window.get_renderer());
+            this.dwpPreview.setPreview(dwpTexture);
         };
 
         this.dwpConfig = {
@@ -278,7 +243,7 @@ class WallhubPreferences extends ExtensionPreferences {
                 filters: [{ name: "Dynamic Wallpapers", mimeTypes: [MimeTypes.XML] }],
             };
 
-            const file = await this.openFileChooser(fileOptions, FileChooserActions.FILE);
+            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
             if (file == null) return;
 
             const path = file.get_path();
@@ -311,7 +276,7 @@ class WallhubPreferences extends ExtensionPreferences {
                 title: "Choose a light background",
                 filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
             };
-            const file = await this.openFileChooser(fileOptions, FileChooserActions.FILE);
+            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
             if (file == null) return;
 
             const path = file.get_path();
@@ -330,7 +295,7 @@ class WallhubPreferences extends ExtensionPreferences {
                 title: "Choose a dark background",
                 filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
             };
-            const file = await this.openFileChooser(fileOptions, FileChooserActions.FILE);
+            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
             if (file == null) return;
 
             const path = file.get_path();
@@ -350,7 +315,7 @@ class WallhubPreferences extends ExtensionPreferences {
                     title: "Save dynamic wallpaper",
                 };
 
-                const file = await this.openFileChooser(fileOptions, FileChooserActions.SAVE);
+                const file = await openFileChooser(fileOptions, FileChooserActions.SAVE, this.window);
                 if (file == null) return;
 
                 const path = file.get_path();
@@ -368,7 +333,7 @@ class WallhubPreferences extends ExtensionPreferences {
             const result = await writeFile(this.dwpPath, xmlBytes, null);
 
             if (result == null) {
-                errorLog("[Wallhub] Failed to save dynamic wallpaper");
+                errorLog("Failed to save dynamic wallpaper");
             } else {
                 this.sendToast("Dynamic wallpaper was successfully saved!");
             }
@@ -382,14 +347,12 @@ class WallhubPreferences extends ExtensionPreferences {
         this.loginBrightnessIpt = this.builder.get_object("sr-login-brightness") as Adw.SpinRow;
         this.loginApplyBtn = this.builder.get_object("btn-login-apply") as Gtk.Button;
         this.loginResetBtn = this.builder.get_object("btn-login-reset") as Gtk.Button;
-        this.loginPreviewPic = this.builder.get_object("pic-login-preview") as Gtk.Picture;
-        this.loginPreviewGrp = this.builder.get_object("grp-login-preview") as Adw.PreferencesGroup;
-        this.loginPreviewLbl = this.builder.get_object("lbl-login-preview") as Gtk.Label;
+        this.loginPreview = this.builder.get_object("grp-login-preview") as InstanceType<typeof TexturePreview>;
 
         this.ogResourcePath = GLib.build_filenamev([
             GLib.get_user_config_dir(),
             "wallhub",
-            GLib.basename(GRESOURCE_PATH),
+            GLib.basename(SHELL_RESOURCE_PATH),
         ]);
 
         if (GLib.file_test(this.ogResourcePath, GLib.FileTest.EXISTS)) {
@@ -403,23 +366,14 @@ class WallhubPreferences extends ExtensionPreferences {
 
             this.loginPreviewSourceId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
                 if (this.loginPath == null) {
-                    this.loginPreviewLbl.visible = true;
-                    this.loginPreviewPic.visible = false;
                     return;
                 }
 
-                this.loginPreviewLbl.visible = false;
-                this.loginPreviewPic.visible = true;
-
                 const brightness = this.loginBrightnessIpt.value;
                 const sigma = this.loginBlurIpt.value;
+
                 const blurredTexture = this.getBlurredTexture(this.loginPath, brightness, sigma);
-
-                const width = this.loginPreviewGrp.get_allocated_width();
-                const height = (width * blurredTexture.height) / blurredTexture.width;
-
-                this.loginPreviewPic.paintable = blurredTexture;
-                this.loginPreviewPic.heightRequest = height;
+                this.loginPreview.setPreview(blurredTexture);
 
                 return GLib.SOURCE_REMOVE;
             });
@@ -430,7 +384,7 @@ class WallhubPreferences extends ExtensionPreferences {
                 title: "Choose a login background",
                 filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
             };
-            const file = await this.openFileChooser(fileOptions, FileChooserActions.FILE);
+            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
             const path = file.get_path();
 
             this.loginPath = path;
@@ -457,11 +411,11 @@ class WallhubPreferences extends ExtensionPreferences {
                 return;
             }
 
-            const installArgs = ["pkexec", "install", "-m644", this.ogResourcePath, GRESOURCE_PATH];
+            const installArgs = ["pkexec", "install", "-m644", this.ogResourcePath, SHELL_RESOURCE_PATH];
             const installResult = await spawnChild(installArgs);
 
             if (installResult === false) {
-                errorLog("[Wallhub] Failed to reset GResource");
+                errorLog("Failed to reset GResource");
                 this.sendToast("Failed to reset login background");
                 return;
             }
@@ -473,83 +427,6 @@ class WallhubPreferences extends ExtensionPreferences {
 
         this.loginBlurIpt.connect("notify::value", updatePreview);
         this.loginBrightnessIpt.connect("notify::value", updatePreview);
-    }
-
-    private async openFileChooser(options: IFileChooserOptions, action: FileChooserActions) {
-        const dialogOptions = { ...options, filters: null };
-
-        if (options.filters) {
-            const filters = new Gio.ListStore();
-
-            for (const filter of options.filters) {
-                const filterObj = new Gtk.FileFilter(filter);
-                filters.append(filterObj);
-            }
-
-            dialogOptions.filters = filters;
-        } else {
-            delete dialogOptions.filters;
-        }
-
-        const fileDialog = new Gtk.FileDialog(dialogOptions);
-
-        switch (action) {
-            case FileChooserActions.FILE: {
-                const filePromise = fileDialog.open(this.window, null) as unknown as Promise<Gio.File>;
-                const file = await filePromise.catch(handleCatch);
-                return file;
-            }
-
-            case FileChooserActions.SAVE: {
-                const savePromise = fileDialog.save(this.window, null) as unknown as Promise<Gio.File>;
-                const save = await savePromise.catch(handleCatch);
-                return save;
-            }
-
-            case FileChooserActions.FOLDER: {
-                const folderPromise = fileDialog.select_folder(this.window, null) as unknown as Promise<Gio.File>;
-                const folder = await folderPromise.catch(handleCatch);
-                return folder;
-            }
-        }
-    }
-
-    private async openWallpaperChooser() {
-        const wallpaperType = this.settings.get_enum("wallpaper-type");
-        const initialFolder = Gio.File.new_for_path(GLib.get_home_dir());
-
-        const chooserOptions: IFileChooserOptions = {
-            initialFolder,
-        };
-
-        if (wallpaperType === WallpaperTypes.SINGLE) {
-            chooserOptions.filters = [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }];
-            chooserOptions.title = "Choose a wallpaper";
-
-            const file = await this.openFileChooser(chooserOptions, FileChooserActions.FILE);
-            if (file == null) return;
-
-            const path = file.get_path();
-
-            this.settings.set_string("wallpaper-path-single", path);
-            this.wpChooseRow.subtitle = path;
-            this.wpChooseRow.tooltipText = path;
-
-            GLib.free(path);
-        } else {
-            chooserOptions.title = "Choose a folder";
-
-            const folder = await this.openFileChooser(chooserOptions, FileChooserActions.FOLDER);
-            if (folder == null) return;
-
-            const path = folder.get_path();
-
-            this.settings.set_string("wallpaper-path-slideshow", path);
-            this.wpChooseRow.subtitle = path;
-            this.wpChooseRow.tooltipText = path;
-
-            GLib.free(path);
-        }
     }
 
     private async searchAndShowWallpapers() {
@@ -717,7 +594,7 @@ class WallhubPreferences extends ExtensionPreferences {
             initialName: GLib.basename(path),
         };
 
-        const file = await this.openFileChooser(chooserOptions, FileChooserActions.SAVE);
+        const file = await openFileChooser(chooserOptions, FileChooserActions.SAVE, this.window);
         if (file == null) return;
 
         const savePath = file.get_path();
@@ -739,10 +616,10 @@ class WallhubPreferences extends ExtensionPreferences {
 
         if (GLib.file_test(this.ogResourcePath, GLib.FileTest.EXISTS) === false) {
             GLib.mkdir_with_parents(GLib.path_get_dirname(this.ogResourcePath), 0o755);
-            const backupResult = await copyFile(GRESOURCE_PATH, this.ogResourcePath, null);
+            const backupResult = await copyFile(SHELL_RESOURCE_PATH, this.ogResourcePath, null);
 
             if (backupResult == false) {
-                errorLog("[Wallhub] Failed to backup GResource");
+                errorLog("Failed to backup GResource");
                 this.sendToast("Failed to apply login background");
                 return;
             }
@@ -768,7 +645,7 @@ class WallhubPreferences extends ExtensionPreferences {
             const result = await writeFile(path, data.toArray(), null);
 
             if (result == null) {
-                errorLog("[Wallhub] Failed to copy resource");
+                errorLog("Failed to copy resource");
                 this.sendToast("Failed to apply login background");
                 return;
             } else {
@@ -796,7 +673,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const xmlResult = await writeFile(xmlPath, xmlBytes, null);
 
         if (xmlResult == null) {
-            errorLog("[Wallhub] Failed to write XML file");
+            errorLog("Failed to write XML file");
             this.sendToast("Failed to apply login background");
             return;
         }
@@ -820,7 +697,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const resultDark = await appendFile(cssDarkPath, cssBytes, null);
 
         if (resultLight == null || resultDark == null) {
-            errorLog("[Wallhub] Failed to write CSS file");
+            errorLog("Failed to write CSS file");
             this.sendToast("Failed to apply login background");
             return;
         }
@@ -831,16 +708,16 @@ class WallhubPreferences extends ExtensionPreferences {
         const compileResult = await spawnChild(compileArgs);
 
         if (compileResult === false) {
-            errorLog("[Wallhub] Failed to compile GResource");
+            errorLog("Failed to compile GResource");
             this.sendToast("Failed to apply login background");
             return;
         }
 
-        const installArgs = ["pkexec", "install", "-m644", tmpResourcePath, GRESOURCE_PATH];
+        const installArgs = ["pkexec", "install", "-m644", tmpResourcePath, SHELL_RESOURCE_PATH];
         const installResult = await spawnChild(installArgs);
 
         if (installResult === false) {
-            errorLog("[Wallhub] Failed to install GResource");
+            errorLog("Failed to install GResource");
             this.sendToast("Failed to apply login background");
             return;
         }
@@ -848,7 +725,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const rmResult = GLib.rmdir(tmpDir);
 
         if (rmResult === -1) {
-            errorLog("[Wallhub] Failed to remove tmp dir");
+            errorLog("Failed to remove tmp dir");
         }
 
         this.sendToast("Login background was successfully applied!");
@@ -866,7 +743,6 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private getBlurredWallpaper(path: string, brightness: number, sigma: number) {
-        debugLog(sigma, brightness);
         const encoder = new TextEncoder();
         const pathBytes = encoder.encode(path);
 
@@ -916,55 +792,6 @@ class WallhubPreferences extends ExtensionPreferences {
         const newTexture = renderer.render_texture(node, rect);
 
         return newTexture;
-    }
-
-    private getDwpTexture(lightBg: string, darkBg: string) {
-        const lightTexture = Gdk.Texture.new_from_filename(lightBg);
-        const darkTexture = Gdk.Texture.new_from_filename(darkBg);
-
-        const lightRes = lightTexture.width * lightTexture.height;
-        const darkRes = darkTexture.width * darkTexture.height;
-
-        const minWidth = lightRes < darkRes ? lightTexture.width : darkTexture.width;
-        const minHeight = lightRes < darkRes ? lightTexture.height : darkTexture.height;
-        const halfMinWidth = minWidth / 2;
-
-        const minRect = Graphene.Rect.zero();
-        minRect.init(0, 0, minWidth, minHeight);
-
-        const lightTexureNode = Gsk.TextureNode.new(lightTexture, minRect);
-        const darkTexureNode = Gsk.TextureNode.new(darkTexture, minRect);
-
-        const halfLightRect = Graphene.Rect.zero();
-        halfLightRect.init(0, 0, halfMinWidth, lightTexture.height);
-
-        const halfDarkRect = Graphene.Rect.zero();
-        halfDarkRect.init(halfMinWidth, 0, halfMinWidth, darkTexture.height);
-
-        const lightClipNode = Gsk.ClipNode.new(lightTexureNode, halfLightRect);
-        const darkClipNode = Gsk.ClipNode.new(darkTexureNode, halfDarkRect);
-
-        const snapshot = Gtk.Snapshot.new();
-        snapshot.append_node(lightClipNode);
-        snapshot.append_node(darkClipNode);
-
-        const node = snapshot.to_node();
-        const renderer = this.window.get_renderer();
-        const newTexture = renderer.render_texture(node, minRect);
-
-        return newTexture;
-    }
-
-    private bindWallpaperType(key: string, btn: Gtk.ToggleButton, value: number) {
-        if (btn.active) {
-            this.settings.set_enum(key, value);
-
-            const settingKey = value === WallpaperTypes.SINGLE ? "wallpaper-path-single" : "wallpaper-path-slideshow";
-            const wallpaperPathText = this.settings.get_string(settingKey) || "No wallpaper(s) selected";
-
-            this.wpChooseRow.subtitle = wallpaperPathText;
-            this.wpChooseRow.tooltipText = wallpaperPathText;
-        }
     }
 
     private bindSlideshowIntervalUnit(key: string, dropdown: Gtk.DropDown) {

@@ -1,0 +1,101 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $WallpaperGrid: Adw.PreferencesGroup {
+  title: "Wallpapers";
+  description: "Add folders, image files or dynamic wallpapers(xml)";
+
+  header-suffix: Box {
+    margin-top: 10;
+    margin-bottom: 10;
+    valign: center;
+
+    Box {
+      hexpand: true;
+      halign: end;
+
+      styles [
+        "linked"
+      ]
+
+      Button add-folder-btn{
+        tooltip-text: "Add folder";
+
+        Adw.ButtonContent {
+          icon-name: "folder-new-symbolic";
+        }
+      }
+
+      Button add-file-btn  {
+        tooltip-text: "Add file";
+
+        Adw.ButtonContent {
+          icon-name: "image-x-generic-symbolic";
+        }
+      }
+    }
+
+    Box {
+      hexpand: true;
+      halign: end;
+
+      styles [
+        "linked"
+      ]
+
+      Button remove-btn {
+        tooltip-text: "Remove selected";
+
+        Adw.ButtonContent {
+          icon-name: "edit-delete-symbolic";
+        }
+      }
+
+      Button select-all-btn {
+        tooltip-text: "Select all";
+
+        Adw.ButtonContent {
+          icon-name: "edit-select-all-symbolic";
+        }
+      }
+    }
+  };
+
+    ScrolledWindow scrolled-win {
+      propagate-natural-height: true;
+      styles ["card"]
+
+      FlowBox grid-box {
+        homogeneous: true;
+        orientation: horizontal;
+        valign: start;
+        vexpand: true;
+        column-spacing: 12;
+        row-spacing: 12;
+        max-children-per-line: 6;
+
+        styles [
+          "wallpaper-grid"
+        ]
+
+        FlowBoxChild empty-item {
+          halign: center;
+          valign: center;
+          hexpand: true;
+          vexpand: true;
+          visible:  false;
+
+          Label {
+              label: "<span size='x-large' weight='bold' color='#ccc'>No wallpapers added</span>";
+              use-markup: true;
+              hexpand: true;
+              vexpand: true;
+              halign: center;
+              valign: center;
+              margin-top: 12;
+              margin-bottom: 12;
+          }
+        } 
+    }
+  }
+}

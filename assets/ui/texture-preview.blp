@@ -1,0 +1,22 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $TexturePreview: Adw.PreferencesGroup {
+  hexpand: true;
+  vexpand: true;
+
+  Label empty-label {
+      label: '<span size="xx-large" alpha="50%" weight="heavy">Preview</span>';
+      halign: center;
+      valign: center;
+      hexpand: true;
+      vexpand: true;
+      selectable: false;
+      use-markup: true;
+  }
+
+  Picture texture-pic {
+    visible: false;
+    styles ["card"]
+  }
+}

@@ -1,0 +1,42 @@
+.wallpaper-grid {
+    padding: 12px;
+}
+
+.wallpaper-grid-item .wallpaper-grid-item-img {
+    border-radius: 12px;
+}
+
+.wallpaper-grid-item .wallpaper-grid-item-btn {
+    opacity: 0;
+    transition: 0.1s ease-in-out;
+}
+
+.wallpaper-grid-item:hover .wallpaper-grid-item-btn {
+    opacity: 1;
+}
+
+.wallpaper-grid-item .wallpaper-grid-item-check {
+    opacity: 0;
+    transition: 0.1s ease-in-out;
+}
+
+.wallpaper-grid-item .wallpaper-grid-item-check:checked {
+    opacity: 1;
+}
+
+.wallpaper-grid-item:hover .wallpaper-grid-item-check {
+    opacity: 1;
+}
+
+.wallpaper-grid-item .wallpaper-grid-item-label {
+    padding: 2px 10px;
+    border-radius: 99px;
+}
+
+.results-grid-image {
+    transition: 0.1s ease-in-out;
+}
+
+.results-grid-image:hover {
+    opacity: 0.25;
+}

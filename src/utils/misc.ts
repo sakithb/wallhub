@@ -17,6 +17,10 @@ export const getHcf = (a: number, b: number): number => {
     return getHcf(b, a % b);
 };
 
+export const isBitSet = (num: number, bit: number): boolean => {
+    return (num & (1 << bit)) !== 0;
+};
+
 export const errorLog = (...args: unknown[]) => {
     console.error("[Wallhub]", "Error:", ...args);
 };

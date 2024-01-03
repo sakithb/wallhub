@@ -53,11 +53,12 @@ build() {
     ESFLAGS+=("--extra-source=$D")
   done
 
-  SCHEMA="$PWD/assets/schemas/org.gnome.shell.extensions.wallhub.gschema.xml"
+  RESOURCE="$PWD/dist/compiled/org.gnome.shell.extensions.wallhub.gresource"
+  SCHEMA="$PWD/assets/org.gnome.shell.extensions.wallhub.gschema.xml"
   PODIR="$PWD/assets/locale"
 
   mkdir -p "$BUILDDIR"
-  gnome-extensions pack -f -o "$BUILDDIR" --schema="$SCHEMA" --podir="$PODIR" "${ESFLAGS[@]}" "$JSSRCDIR"
+  gnome-extensions pack -f -o "$BUILDDIR" --schema="$SCHEMA" --podir="$PODIR" "${ESFLAGS[@]}" --extra-source="$RESOURCE" "$JSSRCDIR"
 }
 
 debug() {

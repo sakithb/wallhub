@@ -14,7 +14,7 @@ const watchChildPid = (pid: number): Promise<boolean> => {
             const success = GLib.spawn_check_wait_status(status);
 
             if (success == false) {
-                errorLog("[Wallhub] Child process exited with error: ", pid);
+                errorLog("Child process exited with error: ", pid);
                 return resolve(false);
             }
 

@@ -1,8 +1,3 @@
-export enum WallpaperTypes {
-    SINGLE,
-    SLIDESHOW,
-}
-
 export enum SlideshowIntervalUnits {
     HOURS = "3600",
     MINUTES = "60",
@@ -38,4 +33,5 @@ export enum FileChooserActions {
     FILE = "file",
     SAVE = "save",
     FOLDER = "folder",
+    MULTIPLE = "multiple",
 }

@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <enum id="org.gnome.shell.extensions.wallhub.wallpaper-types">
-    <value nick="Single" value="0" />
-    <value nick="Slideshow" value="1" />
-  </enum>
   <enum id="org.gnome.shell.extensions.wallhub.slideshow-interval-units">
     <value nick="Hours" value="3600" />
     <value nick="Minutes" value="60" />
     <value nick="Seconds" value="1" />
   </enum>
   <schema id="org.gnome.shell.extensions.wallhub" path="/org/gnome/shell/extensions/wallhub/">
-    <key name="wallpaper-type" enum="org.gnome.shell.extensions.wallhub.wallpaper-types">
-      <default>'Single'</default>
+    <key name="wallpaper-paths" type="as">
+      <default>[]</default>
     </key>
-    <key name="wallpaper-path-single" type="s">
-      <default>''</default>
-    </key>
-    <key name="wallpaper-path-slideshow" type="s">
-      <default>''</default>
+    <key name="wallpaper-paths-selected" type="i">
+      <default>0</default>
     </key>
     <key name="slideshow-interval-unit"
       enum="org.gnome.shell.extensions.wallhub.slideshow-interval-units">

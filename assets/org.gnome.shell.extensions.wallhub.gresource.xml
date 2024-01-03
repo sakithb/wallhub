@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gnome/shell/extensions/wallhub/">
+    <file>ui/prefs.ui</file>
+    <file>ui/texture-preview.ui</file>
+    <file>ui/wallpaper-grid.ui</file>
+    <file>prefs.css</file>
+  </gresource>
+</gresources>

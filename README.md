@@ -31,6 +31,13 @@ You can report issues in [here](https://github.com/sakithb/wallhub/issues). Befo
    - Gnome version
    - Extension version
 
+## Screenshots
+
+[<img src="assets/images/general_prefs.png" width="400">]()
+[<img src="assets/images/browse_prefs.png" width="400">]()
+[<img src="assets/images/dwp_prefs.png" width="400">]()
+[<img src="assets/images/login_prefs.png" width="400">]()
+
 ## Contributing
 
 Contributors are welcome! If you have any suggestions for new features or if you are interested in translating, feel free to open a pull request.

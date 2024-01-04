@@ -245,41 +245,37 @@ class WallhubPreferences extends ExtensionPreferences {
         this.dwpNameIpt.connect("notify::text", updateSaveSensitive);
 
         this.dwpChooseBtn.connect("clicked", async () => {
-            try {
-                const fileOptions: IFileChooserOptions = {
-                    title: _("Choose a dynamic wallpaper"),
-                    filters: [{ name: _("Dynamic Wallpapers"), mimeTypes: [MimeTypes.XML] }],
-                };
+            const fileOptions: IFileChooserOptions = {
+                title: _("Choose a dynamic wallpaper"),
+                filters: [{ name: _("Dynamic Wallpapers"), mimeTypes: [MimeTypes.XML] }],
+            };
 
-                const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
-                if (file == null) return;
+            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
+            if (file == null) return;
 
-                const path = file.get_path();
+            const path = file.get_path();
 
-                const content = await readFile(path, null);
-                if (content == null) return;
+            const content = await readFile(path, null);
+            if (content == null) return;
 
-                const decoder = new TextDecoder();
-                const xmlStr = decoder.decode(content);
+            const decoder = new TextDecoder();
+            const xmlStr = decoder.decode(content);
 
-                const dwp = parseDynamicWallpaper(xmlStr);
-                if (dwp == null) return;
+            const dwp = parseDynamicWallpaper(xmlStr);
+            if (dwp == null) return;
 
-                this.dwpConfig = dwp;
-                this.dwpPath = path;
+            this.dwpConfig = dwp;
+            this.dwpPath = path;
 
-                this.dwpNameIpt.text = dwp.name;
-                this.dwpLightRow.subtitle = dwp.lightBg;
-                this.dwpLightRow.tooltipText = dwp.lightBg;
-                this.dwpDarkRow.subtitle = dwp.darkBg;
-                this.dwpDarkRow.tooltipText = dwp.darkBg;
+            this.dwpNameIpt.text = dwp.name;
+            this.dwpLightRow.subtitle = dwp.lightBg;
+            this.dwpLightRow.tooltipText = dwp.lightBg;
+            this.dwpDarkRow.subtitle = dwp.darkBg;
+            this.dwpDarkRow.tooltipText = dwp.darkBg;
 
-                GLib.free(path);
-                updateSaveSensitive();
-                updatePreview();
-            } catch (e) {
-                errorLog(e);
-            }
+            GLib.free(path);
+            updateSaveSensitive();
+            updatePreview();
         });
 
         this.dwpLightChooseBtn.connect("clicked", async () => {
@@ -392,29 +388,25 @@ class WallhubPreferences extends ExtensionPreferences {
         };
 
         this.loginChooseBtn.connect("clicked", async () => {
-            try {
-                const fileOptions: IFileChooserOptions = {
-                    title: _("Choose a login background"),
-                    filters: [{ name: _("Images"), mimeTypes: [MimeTypes.IMAGES] }],
-                };
+            const fileOptions: IFileChooserOptions = {
+                title: _("Choose a login background"),
+                filters: [{ name: _("Images"), mimeTypes: [MimeTypes.IMAGES] }],
+            };
 
-                const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
-                if (file == null) return;
+            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
+            if (file == null) return;
 
-                const path = file.get_path();
+            const path = file.get_path();
 
-                this.loginPath = path;
-                this.loginChooseRow.subtitle = path;
-                this.loginChooseRow.tooltipText = path;
-                this.loginBlurIpt.sensitive = true;
-                this.loginBrightnessIpt.sensitive = true;
-                this.loginApplyBtn.sensitive = true;
+            this.loginPath = path;
+            this.loginChooseRow.subtitle = path;
+            this.loginChooseRow.tooltipText = path;
+            this.loginBlurIpt.sensitive = true;
+            this.loginBrightnessIpt.sensitive = true;
+            this.loginApplyBtn.sensitive = true;
 
-                GLib.free(path);
-                updatePreview();
-            } catch (e) {
-                errorLog(e);
-            }
+            GLib.free(path);
+            updatePreview();
         });
 
         this.loginApplyBtn.connect("clicked", async () => {

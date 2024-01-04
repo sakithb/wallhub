@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 14:15+0530\n"
+"POT-Creation-Date: 2024-01-04 16:08+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,82 +17,83 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/extension.ts:243
+#. @ts-expect-error label is not in types
+#: src/extension.ts:112 src/extension.ts:266 src/extension.ts:274
 msgid "Next Wallpaper"
 msgstr ""
 
-#: src/prefs.ts:251
+#: src/prefs.ts:249
 msgid "Choose a dynamic wallpaper"
 msgstr ""
 
-#: src/prefs.ts:252
+#: src/prefs.ts:250
 msgid "Dynamic Wallpapers"
 msgstr ""
 
-#: src/prefs.ts:288
+#: src/prefs.ts:283
 msgid "Choose a light background"
 msgstr ""
 
-#: src/prefs.ts:289 src/prefs.ts:308 src/prefs.ts:399
+#: src/prefs.ts:284 src/prefs.ts:303 src/prefs.ts:393
 #: src/helpers/WallpaperGrid.ts:58
 msgid "Images"
 msgstr ""
 
-#: src/prefs.ts:307
+#: src/prefs.ts:302
 msgid "Choose a dark background"
 msgstr ""
 
-#: src/prefs.ts:327
+#: src/prefs.ts:322
 msgid "Save dynamic wallpaper"
 msgstr ""
 
-#: src/prefs.ts:351
+#: src/prefs.ts:346
 msgid "Dynamic wallpaper was successfully saved!"
 msgstr ""
 
-#: src/prefs.ts:398
+#: src/prefs.ts:392
 msgid "Choose a login background"
 msgstr ""
 
-#: src/prefs.ts:430
+#: src/prefs.ts:421
 msgid "No backup found"
 msgstr ""
 
-#: src/prefs.ts:439
+#: src/prefs.ts:430
 msgid "Failed to reset login background"
 msgstr ""
 
-#: src/prefs.ts:445
+#: src/prefs.ts:436
 msgid "Login background was successfully reset!"
 msgstr ""
 
-#: src/prefs.ts:503
+#: src/prefs.ts:494
 #, javascript-format
 msgid "Page %d of %d"
 msgstr ""
 
-#: src/prefs.ts:589
+#: src/prefs.ts:580
 msgid "Failed to preview wallpaper"
 msgstr ""
 
-#: src/prefs.ts:613
+#: src/prefs.ts:604
 msgid "Save wallpaper"
 msgstr ""
 
-#: src/prefs.ts:624
+#: src/prefs.ts:615
 msgid "Failed to download wallpaper"
 msgstr ""
 
-#: src/prefs.ts:627
+#: src/prefs.ts:618
 msgid "Wallpaper was successfully downloaded!"
 msgstr ""
 
-#: src/prefs.ts:643 src/prefs.ts:669 src/prefs.ts:680 src/prefs.ts:697
-#: src/prefs.ts:721 src/prefs.ts:732 src/prefs.ts:741
+#: src/prefs.ts:634 src/prefs.ts:660 src/prefs.ts:671 src/prefs.ts:688
+#: src/prefs.ts:712 src/prefs.ts:723 src/prefs.ts:732
 msgid "Failed to apply login background"
 msgstr ""
 
-#: src/prefs.ts:751
+#: src/prefs.ts:742
 msgid "Login background was successfully applied!"
 msgstr ""
 

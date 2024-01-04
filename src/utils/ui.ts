@@ -6,13 +6,14 @@ import Gsk from "gi://Gsk?version=4.0";
 import Adw from "gi://Adw?version=1";
 import { IFileChooserOptions } from "../types/common.js";
 import { FileChooserActions } from "../types/enums.js";
+
 import { handleCatch } from "./misc.js";
 
 export async function openFileChooser<T extends FileChooserActions>(
     options: IFileChooserOptions,
     action: T,
     window: Gtk.Window,
-): Promise<T extends FileChooserActions.MULTIPLE ? Gio.File[] : Gio.File>;
+): Promise<T extends typeof FileChooserActions.MULTIPLE ? Gio.File[] : Gio.File>;
 export async function openFileChooser<T extends FileChooserActions>(
     options: IFileChooserOptions,
     action: T,

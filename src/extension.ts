@@ -64,14 +64,11 @@ export default class Wallhub extends Extension {
         this.injectionManager.overrideMethod(Main.layoutManager, "_addBackgroundMenu", (originalMethod) => {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             return (bgManager: BackgroundManager) => {
-                try {
-                    originalMethod.call(Main.layoutManager, bgManager);
-                    // @ts-expect-error _backgroundMenu is private
-                    const menu: BackgroundMenu = bgManager.backgroundActor._backgroundMenu;
-                    this.addBackgroundMenuItem(menu);
-                } catch (error) {
-                    handleCatch(error);
-                }
+                debugLog("Overriding _addBackgroundMenu");
+                originalMethod.call(Main.layoutManager, bgManager);
+                // @ts-expect-error _backgroundMenu is private
+                const menu: BackgroundMenu = bgManager.backgroundActor._backgroundMenu;
+                this.addBackgroundMenuItem(menu);
             };
         });
 
@@ -82,23 +79,38 @@ export default class Wallhub extends Extension {
     }
 
     public disable() {
-        if (this.loopSourceId != null) {
-            GLib.source_remove(this.loopSourceId);
-        }
-
-        this.directoryMonitors.forEach((monitor) => monitor.cancel());
-        this.injectionManager.clear();
-
         this.settings = null;
+        this.backgroundSettings = null;
 
         this.wallpaperPaths = null;
         this.wallpaperPathsSelected = null;
         this.slideshowIntervalUnit = null;
         this.slideshowInterval = null;
 
+        this.wallpaperQueue.clear();
+        this.directoryMonitors.forEach((monitor) => monitor.cancel());
+        this.injectionManager.clear();
+
         this.wallpaperQueue = null;
         this.directoryMonitors = null;
         this.injectionManager = null;
+
+        // @ts-expect-error _bgManagers is private
+        Main.layoutManager._bgManagers.forEach((bgManager: BackgroundManager) => {
+            // @ts-expect-error _backgroundMenu is private
+            const menu: BackgroundMenu = bgManager.backgroundActor._backgroundMenu;
+            // @ts-expect-error _getMenuItems is private
+            menu._getMenuItems().forEach((item: PopupMenu.PopupMenuItem) => {
+                // @ts-expect-error label is not in types
+                if (item.label_actor?.text === _("Next Wallpaper")) {
+                    menu.box.remove_child(item.actor);
+                }
+            });
+        });
+
+        if (this.loopSourceId != null) {
+            GLib.source_remove(this.loopSourceId);
+        }
 
         debugLog("Disabled");
     }
@@ -249,7 +261,7 @@ export default class Wallhub extends Extension {
             }
         });
 
-        menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(null), 4);
-        menu.addMenuItem(menuItem, 5);
+        menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(null));
+        menu.addMenuItem(menuItem);
     }
 }

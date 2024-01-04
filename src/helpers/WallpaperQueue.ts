@@ -14,7 +14,7 @@ class WallpaperQueue extends Array<string> {
             return null;
         }
 
-        const index = Math.floor(Math.random() * (this.length - Math.max(1, Math.round(this.length * 0.2))));
+        const index = Math.floor(Math.random() * (this.length * 0.8));
         const wallpaper = this.splice(index, 1)[0];
 
         this.push(wallpaper);

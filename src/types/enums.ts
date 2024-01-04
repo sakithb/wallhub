@@ -1,37 +1,46 @@
-export enum SlideshowIntervalUnits {
-    HOURS = "3600",
-    MINUTES = "60",
-    SECONDS = "1",
-}
+import { Enum } from "./common.js";
 
-export enum BrowseCategories {
-    GENERAL = "100",
-    ANIME = "010",
-    PEOPLE = "001",
-}
+export const SlideshowIntervalUnits = {
+    HOURS: "3600",
+    MINUTES: "60",
+    SECONDS: "1",
+} as const;
 
-export enum SortTypes {
-    DATE_ADDED = "date_added",
-    RELEVANCE = "relevance",
-    RANDOM = "random",
-    VIEWS = "views",
-    FAVORITES = "favorites",
-    TOPLIST = "toplist",
-}
+export const BrowseCategories = {
+    GENERAL: "100",
+    ANIME: "010",
+    PEOPLE: "001",
+} as const;
 
-export enum SortOrders {
-    ASCENDING = "asc",
-    DESCENDING = "desc",
-}
+export const SortTypes = {
+    DATE_ADDED: "date_added",
+    RELEVANCE: "relevance",
+    RANDOM: "random",
+    VIEWS: "views",
+    FAVORITES: "favorites",
+    TOPLIST: "toplist",
+} as const;
 
-export enum MimeTypes {
-    IMAGES = "image/*",
-    XML = "application/xml",
-}
+export const SortOrders = {
+    ASCENDING: "asc",
+    DESCENDING: "desc",
+} as const;
 
-export enum FileChooserActions {
-    FILE = "file",
-    SAVE = "save",
-    FOLDER = "folder",
-    MULTIPLE = "multiple",
-}
+export const MimeTypes = {
+    IMAGES: "image/*",
+    XML: "application/xml",
+} as const;
+
+export const FileChooserActions = {
+    FILE: "file",
+    SAVE: "save",
+    FOLDER: "folder",
+    MULTIPLE: "multiple",
+} as const;
+
+export type SlideshowIntervalUnits = Enum<typeof SlideshowIntervalUnits>;
+export type BrowseCategories = Enum<typeof BrowseCategories>;
+export type SortTypes = Enum<typeof SortTypes>;
+export type SortOrders = Enum<typeof SortOrders>;
+export type MimeTypes = Enum<typeof MimeTypes>;
+export type FileChooserActions = Enum<typeof FileChooserActions>;

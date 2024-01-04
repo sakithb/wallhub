@@ -8,6 +8,7 @@ import Gtk from "gi://Gtk?version=4.0";
 import Soup from "gi://Soup?version=3.0";
 import GObject from "gi://GObject?version=2.0";
 import { ExtensionPreferences } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
+import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 
 import "./utils/initResource.js";
 import WallpaperGrid from "./helpers/WallpaperGrid.js";
@@ -16,7 +17,7 @@ import { IWallhavenSearchOptions, IWallhavenWallpaper } from "./types/api.js";
 import { IFileChooserOptions } from "./types/common.js";
 import { DynamicWallpaper } from "./types/dwp.js";
 import { generateDynamicWallpaper, parseDynamicWallpaper } from "./utils/dwp.js";
-import { getDwpTexture, openFileChooser } from "./utils/ui.js";
+import { getDwpTexture, openFileChooser, sendToast } from "./utils/ui.js";
 import { fetchImage, fetchSearchResults } from "./utils/fetch.js";
 import { appendFile, copyFile, readFile, spawnChild, writeFile } from "./utils/io.js";
 import { errorLog, getEnumIndexFromValue, getEnumValueFromIndex, getHcf, handleCatch } from "./utils/misc.js";
@@ -225,8 +226,15 @@ class WallhubPreferences extends ExtensionPreferences {
         };
 
         const updatePreview = () => {
-            const dwpTexture = getDwpTexture(this.dwpConfig.lightBg, this.dwpConfig.darkBg, this.window.get_renderer());
-            this.dwpPreview.setPreview(dwpTexture);
+            if (this.dwpConfig.lightBg && this.dwpConfig.darkBg) {
+                const dwpTexture = getDwpTexture(
+                    this.dwpConfig.lightBg,
+                    this.dwpConfig.darkBg,
+                    this.window.get_renderer(),
+                );
+
+                this.dwpPreview.setPreview(dwpTexture);
+            }
         };
 
         this.dwpConfig = {
@@ -238,43 +246,47 @@ class WallhubPreferences extends ExtensionPreferences {
         this.dwpNameIpt.connect("notify::text", updateSaveSensitive);
 
         this.dwpChooseBtn.connect("clicked", async () => {
-            const fileOptions: IFileChooserOptions = {
-                title: "Choose a dynamic wallpaper",
-                filters: [{ name: "Dynamic Wallpapers", mimeTypes: [MimeTypes.XML] }],
-            };
+            try {
+                const fileOptions: IFileChooserOptions = {
+                    title: _("Choose a dynamic wallpaper"),
+                    filters: [{ name: _("Dynamic Wallpapers"), mimeTypes: [MimeTypes.XML] }],
+                };
 
-            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
-            if (file == null) return;
+                const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
+                if (file == null) return;
 
-            const path = file.get_path();
+                const path = file.get_path();
 
-            const content = await readFile(path, null);
-            if (content == null) return;
+                const content = await readFile(path, null);
+                if (content == null) return;
 
-            const decoder = new TextDecoder();
-            const xmlStr = decoder.decode(content);
+                const decoder = new TextDecoder();
+                const xmlStr = decoder.decode(content);
 
-            const dwp = parseDynamicWallpaper(xmlStr);
-            if (dwp == null) return;
+                const dwp = parseDynamicWallpaper(xmlStr);
+                if (dwp == null) return;
 
-            this.dwpConfig = dwp;
-            this.dwpPath = path;
+                this.dwpConfig = dwp;
+                this.dwpPath = path;
 
-            this.dwpNameIpt.text = dwp.name;
-            this.dwpLightRow.subtitle = dwp.lightBg;
-            this.dwpLightRow.tooltipText = dwp.lightBg;
-            this.dwpDarkRow.subtitle = dwp.darkBg;
-            this.dwpDarkRow.tooltipText = dwp.darkBg;
+                this.dwpNameIpt.text = dwp.name;
+                this.dwpLightRow.subtitle = dwp.lightBg;
+                this.dwpLightRow.tooltipText = dwp.lightBg;
+                this.dwpDarkRow.subtitle = dwp.darkBg;
+                this.dwpDarkRow.tooltipText = dwp.darkBg;
 
-            GLib.free(path);
-            updateSaveSensitive();
-            updatePreview();
+                GLib.free(path);
+                updateSaveSensitive();
+                updatePreview();
+            } catch (e) {
+                errorLog(e);
+            }
         });
 
         this.dwpLightChooseBtn.connect("clicked", async () => {
             const fileOptions: IFileChooserOptions = {
-                title: "Choose a light background",
-                filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
+                title: _("Choose a light background"),
+                filters: [{ name: _("Images"), mimeTypes: [MimeTypes.IMAGES] }],
             };
             const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
             if (file == null) return;
@@ -292,8 +304,8 @@ class WallhubPreferences extends ExtensionPreferences {
 
         this.dwpDarkChooseBtn.connect("clicked", async () => {
             const fileOptions: IFileChooserOptions = {
-                title: "Choose a dark background",
-                filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
+                title: _("Choose a dark background"),
+                filters: [{ name: _("Images"), mimeTypes: [MimeTypes.IMAGES] }],
             };
             const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
             if (file == null) return;
@@ -312,7 +324,8 @@ class WallhubPreferences extends ExtensionPreferences {
         this.dwpSaveBtn.connect("clicked", async () => {
             if (this.dwpPath == null) {
                 const fileOptions: IFileChooserOptions = {
-                    title: "Save dynamic wallpaper",
+                    title: _("Save dynamic wallpaper"),
+                    initialName: `${this.dwpConfig.name}.xml`,
                 };
 
                 const file = await openFileChooser(fileOptions, FileChooserActions.SAVE, this.window);
@@ -335,7 +348,7 @@ class WallhubPreferences extends ExtensionPreferences {
             if (result == null) {
                 errorLog("Failed to save dynamic wallpaper");
             } else {
-                this.sendToast("Dynamic wallpaper was successfully saved!");
+                sendToast(_("Dynamic wallpaper was successfully saved!"), this.window);
             }
         });
     }
@@ -380,22 +393,29 @@ class WallhubPreferences extends ExtensionPreferences {
         };
 
         this.loginChooseBtn.connect("clicked", async () => {
-            const fileOptions: IFileChooserOptions = {
-                title: "Choose a login background",
-                filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES] }],
-            };
-            const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
-            const path = file.get_path();
+            try {
+                const fileOptions: IFileChooserOptions = {
+                    title: _("Choose a login background"),
+                    filters: [{ name: _("Images"), mimeTypes: [MimeTypes.IMAGES] }],
+                };
 
-            this.loginPath = path;
-            this.loginChooseRow.subtitle = path;
-            this.loginChooseRow.tooltipText = path;
-            this.loginBlurIpt.sensitive = true;
-            this.loginBrightnessIpt.sensitive = true;
-            this.loginApplyBtn.sensitive = true;
+                const file = await openFileChooser(fileOptions, FileChooserActions.FILE, this.window);
+                if (file == null) return;
 
-            GLib.free(path);
-            updatePreview();
+                const path = file.get_path();
+
+                this.loginPath = path;
+                this.loginChooseRow.subtitle = path;
+                this.loginChooseRow.tooltipText = path;
+                this.loginBlurIpt.sensitive = true;
+                this.loginBrightnessIpt.sensitive = true;
+                this.loginApplyBtn.sensitive = true;
+
+                GLib.free(path);
+                updatePreview();
+            } catch (e) {
+                errorLog(e);
+            }
         });
 
         this.loginApplyBtn.connect("clicked", async () => {
@@ -407,7 +427,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
         this.loginResetBtn.connect("clicked", async () => {
             if (GLib.file_test(this.ogResourcePath, GLib.FileTest.EXISTS) === false) {
-                this.sendToast("No backup found");
+                sendToast(_("No backup found"), this.window);
                 return;
             }
 
@@ -416,13 +436,13 @@ class WallhubPreferences extends ExtensionPreferences {
 
             if (installResult === false) {
                 errorLog("Failed to reset GResource");
-                this.sendToast("Failed to reset login background");
+                sendToast(_("Failed to reset login background"), this.window);
                 return;
             }
 
             GLib.unlink(this.ogResourcePath);
             this.loginResetBtn.sensitive = false;
-            this.sendToast("Login background was successfully reset!");
+            sendToast(_("Login background was successfully reset!"), this.window);
         });
 
         this.loginBlurIpt.connect("notify::value", updatePreview);
@@ -480,7 +500,7 @@ class WallhubPreferences extends ExtensionPreferences {
         this.noOfPages = results.meta.last_page;
         this.currentPage = results.meta.current_page;
 
-        this.pageNoLabel.label = `Page ${this.currentPage} of ${this.noOfPages}`;
+        this.pageNoLabel.label = _("Page %d of %d").format(this.currentPage, this.noOfPages);
 
         if (this.currentPage === 1) {
             this.prevPageBtn.sensitive = false;
@@ -566,7 +586,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
         if (imgBytes == null) {
             this.wpViewerWin.close();
-            this.sendToast("Failed to preview wallpaper");
+            sendToast(_("Failed to preview wallpaper"), this.window);
         } else {
             const texture = Gdk.Texture.new_from_bytes(imgBytes);
             const aspectRatio = texture.width / texture.height;
@@ -590,7 +610,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
     private async downloadWallpaper(imgBytes: GLib.Bytes, path: string) {
         const chooserOptions: IFileChooserOptions = {
-            title: "Save wallpaper",
+            title: _("Save wallpaper"),
             initialName: GLib.basename(path),
         };
 
@@ -601,10 +621,10 @@ class WallhubPreferences extends ExtensionPreferences {
         const result = await writeFile(savePath, imgBytes.toArray(), null);
 
         if (result == null) {
-            this.sendToast("Failed to download wallpaper");
+            sendToast(_("Failed to download wallpaper"), this.window);
         } else {
             this.wpViewerWin.close();
-            this.sendToast("Wallpaper was successfully downloaded!");
+            sendToast(_("Wallpaper was successfully downloaded!"), this.window);
         }
     }
 
@@ -620,7 +640,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
             if (backupResult == false) {
                 errorLog("Failed to backup GResource");
-                this.sendToast("Failed to apply login background");
+                sendToast(_("Failed to apply login background"), this.window);
                 return;
             }
         }
@@ -646,7 +666,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
             if (result == null) {
                 errorLog("Failed to copy resource");
-                this.sendToast("Failed to apply login background");
+                sendToast(_("Failed to apply login background"), this.window);
                 return;
             } else {
                 xmlLines.push(`<file>org/gnome/shell/theme/${resourceName}</file>`);
@@ -657,7 +677,7 @@ class WallhubPreferences extends ExtensionPreferences {
         const wpCopyResult = await copyFile(blurredPath, wpDestPath, null);
 
         if (wpCopyResult == false) {
-            this.sendToast("Failed to apply login background");
+            sendToast(_("Failed to apply login background"), this.window);
             return;
         }
 
@@ -674,7 +694,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
         if (xmlResult == null) {
             errorLog("Failed to write XML file");
-            this.sendToast("Failed to apply login background");
+            sendToast(_("Failed to apply login background"), this.window);
             return;
         }
 
@@ -698,7 +718,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
         if (resultLight == null || resultDark == null) {
             errorLog("Failed to write CSS file");
-            this.sendToast("Failed to apply login background");
+            sendToast(_("Failed to apply login background"), this.window);
             return;
         }
 
@@ -709,7 +729,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
         if (compileResult === false) {
             errorLog("Failed to compile GResource");
-            this.sendToast("Failed to apply login background");
+            sendToast(_("Failed to apply login background"), this.window);
             return;
         }
 
@@ -718,7 +738,7 @@ class WallhubPreferences extends ExtensionPreferences {
 
         if (installResult === false) {
             errorLog("Failed to install GResource");
-            this.sendToast("Failed to apply login background");
+            sendToast(_("Failed to apply login background"), this.window);
             return;
         }
 
@@ -728,18 +748,13 @@ class WallhubPreferences extends ExtensionPreferences {
             errorLog("Failed to remove tmp dir");
         }
 
-        this.sendToast("Login background was successfully applied!");
+        sendToast(_("Login background was successfully applied!"), this.window);
     }
 
     private closeWallpaperPreview() {
         this.wpViewerCancellable?.cancel();
         this.wpViewerCancellable = null;
         this.wpViewerWin.close();
-    }
-
-    private sendToast(title: string, timeout = 2) {
-        const toast = new Adw.Toast({ title, timeout });
-        this.window.add_toast(toast);
     }
 
     private getBlurredWallpaper(path: string, brightness: number, sigma: number) {

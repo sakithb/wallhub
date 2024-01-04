@@ -1,6 +1,6 @@
 import GLib from "gi://GLib?version=2.0";
 import Gio from "gi://Gio?version=2.0";
-import { Extension, InjectionManager } from "resource:///org/gnome/shell/extensions/extension.js";
+import { Extension, InjectionManager, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 import { BackgroundMenu } from "resource:///org/gnome/shell/ui/backgroundMenu.js";
 import { BackgroundManager } from "resource:///org/gnome/shell/ui/background.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
@@ -240,7 +240,7 @@ export default class Wallhub extends Extension {
     }
 
     private addBackgroundMenuItem(menu: BackgroundMenu) {
-        const menuItem = new PopupMenu.PopupMenuItem("Next Wallpaper");
+        const menuItem = new PopupMenu.PopupMenuItem(_("Next Wallpaper"));
 
         menuItem.connect("activate", () => {
             const wallpaper = this.wallpaperQueue.dequeue();

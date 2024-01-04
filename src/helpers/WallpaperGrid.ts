@@ -5,6 +5,8 @@ import Gio from "gi://Gio?version=2.0";
 import Gtk from "gi://Gtk?version=4.0";
 import Gdk from "gi://Gdk?version=4.0";
 import Pango from "gi://Pango?version=1.0";
+import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+
 import { isBitSet } from "../utils/misc.js";
 import { parseDynamicWallpaper } from "../utils/dwp.js";
 import { getDwpTexture, openFileChooser } from "../utils/ui.js";
@@ -48,12 +50,12 @@ class WallpaperGrid extends Adw.PreferencesGroup {
         this.gridBox.set_hadjustment(this.scrolledWin.hadjustment);
         this.gridBox.set_vadjustment(this.scrolledWin.vadjustment);
 
-        const window = this.get_ancestor(Gtk.Window.$gtype) as Gtk.Window;
+        const window = this.get_ancestor(Adw.PreferencesWindow.$gtype) as Adw.PreferencesWindow;
 
         this.addFileBtn.connect("clicked", async () => {
             const fileOptions: IFileChooserOptions = {
-                title: "Choose a wallpaper",
-                filters: [{ name: "Images", mimeTypes: [MimeTypes.IMAGES, MimeTypes.XML] }],
+                title: _("Choose a wallpaper"),
+                filters: [{ name: _("Images"), mimeTypes: [MimeTypes.IMAGES, MimeTypes.XML] }],
             };
 
             const files = await openFileChooser(fileOptions, FileChooserActions.MULTIPLE, window);
@@ -77,7 +79,7 @@ class WallpaperGrid extends Adw.PreferencesGroup {
 
         this.addFolderBtn.connect("clicked", async () => {
             const folderOptions: IFileChooserOptions = {
-                title: "Choose a folder",
+                title: _("Choose a folder"),
             };
 
             const folder = await openFileChooser(folderOptions, FileChooserActions.FOLDER, window);
@@ -156,12 +158,21 @@ class WallpaperGrid extends Adw.PreferencesGroup {
         this.wallpapers = wallpapers;
 
         if (wallpapers.length === 0) {
+            let i = 0;
+            let child: Gtk.FlowBoxChild;
+
+            while ((child = this.gridBox.get_child_at_index(i)) != null) {
+                if (child !== this.emptyItem) {
+                    this.gridBox.remove(child);
+                } else {
+                    i++;
+                }
+            }
+
             this.gridBox.maxChildrenPerLine = 1;
             this.gridBox.selectionMode = Gtk.SelectionMode.NONE;
-
-            this.gridBox.remove_all();
-            this.gridBox.show();
-
+            this.gridBox.valign = Gtk.Align.CENTER;
+            this.emptyItem.show();
             return;
         }
 
@@ -171,6 +182,7 @@ class WallpaperGrid extends Adw.PreferencesGroup {
 
         this.gridBox.maxChildrenPerLine = 6;
         this.gridBox.selectionMode = Gtk.SelectionMode.MULTIPLE;
+        this.gridBox.valign = Gtk.Align.START;
 
         if (oldWallpapers == null) {
             for (let i = 0; i < wallpapers.length; i++) {

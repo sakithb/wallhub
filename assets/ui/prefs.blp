@@ -2,17 +2,17 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.PreferencesPage page-general {
-  icon-name: 'settings-symbolic';
-  name: 'wallhub-general';
-  title: 'General';
+  icon-name: "settings-symbolic";
+  name: "wallhub-general";
+  title: _("General");
 
   $WallpaperGrid grp-wp-paths {}
 
   Adw.PreferencesGroup {
-    title: "Slideshow";
+    title: _("Slideshow");
 
     Adw.ActionRow {
-      title: 'Slideshow interval';
+      title: _("Slideshow interval");
 
       DropDown dd-slideshow-interval-unit {
         margin-top: 10;
@@ -20,9 +20,9 @@ Adw.PreferencesPage page-general {
 
         model: StringList {
           strings [
-            "Hours",
-            "Minutes",
-            "Seconds",
+            _("Hours"),
+            _("Minutes"),
+            _("Seconds"),
           ]
         };
       }
@@ -45,7 +45,7 @@ Adw.PreferencesPage page-general {
 Adw.PreferencesPage page-browse {
   icon-name: "search-symbolic";
   name: "wallhub-browse";
-  title: "Browse";
+  title: _("Browse");
 
   ProgressBar pb-loading {
     visible: false;
@@ -70,11 +70,11 @@ Adw.PreferencesPage page-browse {
 
       SearchEntry se-search {
         hexpand: true;
-        placeholder-text: "Search wallpapers on wallhaven.cc";
+        placeholder-text: _("Search wallpapers on wallhaven.cc");
       }
 
       Button btn-search {
-        label: "Search";
+        label: _("Search");
 
         styles [
           "suggested-action"
@@ -92,17 +92,17 @@ Adw.PreferencesPage page-browse {
         ]
 
         ToggleButton btn-ctg-general {
-          label: 'General';
+          label: _("General");
           active: true;
         }
 
         ToggleButton btn-ctg-anime {
-          label: 'Anime';
+          label: _("Anime");
           active: true;
         }
 
         ToggleButton btn-ctg-people {
-          label: 'People';
+          label: _("People");
           active: true;
         }
       }
@@ -120,12 +120,12 @@ Adw.PreferencesPage page-browse {
 
           model: StringList {
             strings [
-              "Date added",
-              "Relevance",
-              "Random",
-              "Views",
-              "Favorites",
-              "Toplist"
+              _("Date added"),
+              _("Relevance"),
+              _("Random"),
+              _("Views"),
+              _("Favorites"),
+              _("Toplist")
             ]
           };
         }
@@ -179,7 +179,7 @@ Adw.PreferencesPage page-browse {
 
       [center]
       Label lb-page {
-        label: "Page 1 of 4";
+        label: _("Page 1 of 1");
       }
 
       [end]
@@ -195,13 +195,13 @@ Adw.PreferencesPage page-browse {
 Adw.PreferencesPage page-dwp {
   icon-name: "edit-symbolic";
   name: "wallhub-dynamic";
-  title: "Dynamic wallpapers";
+  title: _("Dynamic wallpapers");
 
   $TexturePreview grp-dwp-preview {}
 
   Adw.PreferencesGroup {
     Adw.ActionRow {
-      title: 'Edit dynamic wallpaper';
+      title: _("Edit dynamic wallpaper");
 
       Button btn-dwp-choose {
         halign: center;
@@ -209,7 +209,7 @@ Adw.PreferencesPage page-dwp {
         margin-bottom: 10;
 
         Adw.ButtonContent {
-          label: "Select";
+          label: _("Select");
           icon-name: "document-open-symbolic";
         }
       }
@@ -218,38 +218,38 @@ Adw.PreferencesPage page-dwp {
 
   Adw.PreferencesGroup {
     Adw.EntryRow er-dwp-name {
-      title: 'Wallpaper name';
+      title: _("Wallpaper name");
     }
 
     Adw.ActionRow row-dwp-light-choose {
-      title: 'Daytime wallpaper';
+      title: "Daytime wallpaper";
       subtitle-lines: 1;
 
       Button btn-dwp-light-choose {
         halign: center;
         margin-top: 10;
         margin-bottom: 10;
-        label: "Select";
+        label: _("Select");
       }
     }
 
     Adw.ActionRow row-dwp-dark-choose {
-      title: 'Nighttime wallpaper';
+      title: _("Nighttime wallpaper");
       subtitle-lines: 1;
 
       Button btn-dwp-dark-choose {
         halign: center;
         margin-top: 10;
         margin-bottom: 10;
-        label: "Select";
+        label: _("Select");
       }
     }
   }
 
   Adw.PreferencesGroup {
     Adw.ActionRow {
-      title: 'Save changes';
-      subtitle: 'Create or save changes to a dynamic wallpaper';
+      title: _("Save changes");
+      subtitle: _("Create or save changes to a dynamic wallpaper");
 
       Button btn-dwp-save {
         margin-top: 10;
@@ -261,7 +261,7 @@ Adw.PreferencesPage page-dwp {
         ]
 
         Adw.ButtonContent {
-          label: "Save";
+          label: _("Save");
           icon-name: "document-save-symbolic";
         }
       }
@@ -272,13 +272,13 @@ Adw.PreferencesPage page-dwp {
 Adw.PreferencesPage page-login {
   icon-name: "system-users-symbolic";
   name: "wallhub-login";
-  title: "Login";
+  title: _("Login");
 
   $TexturePreview grp-login-preview {}
 
   Adw.PreferencesGroup {
     Adw.ActionRow row-login-choose {
-      title: 'Choose wallpaper';
+      title: _("Choose wallpaper");
       subtitle-lines: 1;
 
       Button btn-login-choose {
@@ -291,7 +291,7 @@ Adw.PreferencesPage page-login {
         ]
 
         Adw.ButtonContent {
-          label: "Select";
+          label: _("Select");
           icon-name: "document-open-symbolic";
         }
       }
@@ -300,8 +300,8 @@ Adw.PreferencesPage page-login {
 
   Adw.PreferencesGroup {
     Adw.SpinRow sr-login-blur {
-      title: "Blur radius";
-      subtitle: "Blur radius of the wallpaper";
+      title: _("Blur radius");
+      subtitle: _("Blur radius of the wallpaper");
       sensitive: false;
 
       adjustment: Adjustment {
@@ -313,8 +313,8 @@ Adw.PreferencesPage page-login {
     }
 
     Adw.SpinRow sr-login-brightness {
-      title: "Brightness";
-      subtitle: "Brightness of the wallpaper";
+      title: _("Brightness");
+      subtitle: _("Brightness of the wallpaper");
       sensitive: false;
 
       adjustment: Adjustment {
@@ -328,8 +328,8 @@ Adw.PreferencesPage page-login {
 
   Adw.PreferencesGroup {
     Adw.ActionRow {
-      title: 'Apply wallpaper';
-      subtitle: 'Apply wallpaper to the login screen';
+      title: _("Apply wallpaper");
+      subtitle: _("Apply wallpaper to the login screen");
 
       Button btn-login-apply {
         halign: center;
@@ -342,15 +342,15 @@ Adw.PreferencesPage page-login {
         ]
 
         Adw.ButtonContent {
-          label: "Apply";
+          label: _("Apply");
           icon-name: "document-save-symbolic";
         }
       }
     }
 
     Adw.ActionRow {
-      title: 'Reset wallpaper';
-      subtitle: 'Revert back to default theme';
+      title: _("Reset wallpaper");
+      subtitle: _("Revert back to default theme");
 
       Button btn-login-reset {
         halign: center;
@@ -363,7 +363,7 @@ Adw.PreferencesPage page-login {
         ]
 
         Adw.ButtonContent {
-          label: "Reset";
+          label: _("Reset");
           icon-name: "user-trash-symbolic";
         }
       }
@@ -402,12 +402,12 @@ Adw.Window win-wp-viewer {
 
       [start]
       Button btn-wp-viewer-cancel {
-        label: "Cancel";
+        label: _("Cancel");
       }
 
       [end]
       Button btn-wp-viewer-download {
-        label: "Download";
+        label: _("Download");
 
         styles [
           "suggested-action"

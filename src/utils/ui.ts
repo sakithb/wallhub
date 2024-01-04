@@ -3,6 +3,7 @@ import Gtk from "gi://Gtk?version=4.0";
 import Gdk from "gi://Gdk?version=4.0";
 import Graphene from "gi://Graphene?version=1.0";
 import Gsk from "gi://Gsk?version=4.0";
+import Adw from "gi://Adw?version=1";
 import { IFileChooserOptions } from "../types/common.js";
 import { FileChooserActions } from "../types/enums.js";
 import { handleCatch } from "./misc.js";
@@ -61,11 +62,7 @@ export async function openFileChooser<T extends FileChooserActions>(
     }
 }
 
-export const getDwpTexture = (lightBg: string, darkBg: string, renderer: Gsk.Renderer) => {
-    if (lightBg == null || darkBg == null) {
-        return null;
-    }
-
+export function getDwpTexture(lightBg: string, darkBg: string, renderer: Gsk.Renderer) {
     const lightTexture = Gdk.Texture.new_from_filename(lightBg);
     const darkTexture = Gdk.Texture.new_from_filename(darkBg);
 
@@ -99,4 +96,9 @@ export const getDwpTexture = (lightBg: string, darkBg: string, renderer: Gsk.Ren
     const newTexture = renderer.render_texture(node, minRect);
 
     return newTexture;
+}
+
+export const sendToast = (title: string, window: Adw.PreferencesWindow, timeout = 2) => {
+    const toast = new Adw.Toast({ title, timeout });
+    window.add_toast(toast);
 };

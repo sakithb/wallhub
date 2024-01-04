@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $WallpaperGrid: Adw.PreferencesGroup {
-  title: "Wallpapers";
-  description: "Add folders, image files or dynamic wallpapers(xml)";
+  title: _("Wallpapers");
+  description: _("Add folders, image files or dynamic wallpapers(xml)");
 
   header-suffix: Box {
     margin-top: 10;
@@ -19,7 +19,7 @@ template $WallpaperGrid: Adw.PreferencesGroup {
       ]
 
       Button add-folder-btn{
-        tooltip-text: "Add folder";
+        tooltip-text: _("Add folder");
 
         Adw.ButtonContent {
           icon-name: "folder-new-symbolic";
@@ -27,7 +27,7 @@ template $WallpaperGrid: Adw.PreferencesGroup {
       }
 
       Button add-file-btn  {
-        tooltip-text: "Add file";
+        tooltip-text: _("Add file");
 
         Adw.ButtonContent {
           icon-name: "image-x-generic-symbolic";
@@ -44,7 +44,7 @@ template $WallpaperGrid: Adw.PreferencesGroup {
       ]
 
       Button remove-btn {
-        tooltip-text: "Remove selected";
+        tooltip-text: _("Remove selected");
 
         Adw.ButtonContent {
           icon-name: "edit-delete-symbolic";
@@ -52,7 +52,7 @@ template $WallpaperGrid: Adw.PreferencesGroup {
       }
 
       Button select-all-btn {
-        tooltip-text: "Select all";
+        tooltip-text: _("Select all");
 
         Adw.ButtonContent {
           icon-name: "edit-select-all-symbolic";
@@ -86,7 +86,7 @@ template $WallpaperGrid: Adw.PreferencesGroup {
           visible:  false;
 
           Label {
-              label: "<span size='x-large' weight='bold' color='#ccc'>No wallpapers added</span>";
+              label: _("<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">No wallpapers added</span>");
               use-markup: true;
               hexpand: true;
               vexpand: true;

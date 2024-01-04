@@ -17,6 +17,10 @@ declare global {
     interface ImportMeta {
         url: string;
     }
+
+    interface String {
+        format(...args: unknown[]): string;
+    }
 }
 
 declare module "@girs/gnome-shell/extensions/extension" {

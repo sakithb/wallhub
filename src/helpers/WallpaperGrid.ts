@@ -5,7 +5,7 @@ import Gio from "gi://Gio?version=2.0";
 import Gtk from "gi://Gtk?version=4.0";
 import Gdk from "gi://Gdk?version=4.0";
 import Pango from "gi://Pango?version=1.0";
-import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+import { gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
 import { isBitSet } from "../utils/misc.js";
 import { parseDynamicWallpaper } from "../utils/dwp.js";

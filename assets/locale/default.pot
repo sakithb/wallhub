@@ -1,0 +1,312 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-04 14:28+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/extension.ts:243
+msgid "Next Wallpaper"
+msgstr ""
+
+#: src/prefs.ts:250
+msgid "Choose a dynamic wallpaper"
+msgstr ""
+
+#: src/prefs.ts:251
+msgid "Dynamic Wallpapers"
+msgstr ""
+
+#: src/prefs.ts:287
+msgid "Choose a light background"
+msgstr ""
+
+#: src/prefs.ts:288 src/prefs.ts:307 src/prefs.ts:398
+#: src/helpers/WallpaperGrid.ts:58
+msgid "Images"
+msgstr ""
+
+#: src/prefs.ts:306
+msgid "Choose a dark background"
+msgstr ""
+
+#: src/prefs.ts:326
+msgid "Save dynamic wallpaper"
+msgstr ""
+
+#: src/prefs.ts:350
+msgid "Dynamic wallpaper was successfully saved!"
+msgstr ""
+
+#: src/prefs.ts:397
+msgid "Choose a login background"
+msgstr ""
+
+#: src/prefs.ts:429
+msgid "No backup found"
+msgstr ""
+
+#: src/prefs.ts:438
+msgid "Failed to reset login background"
+msgstr ""
+
+#: src/prefs.ts:444
+msgid "Login background was successfully reset!"
+msgstr ""
+
+#: src/prefs.ts:502
+#, javascript-format
+msgid "Page %d of %d"
+msgstr ""
+
+#: src/prefs.ts:588
+msgid "Failed to preview wallpaper"
+msgstr ""
+
+#: src/prefs.ts:612
+msgid "Save wallpaper"
+msgstr ""
+
+#: src/prefs.ts:623
+msgid "Failed to download wallpaper"
+msgstr ""
+
+#: src/prefs.ts:626
+msgid "Wallpaper was successfully downloaded!"
+msgstr ""
+
+#: src/prefs.ts:642 src/prefs.ts:668 src/prefs.ts:679 src/prefs.ts:696
+#: src/prefs.ts:720 src/prefs.ts:731 src/prefs.ts:740
+msgid "Failed to apply login background"
+msgstr ""
+
+#: src/prefs.ts:750
+msgid "Login background was successfully applied!"
+msgstr ""
+
+#: src/helpers/TexturePreview.ts:42
+msgid "Unsupported image format"
+msgstr ""
+
+#: src/helpers/TexturePreview.ts:44
+msgid "Corrupt image"
+msgstr ""
+
+#: src/helpers/TexturePreview.ts:46
+msgid "Unknown error"
+msgstr ""
+
+#: src/helpers/WallpaperGrid.ts:57
+msgid "Choose a wallpaper"
+msgstr ""
+
+#: src/helpers/WallpaperGrid.ts:82
+msgid "Choose a folder"
+msgstr ""
+
+#: assets/ui/prefs.blp:7 assets/ui/prefs.blp:95
+msgid "General"
+msgstr ""
+
+#: assets/ui/prefs.blp:12
+msgid "Slideshow"
+msgstr ""
+
+#: assets/ui/prefs.blp:15
+msgid "Slideshow interval"
+msgstr ""
+
+#: assets/ui/prefs.blp:23
+msgid "Hours"
+msgstr ""
+
+#: assets/ui/prefs.blp:24
+msgid "Minutes"
+msgstr ""
+
+#: assets/ui/prefs.blp:25
+msgid "Seconds"
+msgstr ""
+
+#: assets/ui/prefs.blp:48
+msgid "Browse"
+msgstr ""
+
+#: assets/ui/prefs.blp:73
+msgid "Search wallpapers on wallhaven.cc"
+msgstr ""
+
+#: assets/ui/prefs.blp:77
+msgid "Search"
+msgstr ""
+
+#: assets/ui/prefs.blp:100
+msgid "Anime"
+msgstr ""
+
+#: assets/ui/prefs.blp:105
+msgid "People"
+msgstr ""
+
+#: assets/ui/prefs.blp:123
+msgid "Date added"
+msgstr ""
+
+#: assets/ui/prefs.blp:124
+msgid "Relevance"
+msgstr ""
+
+#: assets/ui/prefs.blp:125
+msgid "Random"
+msgstr ""
+
+#: assets/ui/prefs.blp:126
+msgid "Views"
+msgstr ""
+
+#: assets/ui/prefs.blp:127
+msgid "Favorites"
+msgstr ""
+
+#: assets/ui/prefs.blp:128
+msgid "Toplist"
+msgstr ""
+
+#: assets/ui/prefs.blp:182
+msgid "Page 1 of 1"
+msgstr ""
+
+#: assets/ui/prefs.blp:198
+msgid "Dynamic wallpapers"
+msgstr ""
+
+#: assets/ui/prefs.blp:204
+msgid "Edit dynamic wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:212 assets/ui/prefs.blp:232 assets/ui/prefs.blp:244
+#: assets/ui/prefs.blp:294
+msgid "Select"
+msgstr ""
+
+#: assets/ui/prefs.blp:221
+msgid "Wallpaper name"
+msgstr ""
+
+#: assets/ui/prefs.blp:237
+msgid "Nighttime wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:251
+msgid "Save changes"
+msgstr ""
+
+#: assets/ui/prefs.blp:252
+msgid "Create or save changes to a dynamic wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:264
+msgid "Save"
+msgstr ""
+
+#: assets/ui/prefs.blp:275
+msgid "Login"
+msgstr ""
+
+#: assets/ui/prefs.blp:281
+msgid "Choose wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:303
+msgid "Blur radius"
+msgstr ""
+
+#: assets/ui/prefs.blp:304
+msgid "Blur radius of the wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:316
+msgid "Brightness"
+msgstr ""
+
+#: assets/ui/prefs.blp:317
+msgid "Brightness of the wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:331
+msgid "Apply wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:332
+msgid "Apply wallpaper to the login screen"
+msgstr ""
+
+#: assets/ui/prefs.blp:345
+msgid "Apply"
+msgstr ""
+
+#: assets/ui/prefs.blp:352
+msgid "Reset wallpaper"
+msgstr ""
+
+#: assets/ui/prefs.blp:353
+msgid "Revert back to default theme"
+msgstr ""
+
+#: assets/ui/prefs.blp:366
+msgid "Reset"
+msgstr ""
+
+#: assets/ui/prefs.blp:405
+msgid "Cancel"
+msgstr ""
+
+#: assets/ui/prefs.blp:410
+msgid "Download"
+msgstr ""
+
+#: assets/ui/texture-preview.blp:9
+msgid "<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Preview</span>"
+msgstr ""
+
+#: assets/ui/wallpaper-grid.blp:5
+msgid "Wallpapers"
+msgstr ""
+
+#: assets/ui/wallpaper-grid.blp:6
+msgid "Add folders, image files or dynamic wallpapers(xml)"
+msgstr ""
+
+#: assets/ui/wallpaper-grid.blp:22
+msgid "Add folder"
+msgstr ""
+
+#: assets/ui/wallpaper-grid.blp:30
+msgid "Add file"
+msgstr ""
+
+#: assets/ui/wallpaper-grid.blp:47
+msgid "Remove selected"
+msgstr ""
+
+#: assets/ui/wallpaper-grid.blp:55
+msgid "Select all"
+msgstr ""
+
+#: assets/ui/wallpaper-grid.blp:89
+msgid ""
+"<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">No wallpapers added</"
+"span>"
+msgstr ""

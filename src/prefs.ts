@@ -7,8 +7,7 @@ import Gsk from "gi://Gsk?version=4.0";
 import Gtk from "gi://Gtk?version=4.0";
 import Soup from "gi://Soup?version=3.0";
 import GObject from "gi://GObject?version=2.0";
-import { ExtensionPreferences } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
-import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+import { ExtensionPreferences, gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
 import "./utils/initResource.js";
 import WallpaperGrid from "./helpers/WallpaperGrid.js";

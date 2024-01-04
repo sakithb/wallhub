@@ -1,11 +1,11 @@
 {
   "name": "Wallhub",
   "uuid": "wallhub@sakithb.github.io",
-  "description": "Configure wallpapers with ease",
+  "description": "Manage wallpapers with ease",
   "version-name": "1.0.0",
   "settings-schema": "org.gnome.shell.extensions.wallhub",
   "gettext-domain": "wallhub@sakithb.github.io",
-  "url": "https://github.com/sakith/wallhub",
+  "url": "https://github.com/sakithb/wallhub",
   "shell-version": ["45"],
   "donations": {
     "github": "sakithb",

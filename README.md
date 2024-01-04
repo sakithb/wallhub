@@ -36,10 +36,15 @@ You can report issues in [here](https://github.com/sakithb/wallhub/issues). Befo
 
 ## Screenshots
 
-<img src="assets/images/general_prefs.png" width="300">
-<img src="assets/images/browse_prefs.png" width="300">
-<img src="assets/images/dwp_prefs.png" width="300">
-<img src="assets/images/login_prefs.png" width="300">
+<p float="left">
+  <a href="https://github.com/sakithb/wallhub/blob/main/assets/images/general_prefs.png"><img src="assets/images/general_prefs.png" width="300"></a>
+  <a href="https://github.com/sakithb/wallhub/blob/main/assets/images/browse_prefs.png"><img src="assets/images/browse_prefs.png" width="300"></a>
+</p>
+
+<p float="left">
+  <a href="https://github.com/sakithb/wallhub/blob/main/assets/images/dwp_prefs.png"><img src="assets/images/dwp_prefs.png" width="300"></a>
+  <a href="https://github.com/sakithb/wallhub/blob/main/assets/images/login_prefs.png"><img src="assets/images/login_prefs.png" width="300"></a>
+</p>
 
 ## Get involved
 

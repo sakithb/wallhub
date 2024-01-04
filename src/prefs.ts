@@ -9,12 +9,12 @@ import Soup from "gi://Soup?version=3.0";
 import GObject from "gi://GObject?version=2.0";
 import { ExtensionPreferences, gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-import "./utils/initResource.js";
+import "./utils/init_resource.js";
 import WallpaperGrid from "./helpers/WallpaperGrid.js";
 import TexturePreview from "./helpers/TexturePreview.js";
 import { IWallhavenSearchOptions, IWallhavenWallpaper } from "./types/api.js";
 import { IFileChooserOptions } from "./types/common.js";
-import { DynamicWallpaper } from "./types/dwp.js";
+import { DynamicWallpaper } from "./types/common.js";
 import { generateDynamicWallpaper, parseDynamicWallpaper } from "./utils/dwp.js";
 import { getDwpTexture, openFileChooser, sendToast } from "./utils/ui.js";
 import { fetchImage, fetchSearchResults } from "./utils/fetch.js";

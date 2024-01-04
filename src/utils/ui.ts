@@ -99,7 +99,7 @@ export function getDwpTexture(lightBg: string, darkBg: string, renderer: Gsk.Ren
     return newTexture;
 }
 
-export const sendToast = (title: string, window: Adw.PreferencesWindow, timeout = 2) => {
+export function sendToast(title: string, window: Adw.PreferencesWindow, timeout = 2) {
     const toast = new Adw.Toast({ title, timeout });
     window.add_toast(toast);
-};
+}

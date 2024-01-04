@@ -1,4 +1,4 @@
-import { DynamicWallpaper } from "../types/dwp.js";
+import { DynamicWallpaper } from "../types/common.js";
 
 const NAME_REGEX = /<name>(.*?)<\/name>/;
 const LIGHTBG_REGEX = /<filename>(.*?)<\/filename>/;

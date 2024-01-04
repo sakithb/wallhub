@@ -11,3 +11,9 @@ export interface IFileFilter {
 export interface IFileChooserOptions extends Omit<Gtk.FileDialog.ConstructorProperties, "filters"> {
     filters?: IFileFilter[];
 }
+
+export interface DynamicWallpaper {
+    name: string;
+    lightBg: string;
+    darkBg: string;
+}

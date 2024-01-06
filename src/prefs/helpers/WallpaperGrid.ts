@@ -1,18 +1,18 @@
-import Adw from "gi://Adw?version=1";
-import GLib from "gi://GLib?version=2.0";
-import GObject from "gi://GObject?version=2.0";
-import Gio from "gi://Gio?version=2.0";
-import Gtk from "gi://Gtk?version=4.0";
-import Gdk from "gi://Gdk?version=4.0";
-import Pango from "gi://Pango?version=1.0";
+import Adw from "gi://Adw";
+import GLib from "gi://GLib";
+import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
+import Gdk from "gi://Gdk";
+import Pango from "gi://Pango";
 import { gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-import { isBitSet } from "../utils/misc.js";
-import { parseDynamicWallpaper } from "../utils/dwp.js";
+import { isBitSet } from "../../common/utils/misc.js";
+import { parseDynamicWallpaper } from "../../common/utils/dwp.js";
 import { getDwpTexture, openFileChooser } from "../utils/ui.js";
-import { readFile } from "../utils/io.js";
-import { IFileChooserOptions } from "../types/common.js";
-import { FileChooserActions, MimeTypes } from "../types/enums.js";
+import { readFile } from "../../common/utils/io.js";
+import { IFileChooserOptions } from "../types.js";
+import { MimeTypes } from "../enums.js";
+import { FileChooserActions } from "../enums.js";
 
 class WallpaperGrid extends Adw.PreferencesGroup {
     public wallpapers: string[];
@@ -299,30 +299,4 @@ class WallpaperGrid extends Adw.PreferencesGroup {
     }
 }
 
-const GWallpaperGrid = GObject.registerClass(
-    {
-        GTypeName: "WallpaperGrid",
-        Properties: {
-            selected: GObject.ParamSpec.jsobject("selected", "Selected", "Selected", GObject.ParamFlags.READABLE),
-            wallpapers: GObject.ParamSpec.jsobject(
-                "wallpapers",
-                "Wallpapers",
-                "Wallpapers",
-                GObject.ParamFlags.READABLE,
-            ),
-        },
-        Template: "resource:///org/gnome/shell/extensions/wallhub/ui/wallpaper-grid.ui",
-        InternalChildren: [
-            "grid-box",
-            "empty-item",
-            "scrolled-win",
-            "add-folder-btn",
-            "add-file-btn",
-            "remove-btn",
-            "select-all-btn",
-        ],
-    },
-    WallpaperGrid,
-);
-
-export default GWallpaperGrid;
+export default WallpaperGrid;

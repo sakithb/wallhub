@@ -15,8 +15,8 @@ build() {
     npm run compile:padding 1>/dev/null
 
     echo "Stripping debug values..."
-    sed 's/const DEBUG = true;/const DEBUG = false;/g' ./dist/compiled/utils/misc.js >./dist/compiled/utils/misc.js.tmp
-    mv ./dist/compiled/utils/misc.js.tmp ./dist/compiled/utils/misc.js
+    sed 's/const DEBUG = true;/const DEBUG = false;/g' ./dist/compiled/common/utils/misc.js >./dist/compiled/common/utils/misc.js.tmp
+    mv ./dist/compiled/common/utils/misc.js.tmp ./dist/compiled/common/utils/misc.js
   fi
 
   cp src/metadata.json dist/compiled/metadata.json
@@ -42,7 +42,7 @@ build() {
   done
 
   EXTRAFILES=$(find "$JSSRCDIR" -maxdepth 1 -type f "${FINDFARGS[@]}")
-  EXTRADIRS=$(find "$JSSRCDIR" -type d "${FINDDARGS[@]}")
+  EXTRADIRS=$(find "$JSSRCDIR" -maxdepth 1 -type d "${FINDDARGS[@]}")
   ESFLAGS=()
 
   for F in $EXTRAFILES; do

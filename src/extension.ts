@@ -1,15 +1,15 @@
-import GLib from "gi://GLib?version=2.0";
-import Gio from "gi://Gio?version=2.0";
+import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 import { Extension, InjectionManager, gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 import { BackgroundMenu } from "resource:///org/gnome/shell/ui/backgroundMenu.js";
 import { BackgroundManager } from "resource:///org/gnome/shell/ui/background.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 
-import WallpaperQueue from "./helpers/WallpaperQueue.js";
-import { parseDynamicWallpaper } from "./utils/dwp.js";
-import { readFile } from "./utils/io.js";
-import { debugLog, errorLog, handleCatch, isBitSet } from "./utils/misc.js";
+import WallpaperQueue from "./shell/helpers/WallpaperQueue.js";
+import { parseDynamicWallpaper } from "./common/utils/dwp.js";
+import { readFile } from "./common/utils/io.js";
+import { debugLog, errorLog, handleCatch, isBitSet } from "./common/utils/misc.js";
 
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.File.prototype, "query_info_async", "query_info_finish");

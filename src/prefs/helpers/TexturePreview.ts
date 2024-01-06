@@ -1,8 +1,7 @@
-import Adw from "gi://Adw?version=1";
-import GObject from "gi://GObject?version=2.0";
-import Gtk from "gi://Gtk?version=4.0";
-import Gdk from "gi://Gdk?version=4.0";
-import GdkPixbuf from "gi://GdkPixbuf?version=2.0";
+import Adw from "gi://Adw";
+import Gtk from "gi://Gtk";
+import Gdk from "gi://Gdk";
+import GdkPixbuf from "gi://GdkPixbuf";
 import { gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
 import { sendToast } from "../utils/ui.js";
@@ -49,13 +48,4 @@ class TexturePreview extends Adw.PreferencesGroup {
     }
 }
 
-const GTexturePreview = GObject.registerClass(
-    {
-        GTypeName: "TexturePreview",
-        Template: "resource:///org/gnome/shell/extensions/wallhub/ui/texture-preview.ui",
-        InternalChildren: ["empty-label", "texture-pic"],
-    },
-    TexturePreview,
-);
-
-export default GTexturePreview;
+export default TexturePreview;

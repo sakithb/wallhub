@@ -1,3 +1,15 @@
+import Gtk from "gi://Gtk";
+import { MimeTypes } from "./enums.js";
+
+export interface IFileFilter {
+    name: string;
+    mimeTypes: MimeTypes[];
+}
+
+export interface IFileChooserOptions extends Omit<Gtk.FileDialog.ConstructorProperties, "filters"> {
+    filters?: IFileFilter[];
+}
+
 export interface IWallhavenWallpaper {
     id: string;
     url: string;

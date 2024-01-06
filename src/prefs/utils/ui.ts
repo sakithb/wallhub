@@ -1,13 +1,13 @@
-import Gio from "gi://Gio?version=2.0";
-import Gtk from "gi://Gtk?version=4.0";
-import Gdk from "gi://Gdk?version=4.0";
-import Graphene from "gi://Graphene?version=1.0";
-import Gsk from "gi://Gsk?version=4.0";
-import Adw from "gi://Adw?version=1";
-import { IFileChooserOptions } from "../types/common.js";
-import { FileChooserActions } from "../types/enums.js";
+import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
+import Gdk from "gi://Gdk";
+import Graphene from "gi://Graphene";
+import Gsk from "gi://Gsk";
+import Adw from "gi://Adw";
+import { IFileChooserOptions } from "../types.js";
+import { FileChooserActions } from "../enums.js";
 
-import { handleCatch } from "./misc.js";
+import { handleCatch } from "../../common/utils/misc.js";
 
 export async function openFileChooser<T extends FileChooserActions>(
     options: IFileChooserOptions,

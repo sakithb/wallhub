@@ -1,5 +1,5 @@
-import GLib from "gi://GLib?version=2.0";
-import Gio from "gi://Gio?version=2.0";
+import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 import { errorLog, handleCatch } from "./misc.js";
 
 Gio._promisify(Gio.File.prototype, "replace_contents_bytes_async", "replace_contents_finish");

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 16:40+0530\n"
+"POT-Creation-Date: 2024-01-07 00:35+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,98 +22,101 @@ msgstr ""
 msgid "Next Wallpaper"
 msgstr ""
 
-#: src/prefs.ts:249
+#: src/prefs.ts:249 src/prefs.ts:310
 msgid "Choose a dynamic wallpaper"
 msgstr ""
 
-#: src/prefs.ts:250
+#: src/prefs.ts:250 src/prefs.ts:311
 msgid "Dynamic Wallpapers"
 msgstr ""
 
-#: src/prefs.ts:283
+#: src/prefs.ts:283 src/prefs.ts:344
 msgid "Choose a light background"
 msgstr ""
 
 #: src/prefs.ts:284 src/prefs.ts:303 src/prefs.ts:393
-#: src/helpers/WallpaperGrid.ts:58
+#: src/helpers/WallpaperGrid.ts:58 src/prefs.ts:345 src/prefs.ts:364
+#: src/prefs.ts:454 src/helpers/WallpaperGrid.ts:57
 msgid "Images"
 msgstr ""
 
-#: src/prefs.ts:302
+#: src/prefs.ts:302 src/prefs.ts:363
 msgid "Choose a dark background"
 msgstr ""
 
-#: src/prefs.ts:322
+#: src/prefs.ts:322 src/prefs.ts:383
 msgid "Save dynamic wallpaper"
 msgstr ""
 
-#: src/prefs.ts:346
+#: src/prefs.ts:346 src/prefs.ts:407
 msgid "Dynamic wallpaper was successfully saved!"
 msgstr ""
 
-#: src/prefs.ts:392
+#: src/prefs.ts:392 src/prefs.ts:453
 msgid "Choose a login background"
 msgstr ""
 
-#: src/prefs.ts:421
+#: src/prefs.ts:421 src/prefs.ts:482
 msgid "No backup found"
 msgstr ""
 
-#: src/prefs.ts:430
+#: src/prefs.ts:430 src/prefs.ts:491
 msgid "Failed to reset login background"
 msgstr ""
 
-#: src/prefs.ts:436
+#: src/prefs.ts:436 src/prefs.ts:497
 msgid "Login background was successfully reset!"
 msgstr ""
 
-#: src/prefs.ts:494
+#: src/prefs.ts:494 src/prefs.ts:555
 #, javascript-format
 msgid "Page %d of %d"
 msgstr ""
 
-#: src/prefs.ts:580
+#: src/prefs.ts:580 src/prefs.ts:641
 msgid "Failed to preview wallpaper"
 msgstr ""
 
-#: src/prefs.ts:604
+#: src/prefs.ts:604 src/prefs.ts:665
 msgid "Save wallpaper"
 msgstr ""
 
-#: src/prefs.ts:615
+#: src/prefs.ts:615 src/prefs.ts:676
 msgid "Failed to download wallpaper"
 msgstr ""
 
-#: src/prefs.ts:618
+#: src/prefs.ts:618 src/prefs.ts:679
 msgid "Wallpaper was successfully downloaded!"
 msgstr ""
 
 #: src/prefs.ts:634 src/prefs.ts:660 src/prefs.ts:671 src/prefs.ts:688
-#: src/prefs.ts:712 src/prefs.ts:723 src/prefs.ts:732
+#: src/prefs.ts:712 src/prefs.ts:723 src/prefs.ts:732 src/prefs.ts:695
+#: src/prefs.ts:721 src/prefs.ts:749 src/prefs.ts:773 src/prefs.ts:784
+#: src/prefs.ts:793
 msgid "Failed to apply login background"
 msgstr ""
 
-#: src/prefs.ts:742
+#: src/prefs.ts:742 src/prefs.ts:803
 msgid "Login background was successfully applied!"
 msgstr ""
 
-#: src/helpers/TexturePreview.ts:42
+#: src/helpers/TexturePreview.ts:42 src/helpers/TexturePreview.ts:41
 msgid "Unsupported image format"
 msgstr ""
 
-#: src/helpers/TexturePreview.ts:44
+#: src/helpers/TexturePreview.ts:44 src/helpers/TexturePreview.ts:43
 msgid "Corrupt image"
 msgstr ""
 
-#: src/helpers/TexturePreview.ts:46
+#: src/helpers/TexturePreview.ts:46 src/helpers/TexturePreview.ts:45
 msgid "Unknown error"
 msgstr ""
 
-#: src/helpers/WallpaperGrid.ts:57
+#: src/helpers/WallpaperGrid.ts:57 src/helpers/WallpaperGrid.ts:56
 msgid "Choose a wallpaper"
 msgstr ""
 
-#: src/helpers/WallpaperGrid.ts:82
+#: src/helpers/WallpaperGrid.ts:82 src/helpers/WallpaperGrid.ts:81
 msgid "Choose a folder"
 msgstr ""
 

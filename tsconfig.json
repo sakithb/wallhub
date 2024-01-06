@@ -9,5 +9,5 @@
     "lib": ["ESNext"]
   },
   "include": ["./src/**/*.ts"],
-  "exclude": ["./src/types/dev.ts"]
+  "exclude": ["src/common/types/dev.ts"]
 }

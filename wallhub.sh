@@ -15,8 +15,8 @@ build() {
     npm run compile:padding 1>/dev/null
 
     echo "Stripping debug values..."
-    sed 's/const DEBUG = true;/const DEBUG = false;/g' ./dist/compiled/common/utils/misc.js >./dist/compiled/common/utils/misc.js.tmp
-    mv ./dist/compiled/common/utils/misc.js.tmp ./dist/compiled/common/utils/misc.js
+    sed 's/const DEBUG = true;/const DEBUG = false;/g' ./dist/compiled/utils/common/misc.js >./dist/compiled/utils/common/misc.js.tmp
+    mv ./dist/compiled/utils/common/misc.js.tmp ./dist/compiled/utils/common/misc.js
   fi
 
   cp src/metadata.json dist/compiled/metadata.json

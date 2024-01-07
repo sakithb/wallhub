@@ -1,4 +1,4 @@
-import { Enum } from "./common.js";
+import { Enum } from "../common.js";
 
 export const SlideshowIntervalUnits = {
     HOURS: "3600",

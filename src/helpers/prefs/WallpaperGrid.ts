@@ -6,13 +6,12 @@ import Gdk from "gi://Gdk";
 import Pango from "gi://Pango";
 import { gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-import { isBitSet } from "../../common/utils/misc.js";
-import { parseDynamicWallpaper } from "../../common/utils/dwp.js";
-import { getDwpTexture, openFileChooser } from "../utils/ui.js";
-import { readFile } from "../../common/utils/io.js";
-import { IFileChooserOptions } from "../types.js";
-import { MimeTypes } from "../enums.js";
-import { FileChooserActions } from "../enums.js";
+import { isBitSet } from "../../utils/common/misc.js";
+import { parseDynamicWallpaper } from "../../utils/common/dwp.js";
+import { getDwpTexture, openFileChooser } from "../../utils/prefs/ui.js";
+import { readFile } from "../../utils/common/io.js";
+import { IFileChooserOptions } from "../../types/prefs.js";
+import { MimeTypes, FileChooserActions } from "../../types/enums/prefs.js";
 
 class WallpaperGrid extends Adw.PreferencesGroup {
     public wallpapers: string[];

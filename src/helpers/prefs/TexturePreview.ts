@@ -4,7 +4,7 @@ import Gdk from "gi://Gdk";
 import GdkPixbuf from "gi://GdkPixbuf";
 import { gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-import { sendToast } from "../utils/ui.js";
+import { sendToast } from "../../utils/prefs/ui.js";
 
 class TexturePreview extends Adw.PreferencesGroup {
     private emptyLabel: Gtk.Label;

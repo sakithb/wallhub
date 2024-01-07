@@ -6,10 +6,10 @@ import { BackgroundManager } from "resource:///org/gnome/shell/ui/background.js"
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 
-import WallpaperQueue from "./shell/helpers/WallpaperQueue.js";
-import { parseDynamicWallpaper } from "./common/utils/dwp.js";
-import { readFile } from "./common/utils/io.js";
-import { debugLog, errorLog, handleCatch, isBitSet } from "./common/utils/misc.js";
+import WallpaperQueue from "./helpers/shell/WallpaperQueue.js";
+import { parseDynamicWallpaper } from "./utils/common/dwp.js";
+import { readFile } from "./utils/common/io.js";
+import { debugLog, errorLog, handleCatch, isBitSet } from "./utils/common/misc.js";
 
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.File.prototype, "query_info_async", "query_info_finish");
@@ -72,8 +72,9 @@ export default class Wallhub extends Extension {
             };
         });
 
-        this.updateQueue().catch(handleCatch);
-        this.startLoop().catch(handleCatch);
+        this.updateQueue() //
+            .then(this.startLoop.bind(this))
+            .catch(handleCatch);
 
         debugLog("Enabled");
     }
@@ -125,7 +126,7 @@ export default class Wallhub extends Extension {
         } else {
             const interval = this.slideshowInterval * this.slideshowIntervalUnit;
 
-            this.loopSourceId = GLib.timeout_add_seconds(GLib.PRIORITY_LOW, interval, () => {
+            this.loopSourceId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, interval, () => {
                 const wallpaper = this.wallpaperQueue.dequeue();
 
                 if (wallpaper != null) {

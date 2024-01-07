@@ -1,4 +1,4 @@
-import { Enum } from "../common/types/common.js";
+import { Enum } from "../common.js";
 
 export const FileChooserActions = {
     FILE: "file",

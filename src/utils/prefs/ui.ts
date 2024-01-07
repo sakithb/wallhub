@@ -4,10 +4,10 @@ import Gdk from "gi://Gdk";
 import Graphene from "gi://Graphene";
 import Gsk from "gi://Gsk";
 import Adw from "gi://Adw";
-import { IFileChooserOptions } from "../types.js";
-import { FileChooserActions } from "../enums.js";
 
-import { handleCatch } from "../../common/utils/misc.js";
+import { IFileChooserOptions } from "../../types/prefs.js";
+import { FileChooserActions } from "../../types/enums/prefs.js";
+import { handleCatch } from "../common/misc.js";
 
 export async function openFileChooser<T extends FileChooserActions>(
     options: IFileChooserOptions,

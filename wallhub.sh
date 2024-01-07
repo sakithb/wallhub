@@ -67,6 +67,21 @@ debug() {
   nested
 }
 
+translations() {
+  echo "Updating translations..."
+  touch assets/locale/wallhub@sakithb.github.io.pot
+  xgettext \
+    --from-code=UTF-8 \
+    --add-comments \
+    --join-existing \
+    --keyword=_ \
+    --keyword=C_:1c,2 \
+    --language=Javascript \
+    --output=assets/locale/wallhub@sakithb.github.io.pot \
+    src/*.ts src/**/*.ts \
+    assets/ui/*.blp
+}
+
 reload() {
   echo "Reloading..."
   build
@@ -129,6 +144,9 @@ build)
 debug)
   debug
   ;;
+translations)
+  translations
+  ;;
 reload)
   reload
   ;;
@@ -157,7 +175,7 @@ watch)
   watch
   ;;
 *)
-  echo "Usage: $0 {prod|build|debug|lint|format|install|uninstall|enable|disable|prefs|watch}"
+  echo "Usage: $0 {prod|build|debug|translations|lint|format|install|uninstall|enable|disable|prefs|watch}"
   exit 1
   ;;
 esac

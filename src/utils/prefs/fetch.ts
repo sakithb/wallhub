@@ -1,8 +1,8 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Soup from "gi://Soup";
-import { IWallhavenSearchOptions } from "../types.js";
-import { IWallhavenResponse } from "../types.js";
+
+import { IWallhavenSearchOptions, IWallhavenResponse } from "../../types/prefs.js";
 
 const buildUrlQuery = (params: { [k: string]: string }) => {
     const query = new GLib.String("");

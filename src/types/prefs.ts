@@ -1,5 +1,5 @@
 import Gtk from "gi://Gtk";
-import { MimeTypes } from "./enums.js";
+import { MimeTypes } from "./enums/prefs.js";
 
 export interface IFileFilter {
     name: string;

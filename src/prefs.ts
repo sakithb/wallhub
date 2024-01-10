@@ -9,8 +9,8 @@ import Soup from "gi://Soup";
 import GObject from "gi://GObject";
 import { ExtensionPreferences, gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-import OWallpaperGrid from "./helpers/prefs/WallpaperGrid.js";
-import OTexturePreview from "./helpers/prefs/TexturePreview.js";
+import WallpaperGridOrig from "./helpers/prefs/WallpaperGrid.js";
+import TexturePreviewOrig from "./helpers/prefs/TexturePreview.js";
 import { IWallhavenSearchOptions, IWallhavenWallpaper, IFileChooserOptions } from "./types/prefs.js";
 import { DynamicWallpaper } from "./types/common.js";
 import { generateDynamicWallpaper, parseDynamicWallpaper } from "./utils/common/dwp.js";
@@ -28,8 +28,8 @@ Gio._promisify(Gtk.FileDialog.prototype, "save", "save_finish");
 Gio._promisify(Gtk.FileDialog.prototype, "open_multiple", "open_multiple_finish");
 Gio._promisify(Gtk.FileDialog.prototype, "select_folder", "select_folder_finish");
 
-let WallpaperGrid: typeof OWallpaperGrid;
-let TexturePreview: typeof OTexturePreview;
+let WallpaperGrid: typeof WallpaperGridOrig;
+let TexturePreview: typeof TexturePreviewOrig;
 
 const SHELL_RESOURCE_PATH = "/usr/share/gnome-shell/gnome-shell-theme.gresource";
 class WallhubPreferences extends ExtensionPreferences {
@@ -46,7 +46,7 @@ class WallhubPreferences extends ExtensionPreferences {
     private dwpPage: Adw.PreferencesPage;
     private loginPage: Adw.PreferencesPage;
 
-    private wpGrpPaths: InstanceType<typeof OWallpaperGrid>;
+    private wpGrpPaths: InstanceType<typeof WallpaperGridOrig>;
     private slideshowIntervalUnitIpt: Gtk.DropDown;
     private slideshowIntervalIpt: Gtk.SpinButton;
 
@@ -77,7 +77,7 @@ class WallhubPreferences extends ExtensionPreferences {
     private dwpDarkRow: Adw.ActionRow;
     private dwpDarkChooseBtn: Gtk.Button;
     private dwpSaveBtn: Gtk.Button;
-    private dwpPreview: InstanceType<typeof OTexturePreview>;
+    private dwpPreview: InstanceType<typeof TexturePreviewOrig>;
 
     private loginChooseRow: Adw.ActionRow;
     private loginChooseBtn: Gtk.Button;
@@ -85,7 +85,7 @@ class WallhubPreferences extends ExtensionPreferences {
     private loginBrightnessIpt: Adw.SpinRow;
     private loginApplyBtn: Gtk.Button;
     private loginResetBtn: Gtk.Button;
-    private loginPreview: InstanceType<typeof OTexturePreview>;
+    private loginPreview: InstanceType<typeof TexturePreviewOrig>;
 
     private searchCancellable: Gio.Cancellable;
     private currentPage = 1;
@@ -102,45 +102,49 @@ class WallhubPreferences extends ExtensionPreferences {
         const resourcePath = GLib.build_filenamev([this.path, "org.gnome.shell.extensions.wallhub.gresource"]);
         Gio.resources_register(Gio.resource_load(resourcePath));
 
-        WallpaperGrid = GObject.registerClass(
-            {
-                GTypeName: "WallpaperGrid",
-                Properties: {
-                    selected: GObject.ParamSpec.jsobject(
-                        "selected",
-                        "Selected",
-                        "Selected",
-                        GObject.ParamFlags.READABLE,
-                    ),
-                    wallpapers: GObject.ParamSpec.jsobject(
-                        "wallpapers",
-                        "Wallpapers",
-                        "Wallpapers",
-                        GObject.ParamFlags.READABLE,
-                    ),
+        if (WallpaperGrid == null) {
+            WallpaperGrid = GObject.registerClass(
+                {
+                    GTypeName: "WallpaperGrid",
+                    Properties: {
+                        selected: GObject.ParamSpec.jsobject(
+                            "selected",
+                            "Selected",
+                            "Selected",
+                            GObject.ParamFlags.READABLE,
+                        ),
+                        wallpapers: GObject.ParamSpec.jsobject(
+                            "wallpapers",
+                            "Wallpapers",
+                            "Wallpapers",
+                            GObject.ParamFlags.READABLE,
+                        ),
+                    },
+                    Template: "resource:///org/gnome/shell/extensions/wallhub/ui/wallpaper-grid.ui",
+                    InternalChildren: [
+                        "grid-box",
+                        "empty-item",
+                        "scrolled-win",
+                        "add-folder-btn",
+                        "add-file-btn",
+                        "remove-btn",
+                        "select-all-btn",
+                    ],
                 },
-                Template: "resource:///org/gnome/shell/extensions/wallhub/ui/wallpaper-grid.ui",
-                InternalChildren: [
-                    "grid-box",
-                    "empty-item",
-                    "scrolled-win",
-                    "add-folder-btn",
-                    "add-file-btn",
-                    "remove-btn",
-                    "select-all-btn",
-                ],
-            },
-            OWallpaperGrid,
-        );
+                WallpaperGridOrig,
+            );
+        }
 
-        TexturePreview = GObject.registerClass(
-            {
-                GTypeName: "TexturePreview",
-                Template: "resource:///org/gnome/shell/extensions/wallhub/ui/texture-preview.ui",
-                InternalChildren: ["empty-label", "texture-pic"],
-            },
-            OTexturePreview,
-        );
+        if (TexturePreview == null) {
+            TexturePreview = GObject.registerClass(
+                {
+                    GTypeName: "TexturePreview",
+                    Template: "resource:///org/gnome/shell/extensions/wallhub/ui/texture-preview.ui",
+                    InternalChildren: ["empty-label", "texture-pic"],
+                },
+                TexturePreviewOrig,
+            );
+        }
 
         GObject.type_ensure(WallpaperGrid.$gtype);
         GObject.type_ensure(TexturePreview.$gtype);
@@ -192,7 +196,7 @@ class WallhubPreferences extends ExtensionPreferences {
     }
 
     private initPageGeneral() {
-        this.wpGrpPaths = this.builder.get_object("grp-wp-paths") as InstanceType<typeof OWallpaperGrid>;
+        this.wpGrpPaths = this.builder.get_object("grp-wp-paths") as InstanceType<typeof WallpaperGridOrig>;
         this.slideshowIntervalUnitIpt = this.builder.get_object("dd-slideshow-interval-unit") as Gtk.DropDown;
         this.slideshowIntervalIpt = this.builder.get_object("sb-slideshow-interval") as Gtk.SpinButton;
 
@@ -269,7 +273,7 @@ class WallhubPreferences extends ExtensionPreferences {
         this.dwpDarkRow = this.builder.get_object("row-dwp-dark-choose") as Adw.ActionRow;
         this.dwpDarkChooseBtn = this.builder.get_object("btn-dwp-dark-choose") as Gtk.Button;
         this.dwpSaveBtn = this.builder.get_object("btn-dwp-save") as Gtk.Button;
-        this.dwpPreview = this.builder.get_object("grp-dwp-preview") as InstanceType<typeof OTexturePreview>;
+        this.dwpPreview = this.builder.get_object("grp-dwp-preview") as InstanceType<typeof TexturePreviewOrig>;
 
         const updateSaveSensitive = () => {
             const name = Boolean(this.dwpNameIpt.text);
@@ -410,7 +414,7 @@ class WallhubPreferences extends ExtensionPreferences {
         this.loginBrightnessIpt = this.builder.get_object("sr-login-brightness") as Adw.SpinRow;
         this.loginApplyBtn = this.builder.get_object("btn-login-apply") as Gtk.Button;
         this.loginResetBtn = this.builder.get_object("btn-login-reset") as Gtk.Button;
-        this.loginPreview = this.builder.get_object("grp-login-preview") as InstanceType<typeof OTexturePreview>;
+        this.loginPreview = this.builder.get_object("grp-login-preview") as InstanceType<typeof TexturePreviewOrig>;
 
         this.ogResourcePath = GLib.build_filenamev([
             GLib.get_user_config_dir(),

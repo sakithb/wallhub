@@ -23,7 +23,7 @@ class WallpaperGrid extends Adw.PreferencesGroup {
     private addFolderBtn: Gtk.Button;
     private addFileBtn: Gtk.Button;
     private removeBtn: Gtk.Button;
-    private selectAllBtn: Gtk.Button;
+    private selectAllBtn: Gtk.ToggleButton;
 
     constructor(params = {}) {
         super(params);
@@ -130,10 +130,10 @@ class WallpaperGrid extends Adw.PreferencesGroup {
 
             if (selectedItems.length === this.wallpapers.length) {
                 this.gridBox.unselect_all();
-                this.selectAllBtn.iconName = "edit-select-all-symbolic";
+                this.selectAllBtn.active = false;
             } else {
                 this.gridBox.select_all();
-                this.selectAllBtn.iconName = "edit-select-none-symbolic";
+                this.selectAllBtn.active = true;
             }
         });
 
@@ -141,9 +141,9 @@ class WallpaperGrid extends Adw.PreferencesGroup {
             const selectedItems = this.gridBox.get_selected_children();
 
             if (selectedItems.length === this.wallpapers.length) {
-                this.selectAllBtn.iconName = "edit-select-none-symbolic";
+                this.selectAllBtn.active = true;
             } else {
-                this.selectAllBtn.iconName = "edit-select-all-symbolic";
+                this.selectAllBtn.active = false;
             }
         });
     }

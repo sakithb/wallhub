@@ -50,7 +50,7 @@ You can report issues in [here](https://github.com/sakithb/wallhub/issues). Befo
 
 Any type of contribution is appreciated! If you have any suggestions for new features feel free to open a new issue.
 
-If you are interested in translating, download the [po file](https://github.com/sakithb/wallhub/blob/main/assets/locale/wallhub@sakithb.github.io) and translate it. Then open a pull request with the translated file. You can use [Gtranslator](https://flathub.org/apps/org.gnome.Gtranslator) or [Poedit](https://flathub.org/apps/net.poedit.Poedit) to translate.
+If you are interested in translating, download the [po file](https://github.com/sakithb/wallhub/blob/main/assets/locale/wallhub%40sakithb.github.io.pot) and translate it. Then open a pull request with the translated file. You can use [Gtranslator](https://flathub.org/apps/org.gnome.Gtranslator) or [Poedit](https://flathub.org/apps/net.poedit.Poedit) to translate.
 
 If you are interested in contributing code. There are no specific guidelines for contributing. Just make sure you follow the coding style of the project.
 

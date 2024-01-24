@@ -13,6 +13,12 @@ Wallhub is a gnome extension that allows you to set wallpapers with ease. Here i
 
 ## Installation
 
+#### Dependencies
+- `glib-compile-resources` to change the GDM background
+  - Arch `glib2`
+  - Debian `libglib2.0-bin`
+  - Fedora `glib2-devel`
+
 #### From extensions.gnome.org (Recommended)
 
 [<img src="assets/images/ego.png" height="75">](https://extensions.gnome.org/extension/6661/wallhub/)

@@ -1,0 +1,322 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-07 22:43+0530\n"
+"PO-Revision-Date: 2024-03-24 19:11+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#. @ts-expect-error label is not in types
+#: src/extension.ts:105 src/extension.ts:255
+msgid "Next Wallpaper"
+msgstr "Volgende achtergrond"
+
+#: src/prefs.ts:249 src/prefs.ts:310 src/prefs.ts:304
+msgid "Choose a dynamic wallpaper"
+msgstr "Kies een dynamische achtergrond"
+
+#: src/prefs.ts:250 src/prefs.ts:311 src/prefs.ts:305
+msgid "Dynamic Wallpapers"
+msgstr "Dynamische achtergronden"
+
+#: src/prefs.ts:283 src/prefs.ts:344 src/prefs.ts:338
+msgid "Choose a light background"
+msgstr "Kies een lichte achtergrond"
+
+#: src/prefs.ts:284 src/prefs.ts:303 src/prefs.ts:393
+#: src/helpers/WallpaperGrid.ts:58 src/prefs.ts:345 src/prefs.ts:364
+#: src/prefs.ts:454 src/helpers/WallpaperGrid.ts:57 src/prefs.ts:339
+#: src/prefs.ts:358 src/prefs.ts:448
+msgid "Images"
+msgstr "Afbeeldingen"
+
+#: src/prefs.ts:302 src/prefs.ts:363 src/prefs.ts:357
+msgid "Choose a dark background"
+msgstr "Kies een donkere achtergrond"
+
+#: src/prefs.ts:322 src/prefs.ts:383 src/prefs.ts:377
+msgid "Save dynamic wallpaper"
+msgstr "Dynamische achtergrond opslaan"
+
+#: src/prefs.ts:346 src/prefs.ts:407 src/prefs.ts:401
+msgid "Dynamic wallpaper was successfully saved!"
+msgstr "De dynamische achtergrond is opgeslagen!"
+
+#: src/prefs.ts:392 src/prefs.ts:453 src/prefs.ts:447
+msgid "Choose a login background"
+msgstr "Kies een aanmeldschermachtergrond"
+
+#: src/prefs.ts:421 src/prefs.ts:482 src/prefs.ts:476
+msgid "No backup found"
+msgstr "Er is geen reservekopie aangetroffen"
+
+#: src/prefs.ts:430 src/prefs.ts:491 src/prefs.ts:485
+msgid "Failed to reset login background"
+msgstr "De aanmeldschermachtergrond kan niet worden hersteld"
+
+#: src/prefs.ts:436 src/prefs.ts:497 src/prefs.ts:491
+msgid "Login background was successfully reset!"
+msgstr "De aanmeldschermachtergrond is hersteld!"
+
+#: src/prefs.ts:494 src/prefs.ts:555 src/prefs.ts:549
+#, javascript-format
+msgid "Page %d of %d"
+msgstr "Pagina %d van %d"
+
+#: src/prefs.ts:580 src/prefs.ts:641 src/prefs.ts:635
+msgid "Failed to preview wallpaper"
+msgstr "De achtergrond kan niet worden voorvertoond"
+
+#: src/prefs.ts:604 src/prefs.ts:665 src/prefs.ts:659
+msgid "Save wallpaper"
+msgstr "Achtergrond opslaan"
+
+#: src/prefs.ts:615 src/prefs.ts:676 src/prefs.ts:670
+msgid "Failed to download wallpaper"
+msgstr "De achtergrond kan niet worden opgehaald"
+
+#: src/prefs.ts:618 src/prefs.ts:679 src/prefs.ts:673
+msgid "Wallpaper was successfully downloaded!"
+msgstr "De achtergrond is opgehaald!"
+
+#: src/prefs.ts:634 src/prefs.ts:660 src/prefs.ts:671 src/prefs.ts:688
+#: src/prefs.ts:712 src/prefs.ts:723 src/prefs.ts:732 src/prefs.ts:695
+#: src/prefs.ts:721 src/prefs.ts:749 src/prefs.ts:773 src/prefs.ts:784
+#: src/prefs.ts:793 src/prefs.ts:689 src/prefs.ts:715 src/prefs.ts:726
+#: src/prefs.ts:743 src/prefs.ts:767 src/prefs.ts:778 src/prefs.ts:787
+msgid "Failed to apply login background"
+msgstr "De aanmeldschermachtergrond kan niet worden ingesteld"
+
+#: src/prefs.ts:742 src/prefs.ts:803 src/prefs.ts:797
+msgid "Login background was successfully applied!"
+msgstr "De aanmeldschermachtergrond is ingesteld!"
+
+#: src/helpers/TexturePreview.ts:42 src/helpers/TexturePreview.ts:41
+msgid "Unsupported image format"
+msgstr "Niet-ondersteund bestandstype"
+
+#: src/helpers/TexturePreview.ts:44 src/helpers/TexturePreview.ts:43
+msgid "Corrupt image"
+msgstr "Beschadigde afbeelding"
+
+#: src/helpers/TexturePreview.ts:46 src/helpers/TexturePreview.ts:45
+msgid "Unknown error"
+msgstr "Onbekende foutmelding"
+
+#: src/helpers/WallpaperGrid.ts:57 src/helpers/WallpaperGrid.ts:56
+msgid "Choose a wallpaper"
+msgstr "Kies een achtergrond"
+
+#: src/helpers/WallpaperGrid.ts:82 src/helpers/WallpaperGrid.ts:81
+msgid "Choose a folder"
+msgstr "Kies een map"
+
+#: assets/ui/prefs.blp:7 assets/ui/prefs.blp:95
+msgid "General"
+msgstr "Algemeen"
+
+#: assets/ui/prefs.blp:12
+msgid "Slideshow"
+msgstr "Diavoorstelling"
+
+#: assets/ui/prefs.blp:15
+msgid "Slideshow interval"
+msgstr "Tussenpoos"
+
+#: assets/ui/prefs.blp:23
+msgid "Hours"
+msgstr "uur"
+
+#: assets/ui/prefs.blp:24
+msgid "Minutes"
+msgstr "minuten"
+
+#: assets/ui/prefs.blp:25
+msgid "Seconds"
+msgstr "seconden"
+
+#: assets/ui/prefs.blp:48
+msgid "Browse"
+msgstr "Bladeren"
+
+#: assets/ui/prefs.blp:73
+msgid "Search wallpapers on wallhaven.cc"
+msgstr "Achtergronden zoeken op wallhaven.cc"
+
+#: assets/ui/prefs.blp:77
+msgid "Search"
+msgstr "Zoeken"
+
+#: assets/ui/prefs.blp:100
+msgid "Anime"
+msgstr "Anime"
+
+#: assets/ui/prefs.blp:105
+msgid "People"
+msgstr "Personen"
+
+#: assets/ui/prefs.blp:123
+msgid "Date added"
+msgstr "Toevoegdatum"
+
+#: assets/ui/prefs.blp:124
+msgid "Relevance"
+msgstr "Relevantie"
+
+#: assets/ui/prefs.blp:125
+msgid "Random"
+msgstr "Willekeurig"
+
+#: assets/ui/prefs.blp:126
+msgid "Views"
+msgstr "Aantal weergaven"
+
+#: assets/ui/prefs.blp:127
+msgid "Favorites"
+msgstr "Aantal favorieten"
+
+#: assets/ui/prefs.blp:128
+msgid "Toplist"
+msgstr "Toplijst"
+
+#: assets/ui/prefs.blp:182
+msgid "Page 1 of 1"
+msgstr "Pagina 1 van 1"
+
+#: assets/ui/prefs.blp:198
+msgid "Dynamic wallpapers"
+msgstr "Dynamische achtergronden"
+
+#: assets/ui/prefs.blp:204
+msgid "Edit dynamic wallpaper"
+msgstr "Dynamische achtergrond bewerken"
+
+#: assets/ui/prefs.blp:212 assets/ui/prefs.blp:232 assets/ui/prefs.blp:244
+#: assets/ui/prefs.blp:294
+msgid "Select"
+msgstr "Kiezen"
+
+#: assets/ui/prefs.blp:221
+msgid "Wallpaper name"
+msgstr "Achtergrondnaam"
+
+#: assets/ui/prefs.blp:237
+msgid "Nighttime wallpaper"
+msgstr "Avond-/Nachtachtergrond"
+
+#: assets/ui/prefs.blp:251
+msgid "Save changes"
+msgstr "Wĳzigingen opslaan"
+
+#: assets/ui/prefs.blp:252
+msgid "Create or save changes to a dynamic wallpaper"
+msgstr "Maak een dynamische achtergrond aan of sla de wijzigingen op"
+
+#: assets/ui/prefs.blp:264
+msgid "Save"
+msgstr "Opslaan"
+
+#: assets/ui/prefs.blp:275
+msgid "Login"
+msgstr "Aanmelden"
+
+#: assets/ui/prefs.blp:281
+msgid "Choose wallpaper"
+msgstr "Kies achtergrond"
+
+#: assets/ui/prefs.blp:303
+msgid "Blur radius"
+msgstr "Vervaagstraal"
+
+#: assets/ui/prefs.blp:304
+msgid "Blur radius of the wallpaper"
+msgstr "De vervaagstraal van de achtergrond"
+
+#: assets/ui/prefs.blp:316
+msgid "Brightness"
+msgstr "Helderheid"
+
+#: assets/ui/prefs.blp:317
+msgid "Brightness of the wallpaper"
+msgstr "De helderheid van de achtergrond"
+
+#: assets/ui/prefs.blp:331
+msgid "Apply wallpaper"
+msgstr "Achtergrond instellen"
+
+#: assets/ui/prefs.blp:332
+msgid "Apply wallpaper to the login screen"
+msgstr "Stel de achtergrond in op het aanmeldscherm"
+
+#: assets/ui/prefs.blp:345
+msgid "Apply"
+msgstr "Instellen"
+
+#: assets/ui/prefs.blp:352
+msgid "Reset wallpaper"
+msgstr "Standaardwaarden"
+
+#: assets/ui/prefs.blp:353
+msgid "Revert back to default theme"
+msgstr "Herstel het standaardthema"
+
+#: assets/ui/prefs.blp:366
+msgid "Reset"
+msgstr "Herstellen"
+
+#: assets/ui/prefs.blp:405
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: assets/ui/prefs.blp:410
+msgid "Download"
+msgstr "Downloaden"
+
+#: assets/ui/texture-preview.blp:9
+msgid "<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Preview</span>"
+msgstr ""
+"<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Voorvertonen</span>"
+
+#: assets/ui/wallpaper-grid.blp:5
+msgid "Wallpapers"
+msgstr "Achtergronden"
+
+#: assets/ui/wallpaper-grid.blp:6
+msgid "Add folders, image files or dynamic wallpapers(xml)"
+msgstr "Voeg mappen, afbeeldingen of dynamische bestanden (xml) toe"
+
+#: assets/ui/wallpaper-grid.blp:22
+msgid "Add folder"
+msgstr "Map toevoegen"
+
+#: assets/ui/wallpaper-grid.blp:30
+msgid "Add file"
+msgstr "Bestand toevoegen"
+
+#: assets/ui/wallpaper-grid.blp:47
+msgid "Remove selected"
+msgstr "Selectie wissen"
+
+#: assets/ui/wallpaper-grid.blp:55
+msgid "Select all"
+msgstr "Alles selecteren"
+
+#: assets/ui/wallpaper-grid.blp:89
+msgid ""
+"<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">No wallpapers added</"
+"span>"
+msgstr ""
+"<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">Er zijn nog geen "
+"achtergronden</span>"

@@ -6,7 +6,7 @@
   "settings-schema": "org.gnome.shell.extensions.wallhub",
   "gettext-domain": "wallhub@sakithb.github.io",
   "url": "https://github.com/sakithb/wallhub",
-  "shell-version": ["45"],
+  "shell-version": ["45", "46"],
   "donations": {
     "github": "sakithb",
     "kofi": "sakithb"

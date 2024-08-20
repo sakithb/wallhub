@@ -1,0 +1,321 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-07 22:43+0530\n"
+"PO-Revision-Date: 2024-03-24 19:11+0100\n"
+"Last-Translator: Anatoly Evdokimov <mobineko@inbox.ru>\n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#. @ts-expect-error label is not in types
+#: src/extension.ts:105 src/extension.ts:255
+msgid "Next Wallpaper"
+msgstr "Следующие обои"
+
+#: src/prefs.ts:249 src/prefs.ts:310 src/prefs.ts:304
+msgid "Choose a dynamic wallpaper"
+msgstr "Выберите динамические обои"
+
+#: src/prefs.ts:250 src/prefs.ts:311 src/prefs.ts:305
+msgid "Dynamic Wallpapers"
+msgstr "Динамические обои"
+
+#: src/prefs.ts:283 src/prefs.ts:344 src/prefs.ts:338
+msgid "Choose a light background"
+msgstr "Выберите светлый фон"
+
+#: src/prefs.ts:284 src/prefs.ts:303 src/prefs.ts:393
+#: src/helpers/WallpaperGrid.ts:58 src/prefs.ts:345 src/prefs.ts:364
+#: src/prefs.ts:454 src/helpers/WallpaperGrid.ts:57 src/prefs.ts:339
+#: src/prefs.ts:358 src/prefs.ts:448
+msgid "Images"
+msgstr "Изображения"
+
+#: src/prefs.ts:302 src/prefs.ts:363 src/prefs.ts:357
+msgid "Choose a dark background"
+msgstr "Выберите темный фон"
+
+#: src/prefs.ts:322 src/prefs.ts:383 src/prefs.ts:377
+msgid "Save dynamic wallpaper"
+msgstr "Сохранить динамические обои"
+
+#: src/prefs.ts:346 src/prefs.ts:407 src/prefs.ts:401
+msgid "Dynamic wallpaper was successfully saved!"
+msgstr "Динамические обои успешно сохранены!"
+
+#: src/prefs.ts:392 src/prefs.ts:453 src/prefs.ts:447
+msgid "Choose a login background"
+msgstr "Выберите фон для экрана входа"
+
+#: src/prefs.ts:421 src/prefs.ts:482 src/prefs.ts:476
+msgid "No backup found"
+msgstr "Резервная копия не найдена"
+
+#: src/prefs.ts:430 src/prefs.ts:491 src/prefs.ts:485
+msgid "Failed to reset login background"
+msgstr "Не удалось сбросить фон для экрана входа"
+
+#: src/prefs.ts:436 src/prefs.ts:497 src/prefs.ts:491
+msgid "Login background was successfully reset!"
+msgstr "Фон для экрана входа успешно сброшен!"
+
+#: src/prefs.ts:494 src/prefs.ts:555 src/prefs.ts:549
+#, javascript-format
+msgid "Page %d of %d"
+msgstr "Страница %d из %d"
+
+#: src/prefs.ts:580 src/prefs.ts:641 src/prefs.ts:635
+msgid "Failed to preview wallpaper"
+msgstr "Не удалось просмотреть обои"
+
+#: src/prefs.ts:604 src/prefs.ts:665 src/prefs.ts:659
+msgid "Save wallpaper"
+msgstr "Сохранить обои"
+
+#: src/prefs.ts:615 src/prefs.ts:676 src/prefs.ts:670
+msgid "Failed to download wallpaper"
+msgstr "Не удалось загрузить обои"
+
+#: src/prefs.ts:618 src/prefs.ts:679 src/prefs.ts:673
+msgid "Wallpaper was successfully downloaded!"
+msgstr "Обои успешно загружены!"
+
+#: src/prefs.ts:634 src/prefs.ts:660 src/prefs.ts:671 src/prefs.ts:688
+#: src/prefs.ts:712 src/prefs.ts:723 src/prefs.ts:732 src/prefs.ts:695
+#: src/prefs.ts:721 src/prefs.ts:749 src/prefs.ts:773 src/prefs.ts:784
+#: src/prefs.ts:793 src/prefs.ts:689 src/prefs.ts:715 src/prefs.ts:726
+#: src/prefs.ts:743 src/prefs.ts:767 src/prefs.ts:778 src/prefs.ts:787
+msgid "Failed to apply login background"
+msgstr "Не удалось применить фон для экрана входа"
+
+#: src/prefs.ts:742 src/prefs.ts:803 src/prefs.ts:797
+msgid "Login background was successfully applied!"
+msgstr "Фон для экрана входа успешно применен!"
+
+#: src/helpers/TexturePreview.ts:42 src/helpers/TexturePreview.ts:41
+msgid "Unsupported image format"
+msgstr "Неподдерживаемый формат изображения"
+
+#: src/helpers/TexturePreview.ts:44 src/helpers/TexturePreview.ts:43
+msgid "Corrupt image"
+msgstr "Поврежденное изображение"
+
+#: src/helpers/TexturePreview.ts:46 src/helpers/TexturePreview.ts:45
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+#: src/helpers/WallpaperGrid.ts:57 src/helpers/WallpaperGrid.ts:56
+msgid "Choose a wallpaper"
+msgstr "Выберите обои"
+
+#: src/helpers/WallpaperGrid.ts:82 src/helpers/WallpaperGrid.ts:81
+msgid "Choose a folder"
+msgstr "Выберите папку"
+
+#: assets/ui/prefs.blp:7 assets/ui/prefs.blp:95
+msgid "General"
+msgstr "Общие"
+
+#: assets/ui/prefs.blp:12
+msgid "Slideshow"
+msgstr "Слайд-шоу"
+
+#: assets/ui/prefs.blp:15
+msgid "Slideshow interval"
+msgstr "Интервал слайд-шоу"
+
+#: assets/ui/prefs.blp:23
+msgid "Hours"
+msgstr "часы"
+
+#: assets/ui/prefs.blp:24
+msgid "Minutes"
+msgstr "минуты"
+
+#: assets/ui/prefs.blp:25
+msgid "Seconds"
+msgstr "секунды"
+
+#: assets/ui/prefs.blp:48
+msgid "Browse"
+msgstr "Обзор"
+
+#: assets/ui/prefs.blp:73
+msgid "Search wallpapers on wallhaven.cc"
+msgstr "Поиск обоев на wallhaven.cc"
+
+#: assets/ui/prefs.blp:77
+msgid "Search"
+msgstr "Поиск"
+
+#: assets/ui/prefs.blp:100
+msgid "Anime"
+msgstr "Аниме"
+
+#: assets/ui/prefs.blp:105
+msgid "People"
+msgstr "Люди"
+
+#: assets/ui/prefs.blp:123
+msgid "Date added"
+msgstr "Дата добавления"
+
+#: assets/ui/prefs.blp:124
+msgid "Relevance"
+msgstr "Актуальность"
+
+#: assets/ui/prefs.blp:125
+msgid "Random"
+msgstr "Случайные"
+
+#: assets/ui/prefs.blp:126
+msgid "Views"
+msgstr "Просмотры"
+
+#: assets/ui/prefs.blp:127
+msgid "Favorites"
+msgstr "Избранное"
+
+#: assets/ui/prefs.blp:128
+msgid "Toplist"
+msgstr "Топ-лист"
+
+#: assets/ui/prefs.blp:182
+msgid "Page 1 of 1"
+msgstr "Страница 1 из 1"
+
+#: assets/ui/prefs.blp:198
+msgid "Dynamic wallpapers"
+msgstr "Динамические обои"
+
+#: assets/ui/prefs.blp:204
+msgid "Edit dynamic wallpaper"
+msgstr "Редактировать динамические обои"
+
+#: assets/ui/prefs.blp:212 assets/ui/prefs.blp:232 assets/ui/prefs.blp:244
+#: assets/ui/prefs.blp:294
+msgid "Select"
+msgstr "Выбрать"
+
+#: assets/ui/prefs.blp:221
+msgid "Wallpaper name"
+msgstr "Имя обоев"
+
+#: assets/ui/prefs.blp:237
+msgid "Nighttime wallpaper"
+msgstr "Ночные обои"
+
+#: assets/ui/prefs.blp:251
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: assets/ui/prefs.blp:252
+msgid "Create or save changes to a dynamic wallpaper"
+msgstr "Создать или сохранить изменения в динамических обоях"
+
+#: assets/ui/prefs.blp:264
+msgid "Save"
+msgstr "Сохранить"
+
+#: assets/ui/prefs.blp:275
+msgid "Login"
+msgstr "Вход"
+
+#: assets/ui/prefs.blp:281
+msgid "Choose wallpaper"
+msgstr "Выберите обои"
+
+#: assets/ui/prefs.blp:303
+msgid "Blur radius"
+msgstr "Радиус размытия"
+
+#: assets/ui/prefs.blp:304
+msgid "Blur radius of the wallpaper"
+msgstr "Радиус размытия обоев"
+
+#: assets/ui/prefs.blp:316
+msgid "Brightness"
+msgstr "Яркость"
+
+#: assets/ui/prefs.blp:317
+msgid "Brightness of the wallpaper"
+msgstr "Яркость обоев"
+
+#: assets/ui/prefs.blp:331
+msgid "Apply wallpaper"
+msgstr "Применить обои"
+
+#: assets/ui/prefs.blp:332
+msgid "Apply wallpaper to the login screen"
+msgstr "Применить обои для экрана входа"
+
+#: assets/ui/prefs.blp:345
+msgid "Apply"
+msgstr "Применить"
+
+#: assets/ui/prefs.blp:352
+msgid "Reset wallpaper"
+msgstr "Сбросить обои"
+
+#: assets/ui/prefs.blp:353
+msgid "Revert back to default theme"
+msgstr "Восстановить тему по умолчанию"
+
+#: assets/ui/prefs.blp:366
+msgid "Reset"
+msgstr "Сбросить"
+
+#: assets/ui/prefs.blp:405
+msgid "Cancel"
+msgstr "Отмена"
+
+#: assets/ui/prefs.blp:410
+msgid "Download"
+msgstr "Загрузить"
+
+#: assets/ui/texture-preview.blp:9
+msgid "<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Preview</span>"
+msgstr ""
+"<span size=\"xx-large\" alpha=\"50%\" weight=\"heavy\">Предпросмотр</span>"
+
+#: assets/ui/wallpaper-grid.blp:5
+msgid "Wallpapers"
+msgstr "Обои"
+
+#: assets/ui/wallpaper-grid.blp:6
+msgid "Add folders, image files or dynamic wallpapers(xml)"
+msgstr "Добавить папки, файлы изображений или динамические обои (xml)"
+
+#: assets/ui/wallpaper-grid.blp:22
+msgid "Add folder"
+msgstr "Добавить папку"
+
+#: assets/ui/wallpaper-grid.blp:30
+msgid "Add file"
+msgstr "Добавить файл"
+
+#: assets/ui/wallpaper-grid.blp:47
+msgid "Remove selected"
+msgstr "Удалить выбранное"
+
+#: assets/ui/wallpaper-grid.blp:55
+msgid "Select all"
+msgstr "Выбрать все"
+
+#: assets/ui/wallpaper-grid.blp:89
+msgid ""
+"<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">No wallpapers added</"
+"span>"
+msgstr ""
+"<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">Обои не добавлены</span>"

@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-07 22:43+0530\n"
-"PO-Revision-Date: 2024-03-24 19:11+0100\n"
+"PO-Revision-Date: 2024-09-27 09:48+0300\n"
 "Last-Translator: Anatoly Evdokimov <mobineko@inbox.ru>\n"
 "Language-Team: \n"
-"Language: ru\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. @ts-expect-error label is not in types
 #: src/extension.ts:105 src/extension.ts:255
@@ -137,15 +137,15 @@ msgstr "Интервал слайд-шоу"
 
 #: assets/ui/prefs.blp:23
 msgid "Hours"
-msgstr "часы"
+msgstr "Часы"
 
 #: assets/ui/prefs.blp:24
 msgid "Minutes"
-msgstr "минуты"
+msgstr "Минуты"
 
 #: assets/ui/prefs.blp:25
 msgid "Seconds"
-msgstr "секунды"
+msgstr "Секунды"
 
 #: assets/ui/prefs.blp:48
 msgid "Browse"
@@ -169,11 +169,11 @@ msgstr "Люди"
 
 #: assets/ui/prefs.blp:123
 msgid "Date added"
-msgstr "Дата добавления"
+msgstr "По дате"
 
 #: assets/ui/prefs.blp:124
 msgid "Relevance"
-msgstr "Актуальность"
+msgstr "Новые"
 
 #: assets/ui/prefs.blp:125
 msgid "Random"
@@ -181,15 +181,15 @@ msgstr "Случайные"
 
 #: assets/ui/prefs.blp:126
 msgid "Views"
-msgstr "Просмотры"
+msgstr "По просмотрам"
 
 #: assets/ui/prefs.blp:127
 msgid "Favorites"
-msgstr "Избранное"
+msgstr "Избранные"
 
 #: assets/ui/prefs.blp:128
 msgid "Toplist"
-msgstr "Топ-лист"
+msgstr "Лучшие"
 
 #: assets/ui/prefs.blp:182
 msgid "Page 1 of 1"
@@ -210,7 +210,7 @@ msgstr "Выбрать"
 
 #: assets/ui/prefs.blp:221
 msgid "Wallpaper name"
-msgstr "Имя обоев"
+msgstr "Название обоев"
 
 #: assets/ui/prefs.blp:237
 msgid "Nighttime wallpaper"
@@ -318,4 +318,5 @@ msgid ""
 "<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">No wallpapers added</"
 "span>"
 msgstr ""
-"<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">Обои не добавлены</span>"
+"<span size=\"x-large\" weight=\"bold\" color=\"#ccc\">Обои не добавлены</"
+"span>"

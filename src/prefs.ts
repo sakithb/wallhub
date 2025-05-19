@@ -98,6 +98,7 @@ class WallhubPreferences extends ExtensionPreferences {
     private ogResourcePath: string;
     private loginPreviewSourceId: number;
 
+    // @ts-expect-error fillPreferencesWindow is assigned doesn't match type with prop in ExtensionPreferences
     public fillPreferencesWindow(window: Adw.PreferencesWindow) {
         const resourcePath = GLib.build_filenamev([this.path, "org.gnome.shell.extensions.wallhub.gresource"]);
         Gio.resources_register(Gio.resource_load(resourcePath));

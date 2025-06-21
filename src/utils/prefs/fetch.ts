@@ -5,6 +5,7 @@ import Soup from "gi://Soup";
 import { IWallhavenSearchOptions, IWallhavenResponse } from "../../types/prefs.js";
 
 const buildUrlQuery = (params: { [k: string]: string }) => {
+    // @ts-expect-error type "" doesnt match partial
     const query = new GLib.String("");
     const keys = Object.keys(params);
 
@@ -25,6 +26,7 @@ const buildUrlQuery = (params: { [k: string]: string }) => {
         }
     }
 
+    console.debug(query.toString());
     return query.str;
 };
 

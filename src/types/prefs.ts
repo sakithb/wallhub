@@ -6,7 +6,7 @@ export interface IFileFilter {
     mimeTypes: MimeTypes[];
 }
 
-export interface IFileChooserOptions extends Omit<Gtk.FileDialog.ConstructorProperties, "filters"> {
+export interface IFileChooserOptions extends Partial<Omit<Gtk.FileDialog.ConstructorProps, "filters">> {
     filters?: IFileFilter[];
 }
 

@@ -10,6 +10,7 @@ import WallpaperQueue from "./helpers/shell/WallpaperQueue.js";
 import { parseDynamicWallpaper } from "./utils/common/dwp.js";
 import { readFile } from "./utils/common/io.js";
 import { debugLog, errorLog, handleCatch, isBitSet } from "./utils/common/misc.js";
+import { LayoutManager } from "@girs/gnome-shell/ui/layout";
 
 Gio._promisify(Gio.File.prototype, "enumerate_children_async", "enumerate_children_finish");
 Gio._promisify(Gio.File.prototype, "query_info_async", "query_info_finish");
@@ -61,12 +62,14 @@ export default class Wallhub extends Extension {
             this.startLoop().catch(handleCatch);
         });
 
+        // @ts-expect-error "_addBackgroundMenu" is protected
         this.injectionManager.overrideMethod(Main.layoutManager, "_addBackgroundMenu", (originalMethod) => {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             return (bgManager: BackgroundManager) => {
                 debugLog("Overriding _addBackgroundMenu");
+                // @ts-expect-error originalMethod has type never
                 originalMethod.call(Main.layoutManager, bgManager);
-                // @ts-expect-error _backgroundMenu is private
+                // @ts-expect-error _backgroundMenu does not exits
                 const menu: BackgroundMenu = bgManager.backgroundActor._backgroundMenu;
                 this.addBackgroundMenuItem(menu);
             };
@@ -100,7 +103,6 @@ export default class Wallhub extends Extension {
         Main.layoutManager._bgManagers.forEach((bgManager: BackgroundManager) => {
             // @ts-expect-error _backgroundMenu is private
             const menu: BackgroundMenu = bgManager.backgroundActor._backgroundMenu;
-            // @ts-expect-error _getMenuItems is private
             menu._getMenuItems().forEach((item: PopupMenu.PopupMenuItem) => {
                 // @ts-expect-error label is not in types
                 if (item.label_actor?.text === _("Next Wallpaper")) {

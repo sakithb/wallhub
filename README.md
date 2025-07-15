@@ -1,3 +1,7 @@
+***⚠️ I no longer use GNOME so this repository will be archived, feel free to fork this project***
+
+___
+
 <div>
   <img src="assets/images/icon.png" height="75"> 
   <h1>Wallhub</h1>
